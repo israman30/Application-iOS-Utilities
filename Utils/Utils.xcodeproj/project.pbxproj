@@ -14,6 +14,7 @@
 		4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C096E2B40FFE700882087 /* RatingStartsView.swift */; };
 		4D5C09712B41012200882087 /* RatingHeartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09702B41012200882087 /* RatingHeartsView.swift */; };
 		4D5C09732B4101A600882087 /* HeartLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09722B4101A600882087 /* HeartLikeView.swift */; };
+		4D5C09752B41038800882087 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09742B41038800882087 /* GridView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		4D5C096E2B40FFE700882087 /* RatingStartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStartsView.swift; sourceTree = "<group>"; };
 		4D5C09702B41012200882087 /* RatingHeartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingHeartsView.swift; sourceTree = "<group>"; };
 		4D5C09722B4101A600882087 /* HeartLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartLikeView.swift; sourceTree = "<group>"; };
+		4D5C09742B41038800882087 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +83,7 @@
 				4D5C096E2B40FFE700882087 /* RatingStartsView.swift */,
 				4D5C09702B41012200882087 /* RatingHeartsView.swift */,
 				4D5C09722B4101A600882087 /* HeartLikeView.swift */,
+				4D5C09742B41038800882087 /* GridView.swift */,
 				4D5C09582B40FD9C00882087 /* Utils.docc */,
 			);
 			path = Utils;
@@ -206,6 +209,7 @@
 				4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */,
 				4D5C09592B40FD9C00882087 /* Utils.docc in Sources */,
 				4D5C09732B4101A600882087 /* HeartLikeView.swift in Sources */,
+				4D5C09752B41038800882087 /* GridView.swift in Sources */,
 				4D5C09712B41012200882087 /* RatingHeartsView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
