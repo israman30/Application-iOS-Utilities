@@ -11,6 +11,7 @@
 		4D5C095F2B40FD9C00882087 /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5C09542B40FD9C00882087 /* Utils.framework */; };
 		4D5C09642B40FD9C00882087 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09632B40FD9C00882087 /* UtilsTests.swift */; };
 		4D5C09652B40FD9C00882087 /* Utils.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D5C09572B40FD9C00882087 /* Utils.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C096E2B40FFE700882087 /* RatingStartsView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		4D5C09582B40FD9C00882087 /* Utils.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Utils.docc; sourceTree = "<group>"; };
 		4D5C095E2B40FD9C00882087 /* UtilsTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = UtilsTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5C09632B40FD9C00882087 /* UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
+		4D5C096E2B40FFE700882087 /* RatingStartsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RatingStartsView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +74,7 @@
 			isa = PBXGroup;
 			children = (
 				4D5C09572B40FD9C00882087 /* Utils.h */,
+				4D5C096E2B40FFE700882087 /* RatingStartsView.swift */,
 				4D5C09582B40FD9C00882087 /* Utils.docc */,
 			);
 			path = Utils;
@@ -194,6 +197,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */,
 				4D5C09592B40FD9C00882087 /* Utils.docc in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -407,6 +411,7 @@
 		4D5C096C2B40FD9C00882087 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G9TBJCK73T;
@@ -423,6 +428,7 @@
 		4D5C096D2B40FD9C00882087 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = G9TBJCK73T;
