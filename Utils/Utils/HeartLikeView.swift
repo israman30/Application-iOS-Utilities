@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct HeartLikeView: View {
+public struct HeartLikeView: View {
     
     @Binding var isLiked: Bool
     @State var animationAmount = 1.0
@@ -20,7 +20,7 @@ struct HeartLikeView: View {
     
     @State private var isAnimating = false
     
-    var body: some View {
+    public var body: some View {
         Button {
             self.executeButtonAnimation()
         } label: {

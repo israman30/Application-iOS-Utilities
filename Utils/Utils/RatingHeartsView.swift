@@ -7,11 +7,11 @@
 
 import SwiftUI
 
-struct RatingHeartsView: View {
+public struct RatingHeartsView: View {
     var rating: CGFloat
     var maxRating: Int
 
-    var body: some View {
+    public var body: some View {
         hearts
             .overlay(
             GeometryReader {

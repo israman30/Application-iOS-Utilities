@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct GridView<Content: View>: View {
+public struct GridView<Content: View>: View {
     
     let columns: Int
     let content: () -> Content
@@ -16,7 +16,7 @@ struct GridView<Content: View>: View {
         Array(repeating: GridItem(.flexible()), count: columns)
     }
     
-    var body: some View {
+    public var body: some View {
         ScrollView {
             LazyVGrid(columns: adaptiveColumns) {
                 content()
