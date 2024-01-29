@@ -16,6 +16,7 @@
 		4D5C09732B4101A600882087 /* HeartLikeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09722B4101A600882087 /* HeartLikeView.swift */; };
 		4D5C09752B41038800882087 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09742B41038800882087 /* GridView.swift */; };
 		4D5C09772B4B806700882087 /* TextFieldUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09762B4B806700882087 /* TextFieldUtils.swift */; };
+		4D7826862B67389E0034AC4D /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7826852B67389E0034AC4D /* ToastView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -39,6 +40,7 @@
 		4D5C09722B4101A600882087 /* HeartLikeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeartLikeView.swift; sourceTree = "<group>"; };
 		4D5C09742B41038800882087 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		4D5C09762B4B806700882087 /* TextFieldUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldUtils.swift; sourceTree = "<group>"; };
+		4D7826852B67389E0034AC4D /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				4D5C09722B4101A600882087 /* HeartLikeView.swift */,
 				4D5C09742B41038800882087 /* GridView.swift */,
 				4D5C09762B4B806700882087 /* TextFieldUtils.swift */,
+				4D7826852B67389E0034AC4D /* ToastView.swift */,
 				4D5C09582B40FD9C00882087 /* Utils.docc */,
 			);
 			path = Utils;
@@ -210,6 +213,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */,
+				4D7826862B67389E0034AC4D /* ToastView.swift in Sources */,
 				4D5C09772B4B806700882087 /* TextFieldUtils.swift in Sources */,
 				4D5C09592B40FD9C00882087 /* Utils.docc in Sources */,
 				4D5C09732B4101A600882087 /* HeartLikeView.swift in Sources */,
