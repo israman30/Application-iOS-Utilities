@@ -43,7 +43,7 @@ struct CustomTextField: View {
             .padding()
             .font(font)
             .textFieldStyle(.plain)
-            .background(LinearGradient(gradient: Gradient(colors: [Color.orange, Color.orange]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(LinearGradient(gradient: Gradient(colors: [Color(.systemGray5), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing))
             .cornerRadius(20)
             .shadow(color: .gray, radius: 10)
         }
