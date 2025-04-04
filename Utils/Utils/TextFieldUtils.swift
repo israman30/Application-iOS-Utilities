@@ -11,12 +11,13 @@ struct TextFieldUtils: View {
     @State var text = ""
     var body: some View {
         VStack {
-            CustomTextField(placeholder: "Enter something", inputText: $text, headerText: "Some Header", iconPlaceholder: "magnifyingglass")
-            
-            
+            CustomTextField(
+                placeholder: "Enter something",
+                inputText: $text,
+                headerText: "Some Header",
+                iconPlaceholder: "magnifyingglass"
+            )
         }
-        
-        
     }
 }
 
