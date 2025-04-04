@@ -27,6 +27,7 @@ public struct GridView<Content: View>: View {
         Array(repeating: GridItem(.flexible()), count: rows ?? 1)
     }
     
+    @ViewBuilder
     public var body: some View {
         if orientation == .vertical {
             ScrollView(.vertical) {
