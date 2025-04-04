@@ -15,7 +15,8 @@ struct TextFieldUtils: View {
                 placeholder: "Enter something",
                 inputText: $text,
                 headerText: "Some Header",
-                iconPlaceholder: "magnifyingglass"
+                iconPlaceholder: "magnifyingglass",
+                shadowRadius: 2
             )
         }
     }
@@ -32,6 +33,7 @@ struct CustomTextField: View {
     var font: Font = .title
     var headerText = ""
     var iconPlaceholder = ""
+    var shadowRadius: CGFloat = 2
     
     var body: some View {
         VStack(alignment: .leading) {
@@ -44,9 +46,17 @@ struct CustomTextField: View {
             .padding()
             .font(font)
             .textFieldStyle(.plain)
-            .background(LinearGradient(gradient: Gradient(colors: [Color(.systemGray5), Color.white]), startPoint: .topLeading, endPoint: .bottomTrailing))
+            .background(
+                LinearGradient(
+                    gradient: Gradient(
+                        colors: [Color(.systemGray5), Color.white]
+                    ),
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+            )
             .cornerRadius(20)
-            .shadow(color: .gray, radius: 10)
+            .shadow(color: .gray, radius: shadowRadius)
         }
         .padding()
         
