@@ -26,8 +26,7 @@ struct TextFieldUtils: View {
     TextFieldUtils()
 }
 
-struct UtilTextField: View {
-    
+public struct UtilTextField: View {
     var placeholder = ""
     @Binding var inputText: String
     var font: Font = .title
@@ -40,7 +39,8 @@ struct UtilTextField: View {
     var cornerRadius: CGFloat = 20
     var shadowColor: Color = .gray
     
-    var body: some View {
+    @ViewBuilder
+    public var body: some View {
         VStack(alignment: .leading) {
             Text(headerText)
                 .font(.title)

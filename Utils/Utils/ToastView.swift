@@ -22,6 +22,7 @@ public struct ToastView: View {
         }
     }
     
+    @ViewBuilder
     private var toastText: some View {
         VStack {
             Text(text)
