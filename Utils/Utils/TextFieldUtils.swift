@@ -11,7 +11,7 @@ struct TextFieldUtils: View {
     @State var text = ""
     var body: some View {
         VStack {
-            CustomTextField(
+            UtilTextField(
                 placeholder: "Enter something",
                 inputText: $text,
                 headerText: "Some Header",
@@ -26,7 +26,7 @@ struct TextFieldUtils: View {
     TextFieldUtils()
 }
 
-struct CustomTextField: View {
+struct UtilTextField: View {
     
     var placeholder = ""
     @Binding var inputText: String
@@ -34,11 +34,18 @@ struct CustomTextField: View {
     var headerText = ""
     var iconPlaceholder = ""
     var shadowRadius: CGFloat = 2
+    var colors: [Color] = [Color(.systemGray5), Color.white]
+    var startPoint: UnitPoint = .topLeading
+    var endPoint: UnitPoint = .bottomTrailing
+    var cornerRadius: CGFloat = 20
+    var shadowColor: Color = .gray
     
     var body: some View {
         VStack(alignment: .leading) {
             Text(headerText)
                 .font(.title)
+                .accessibilityAddTraits(.isHeader)
+                .accessibilityHeading(.h2)
             HStack {
                 Image(systemName: iconPlaceholder)
                 TextField(placeholder, text: $inputText)
@@ -46,17 +53,15 @@ struct CustomTextField: View {
             .padding()
             .font(font)
             .textFieldStyle(.plain)
-            .background(
-                LinearGradient(
-                    gradient: Gradient(
-                        colors: [Color(.systemGray5), Color.white]
-                    ),
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                )
+            .customModifier(
+                gradient: colors,
+                startPoint: startPoint,
+                endPoint: endPoint,
+                cornerRadius: cornerRadius,
+                shadowRadius: shadowRadius,
+                shadowColor: shadowColor
             )
-            .cornerRadius(20)
-            .shadow(color: .gray, radius: shadowRadius)
+            
         }
         .padding()
         
@@ -65,7 +70,6 @@ struct CustomTextField: View {
 }
 
 struct CustomModifier: ViewModifier {
-    
     var colors: [Color]
     var startPoint: UnitPoint = .topLeading
     var endPoint: UnitPoint = .bottomTrailing
@@ -75,8 +79,36 @@ struct CustomModifier: ViewModifier {
     
     func body(content: Content) -> some View {
         content
-            .background(LinearGradient(gradient: Gradient(colors: colors), startPoint: startPoint, endPoint: endPoint))
+            .background(
+                LinearGradient(
+                    gradient: Gradient(colors: colors),
+                    startPoint: startPoint,
+                    endPoint: endPoint
+                )
+            )
             .cornerRadius(cornerRadius  )
             .shadow(color: .gray, radius: shadowRadius)
+    }
+}
+
+extension View {
+    func customModifier(
+        gradient colors: [Color],
+        startPoint: UnitPoint = .topLeading,
+        endPoint: UnitPoint = .bottomTrailing,
+        cornerRadius: CGFloat = 20,
+        shadowRadius: CGFloat = 10,
+        shadowColor: Color = .gray
+    ) -> some View {
+        modifier(
+            CustomModifier(
+                colors: colors,
+                startPoint: startPoint,
+                endPoint: endPoint,
+                cornerRadius: cornerRadius,
+                shadowRadius: shadowRadius,
+                shadowColor: shadowColor
+            )
+        )
     }
 }
