@@ -7,13 +7,15 @@
 
 import SwiftUI
 
-struct SquareGridView<Content: View, Item: Hashable>: View {
+struct SquareGridView<Content: View, LoaderContent: View, Item: Hashable>: View {
     var items: [Item]
+    var totalCount: Int
     var columns: Int = 3
     var columnSpacing: CGFloat = 2
     var rowSpacing: CGFloat = 2
     
     let buildItem: (Item) -> Content
+    let loadingItem: () -> LoaderContent
     
     var body: some View {
         GeometryReader { proxy in
@@ -22,6 +24,10 @@ struct SquareGridView<Content: View, Item: Hashable>: View {
                 LazyVGrid(columns: .init(repeating:  GridItem(.fixed(cellSize), spacing: columnSpacing), count: columns), spacing: rowSpacing) {
                     ForEach(items, id: \.self) { item in
                         buildItem(item)
+                            .frame(height: cellSize)
+                    }
+                    if items.count < totalCount {
+                        loadingItem()
                             .frame(height: cellSize)
                     }
                 }
