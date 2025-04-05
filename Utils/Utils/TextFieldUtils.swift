@@ -34,7 +34,7 @@ struct UtilTextField: View {
     var headerText = ""
     var iconPlaceholder = ""
     var shadowRadius: CGFloat = 2
-    var colors: [Color] = [Color(.systemGray5), Color.white]
+    var colors: [Color] = [Color.gray.opacity(0.3), Color.white.opacity(0.2)]
     var startPoint: UnitPoint = .topLeading
     var endPoint: UnitPoint = .bottomTrailing
     var cornerRadius: CGFloat = 20
