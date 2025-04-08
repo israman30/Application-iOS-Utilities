@@ -9,15 +9,16 @@ import SwiftUI
 
 struct TextFieldUtils: View {
     @State var text = ""
+    @State var password = ""
     var body: some View {
         VStack {
-            UtilTextField(
-                placeholder: "Enter something",
-                inputText: $text,
-                headerText: "Some Header",
-                iconPlaceholder: "magnifyingglass",
-                shadowRadius: 2
-            )
+            UtilTextField("email" ,inputText: $text, header: {
+                Text("Email")
+            })
+            
+            UtilTextField("password", inputText: $password, isSecure: true, header: {
+                Text("Password")
+            })
         }
     }
 }
@@ -26,53 +27,80 @@ struct TextFieldUtils: View {
     TextFieldUtils()
 }
 
-public struct UtilTextField: View {
-    var placeholder = ""
+public struct UtilTextField<Label: View>: View {
+    var placeholder: String = ""
     @Binding var inputText: String
     var font: Font = .title
     var headerText = ""
     var iconPlaceholder = ""
     var shadowRadius: CGFloat = 2
-    var colors: [Color] = [Color.gray.opacity(0.3), Color.white.opacity(0.2)]
-    var startPoint: UnitPoint = .topLeading
-    var endPoint: UnitPoint = .bottomTrailing
+    var color: Color = Color.gray.opacity(0.1)
     var cornerRadius: CGFloat = 20
     var shadowColor: Color = .gray
+    var isSecure: Bool = false
+    var header: () -> Label
+    
+    init(
+        _ placeholder: String = "",
+        inputText: Binding<String>,
+        font: Font = .title,
+        iconPlaceholder: String = "",
+        headerText: String = "",
+        shadowRadius: CGFloat = 2,
+        color: Color = Color.gray.opacity(0.1),
+        cornerRadius: CGFloat = 20,
+        shadowColor: Color = .gray,
+        isSecure: Bool = false,
+        @ViewBuilder header: @escaping () -> Label
+    ) {
+        self.placeholder = placeholder
+        self._inputText = inputText
+        self.font = font
+        self.iconPlaceholder = iconPlaceholder
+        self.headerText = headerText
+        self.shadowColor = shadowColor
+        self.color = color
+        self.cornerRadius = cornerRadius
+        self.shadowColor = shadowColor
+        self.isSecure = isSecure
+        self.header = header
+    }
     
     @ViewBuilder
     public var body: some View {
         VStack(alignment: .leading) {
-            Text(headerText)
-                .font(.title)
-                .accessibilityAddTraits(.isHeader)
-                .accessibilityHeading(.h2)
             HStack {
                 Image(systemName: iconPlaceholder)
-                TextField(placeholder, text: $inputText)
+                if isSecure {
+                    VStack(alignment: .leading) {
+                        header()
+                        VStack {
+                            SecureField(placeholder, text: $inputText)
+                        }
+                        .padding()
+                        .customModifier(gradient: color)
+                    }
+                } else {
+                    VStack(alignment: .leading) {
+                        header()
+                        VStack {
+                            TextField(placeholder, text: $inputText)
+                        }
+                        .padding()
+                        .customModifier(gradient: color)
+                    }
+                }
             }
-            .padding()
             .font(font)
             .textFieldStyle(.plain)
-            .customModifier(
-                gradient: colors,
-                startPoint: startPoint,
-                endPoint: endPoint,
-                cornerRadius: cornerRadius,
-                shadowRadius: shadowRadius,
-                shadowColor: shadowColor
-            )
-            
         }
-        .padding()
         
     }
     
 }
 
 struct CustomModifier: ViewModifier {
-    var colors: [Color]
-    var startPoint: UnitPoint = .topLeading
-    var endPoint: UnitPoint = .bottomTrailing
+    var color: Color
     var cornerRadius: CGFloat = 20
     var shadowRadius: CGFloat = 10
     var shadowColor: Color = .gray
@@ -80,11 +108,7 @@ struct CustomModifier: ViewModifier {
     func body(content: Content) -> some View {
         content
             .background(
-                LinearGradient(
-                    gradient: Gradient(colors: colors),
-                    startPoint: startPoint,
-                    endPoint: endPoint
-                )
+                color
             )
             .cornerRadius(cornerRadius  )
             .shadow(color: .gray, radius: shadowRadius)
@@ -93,18 +117,14 @@ struct CustomModifier: ViewModifier {
 
 extension View {
     func customModifier(
-        gradient colors: [Color],
-        startPoint: UnitPoint = .topLeading,
-        endPoint: UnitPoint = .bottomTrailing,
+        gradient color: Color,
         cornerRadius: CGFloat = 20,
         shadowRadius: CGFloat = 10,
         shadowColor: Color = .gray
     ) -> some View {
         modifier(
             CustomModifier(
-                colors: colors,
-                startPoint: startPoint,
-                endPoint: endPoint,
+                color: color,
                 cornerRadius: cornerRadius,
                 shadowRadius: shadowRadius,
                 shadowColor: shadowColor
