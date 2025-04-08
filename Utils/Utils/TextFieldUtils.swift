@@ -12,11 +12,11 @@ struct TextFieldUtils: View {
     @State var password = ""
     var body: some View {
         VStack {
-            UtilTextField(inputText: $text) {
+            UtilTextField("email" ,inputText: $text) {
                 Text("Email")
             }
             
-            UtilTextField(inputText: $password, isSecure: true) {
+            UtilTextField("password", inputText: $password, isSecure: true) {
                 Text("Password")
             }
         }
@@ -75,7 +75,7 @@ public struct UtilTextField<Header: View>: View {
                     VStack(alignment: .leading) {
                         header()
                         VStack {
-                            SecureField("placeholder", text: $inputText)
+                            SecureField(placeholder, text: $inputText)
                         }
                         .padding()
                         .customModifier(gradient: color)
@@ -84,7 +84,7 @@ public struct UtilTextField<Header: View>: View {
                     VStack(alignment: .leading) {
                         header()
                         VStack {
-                            TextField("placeholder", text: $inputText)
+                            TextField(placeholder, text: $inputText)
                         }
                         .padding()
                         .customModifier(gradient: color)
