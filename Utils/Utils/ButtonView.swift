@@ -59,6 +59,7 @@ enum ButtonUtilsStyle {
     case clear
 }
 
+/// Support `Utils` button style section
 extension ButtonStyle where Self == DangerButtonUtilsStyle {
     static var dangerUtil: DangerButtonUtilsStyle { .init() }
 }
@@ -83,6 +84,7 @@ extension ButtonStyle where Self == ClearButtonUtilsStyle {
     static var clearUtil: ClearButtonUtilsStyle { .init() }
 }
 
+// Button style components
 struct DangerButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         configuration.label
