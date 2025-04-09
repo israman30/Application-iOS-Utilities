@@ -45,7 +45,7 @@ public struct ButtonViewUtils: View {
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
         }
-        .utilsButtonStyle(.blue)
+        .utilsButtonStyle(.clear)
     }
 }
 
@@ -56,6 +56,7 @@ enum ButtonUtilsStyle {
     case gray
     case green
     case blue
+    case clear
 }
 
 extension Button {
@@ -74,6 +75,8 @@ extension Button {
             self.buttonStyle(GreenButtonUtilsStyle())
         case .blue:
             self.buttonStyle(BlueButtonUtilsStyle())
+        case .clear:
+            self.buttonStyle(ClearButtonUtilsStyle())
         }
     }
 }
@@ -163,6 +166,24 @@ struct BlueButtonUtilsStyle: ButtonStyle {
                     .background {
                         RoundedRectangle(cornerRadius: 12)
                             .fill(Color.blue.opacity(0.2))
+                    }
+            }
+    }
+}
+
+struct ClearButtonUtilsStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding(.vertical, 12)
+            .foregroundColor(Color.blue)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.blue, lineWidth: 2.0)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.clear.opacity(0.2))
                     }
             }
     }
