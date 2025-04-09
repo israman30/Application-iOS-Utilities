@@ -9,9 +9,10 @@ import SwiftUI
 
 struct ButtonView: View {
     var body: some View {
-        ButtonViewUtils(label: "Tap here") {
-            
+        ButtonViewUtils(label: "Tap here", icon: "xmark.circle") {
+            // action
         }
+        .padding()
     }
 }
 
@@ -34,11 +35,135 @@ public struct ButtonViewUtils: View {
         Button {
             action()
         } label: {
-            if let icon = icon {
-                Image(systemName: icon)
+            HStack(spacing: 10) {
+                if let icon = icon {
+                    Image(systemName: icon)
+                }
+                Text(label)
             }
-            Text(label)
+            .font(.title2)
+            .padding(.vertical, 12)
+            .frame(maxWidth: .infinity)
         }
-        .buttonStyle(.borderedProminent)
+        .utilsButtonStyle(.blue)
+    }
+}
+
+enum ButtonUtilsStyle {
+    case `default`
+    case danger
+    case warning
+    case gray
+    case green
+    case blue
+}
+
+extension Button {
+    @ViewBuilder
+    func utilsButtonStyle(_ style: ButtonUtilsStyle) -> some View {
+        switch style {
+        case .default:
+            self.buttonStyle(DefaultButtonStyle())
+        case .danger:
+            self.buttonStyle(DangerButtonUtilsStyle())
+        case .warning:
+            self.buttonStyle(WarningButtonUtilsStyle())
+        case .gray:
+            self.buttonStyle(GrayButtonUtilsStyle())
+        case .green:
+            self.buttonStyle(GreenButtonUtilsStyle())
+        case .blue:
+            self.buttonStyle(BlueButtonUtilsStyle())
+        }
+    }
+}
+
+struct DangerButtonUtilsStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding(.vertical, 12)
+            .foregroundColor(Color.red)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.red, lineWidth: 2.0)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.red.opacity(0.2))
+                    }
+            }
+    }
+}
+
+struct WarningButtonUtilsStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding(.vertical, 12)
+            .foregroundColor(Color.orange)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.yellow, lineWidth: 2.0)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.yellow.opacity(0.2))
+                    }
+            }
+    }
+}
+
+struct GrayButtonUtilsStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding(.vertical, 12)
+            .foregroundColor(Color.gray)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.gray, lineWidth: 2.0)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.gray.opacity(0.2))
+                    }
+            }
+    }
+}
+
+struct GreenButtonUtilsStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding(.vertical, 12)
+            .foregroundColor(Color.green)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.green, lineWidth: 2.0)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.green.opacity(0.2))
+                    }
+            }
+    }
+}
+
+struct BlueButtonUtilsStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.title2)
+            .padding(.vertical, 12)
+            .foregroundColor(Color.blue)
+            .frame(maxWidth: .infinity)
+            .background {
+                RoundedRectangle(cornerRadius: 12)
+                    .stroke(Color.blue, lineWidth: 2.0)
+                    .background {
+                        RoundedRectangle(cornerRadius: 12)
+                            .fill(Color.blue.opacity(0.2))
+                    }
+            }
     }
 }
