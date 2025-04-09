@@ -18,7 +18,9 @@ struct FloatingButtonView: View {
                         Text("Item \((item + 1))")
                     }
                 }
-                FloatingButtonUtilsView()
+                FloatingButtonUtilsView {
+                    // action
+                }
             }
         }
     }
@@ -29,7 +31,17 @@ struct FloatingButtonView: View {
 }
 
 public struct FloatingButtonUtilsView: View {
-    let color: Color = .blue
+    
+    var icon: String = "plus"
+    var color: Color = .blue
+    var action: () -> Void
+    
+    init(color: Color = .blue, icon: String = "plus", action: @escaping () -> Void) {
+        self.color = color
+        self.icon = icon
+        self.action = action
+    }
+    
     public var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack {
@@ -37,9 +49,9 @@ public struct FloatingButtonUtilsView: View {
                 HStack {
                     Spacer()
                     Button {
-                        // action
+                        action()
                     } label: {
-                        Image(systemName: "plus")
+                        Image(systemName: icon)
                             .font(.title.weight(.semibold))
                             .padding()
                             .background(color)
