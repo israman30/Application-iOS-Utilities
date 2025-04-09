@@ -30,13 +30,14 @@ struct FloatingButtonView: View {
     FloatingButtonView()
 }
 
+/// numerate the `alignments` for the floating button
 enum AlignmentFloatingButton {
     case leading
     case trailing
 }
 
+/// Custom input `params` for customize the floating button
 public struct FloatingButtonUtilsView: View {
-    
     var icon: String = "plus"
     var color: Color = .blue
     var action: () -> Void
