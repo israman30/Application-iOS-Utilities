@@ -13,6 +13,7 @@ struct ButtonView: View {
             // action
         }
         .padding()
+        .buttonStyle(.dangerUtil)
     }
 }
 
@@ -45,7 +46,6 @@ public struct ButtonViewUtils: View {
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
         }
-        .utilsButtonStyle(.clear)
     }
 }
 
@@ -59,26 +59,28 @@ enum ButtonUtilsStyle {
     case clear
 }
 
-extension Button {
-    @ViewBuilder
-    func utilsButtonStyle(_ style: ButtonUtilsStyle) -> some View {
-        switch style {
-        case .default:
-            self.buttonStyle(DefaultButtonStyle())
-        case .danger:
-            self.buttonStyle(DangerButtonUtilsStyle())
-        case .warning:
-            self.buttonStyle(WarningButtonUtilsStyle())
-        case .gray:
-            self.buttonStyle(GrayButtonUtilsStyle())
-        case .green:
-            self.buttonStyle(GreenButtonUtilsStyle())
-        case .blue:
-            self.buttonStyle(BlueButtonUtilsStyle())
-        case .clear:
-            self.buttonStyle(ClearButtonUtilsStyle())
-        }
-    }
+extension ButtonStyle where Self == DangerButtonUtilsStyle {
+    static var dangerUtil: DangerButtonUtilsStyle { .init() }
+}
+
+extension ButtonStyle where Self == WarningButtonUtilsStyle {
+    static var warningUtil: WarningButtonUtilsStyle { .init() }
+}
+
+extension ButtonStyle where Self == GrayButtonUtilsStyle {
+    static var grayUtil: GrayButtonUtilsStyle { .init() }
+}
+
+extension ButtonStyle where Self == GreenButtonUtilsStyle {
+    static var greenUtil: GreenButtonUtilsStyle { .init() }
+}
+
+extension ButtonStyle where Self == BlueButtonUtilsStyle {
+    static var blueUtil: BlueButtonUtilsStyle { .init() }
+}
+
+extension ButtonStyle where Self == ClearButtonUtilsStyle {
+    static var clearUtil: ClearButtonUtilsStyle { .init() }
 }
 
 struct DangerButtonUtilsStyle: ButtonStyle {
