@@ -11,7 +11,7 @@ struct FloatingButtonView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                List(0..<10) { item in
+                List(0..<50) { item in
                     NavigationLink {
                         
                     } label: {
@@ -57,6 +57,7 @@ public struct FloatingButtonUtilsView: View {
                             .background(color)
                             .foregroundColor(.white)
                             .clipShape(Circle())
+                            .shadow(radius: 4, x: 0, y: 4)
                     }
                     .padding()
                 }
