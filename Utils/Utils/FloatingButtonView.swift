@@ -30,38 +30,59 @@ struct FloatingButtonView: View {
     FloatingButtonView()
 }
 
+enum AlignmentFloatingButton {
+    case leading
+    case trailing
+}
+
 public struct FloatingButtonUtilsView: View {
     
     var icon: String = "plus"
     var color: Color = .blue
     var action: () -> Void
+    var alignment: AlignmentFloatingButton = .trailing
     
-    init(color: Color = .blue, icon: String = "plus", action: @escaping () -> Void) {
+    init(
+        alignment: AlignmentFloatingButton = .trailing,
+        color: Color = .blue,
+        icon: String = "plus",
+        action: @escaping () -> Void
+    ) {
         self.color = color
         self.icon = icon
         self.action = action
+        self.alignment = alignment
     }
     
     public var body: some View {
-        ZStack(alignment: .bottomTrailing) {
+        ZStack {
             VStack {
                 Spacer()
                 HStack {
-                    Spacer()
-                    Button {
-                        action()
-                    } label: {
-                        Image(systemName: icon)
-                            .font(.title.weight(.semibold))
-                            .padding()
-                            .background(color)
-                            .foregroundColor(.white)
-                            .clipShape(Circle())
-                            .shadow(radius: 4, x: 0, y: 4)
+                    if alignment == .trailing {
+                        Spacer()
+                        floatingButton
+                    } else {
+                        floatingButton
+                        Spacer()
                     }
-                    .padding()
                 }
             }
         }
+    }
+    
+    private var floatingButton: some View {
+        Button {
+            action()
+        } label: {
+            Image(systemName: icon)
+                .font(.title.weight(.semibold))
+                .padding()
+                .background(color)
+                .foregroundColor(.white)
+                .clipShape(Circle())
+                .shadow(radius: 4, x: 0, y: 4)
+        }
+        .padding()
     }
 }
