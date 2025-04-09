@@ -19,6 +19,10 @@ struct TextFieldUtils: View {
             UtilTextField("password", inputText: $password, isSecure: true, header: {
                 Text("Password")
             })
+            
+            UtilTextField(inputText: $text) {
+                Text("header")
+            }
         }
     }
 }
@@ -27,7 +31,7 @@ struct TextFieldUtils: View {
     TextFieldUtils()
 }
 
-public struct UtilTextField<Label: View>: View {
+public struct UtilTextField<Header: View>: View {
     var placeholder: String = ""
     @Binding var inputText: String
     var font: Font = .title
@@ -38,7 +42,7 @@ public struct UtilTextField<Label: View>: View {
     var cornerRadius: CGFloat = 20
     var shadowColor: Color = .gray
     var isSecure: Bool = false
-    var header: () -> Label
+    var header: (() -> Header)? = nil
     
     init(
         _ placeholder: String = "",
@@ -51,7 +55,7 @@ public struct UtilTextField<Label: View>: View {
         cornerRadius: CGFloat = 20,
         shadowColor: Color = .gray,
         isSecure: Bool = false,
-        @ViewBuilder header: @escaping () -> Label
+        header: (() -> Header)? = nil
     ) {
         self.placeholder = placeholder
         self._inputText = inputText
@@ -73,7 +77,9 @@ public struct UtilTextField<Label: View>: View {
                 Image(systemName: iconPlaceholder)
                 if isSecure {
                     VStack(alignment: .leading) {
-                        header()
+                        if let header = header {
+                            header()
+                        }
                         VStack {
                             SecureField(placeholder, text: $inputText)
                         }
@@ -82,7 +88,9 @@ public struct UtilTextField<Label: View>: View {
                     }
                 } else {
                     VStack(alignment: .leading) {
-                        header()
+                        if let header = header {
+                            header()
+                        }
                         VStack {
                             TextField(placeholder, text: $inputText)
                         }
@@ -94,9 +102,34 @@ public struct UtilTextField<Label: View>: View {
             .font(font)
             .textFieldStyle(.plain)
         }
-        
     }
-    
+}
+
+extension UtilTextField where Header == EmptyView {
+    init(
+        _ placeholder: String = "",
+        inputText: Binding<String>,
+        font: Font = .title,
+        iconPlaceholder: String = "",
+        headerText: String = "",
+        shadowRadius: CGFloat = 2,
+        color: Color = Color.gray.opacity(0.1),
+        cornerRadius: CGFloat = 20,
+        shadowColor: Color = .gray,
+        isSecure: Bool = false,
+    ) {
+        self.placeholder = placeholder
+        self._inputText = inputText
+        self.font = font
+        self.iconPlaceholder = iconPlaceholder
+        self.headerText = headerText
+        self.shadowColor = shadowColor
+        self.color = color
+        self.cornerRadius = cornerRadius
+        self.shadowColor = shadowColor
+        self.isSecure = isSecure
+        self.header = nil
+    }
 }
 
 struct CustomModifier: ViewModifier {
