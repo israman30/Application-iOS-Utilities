@@ -12,15 +12,15 @@ struct TextFieldUtils: View {
     @State var password = ""
     var body: some View {
         VStack {
-            UtilTextField("email" ,inputText: $text, header: {
+            TextFieldUtilView("email" ,inputText: $text, header: {
                 Text("Email")
             })
             
-            UtilTextField("password", inputText: $password, isSecure: true, header: {
+            TextFieldUtilView("password", inputText: $password, isSecure: true, header: {
                 Text("Password")
             })
             
-            UtilTextField(inputText: $text) {
+            TextFieldUtilView(inputText: $text) {
                 Text("header")
             }
         }
@@ -31,7 +31,7 @@ struct TextFieldUtils: View {
     TextFieldUtils()
 }
 
-public struct UtilTextField<Header: View>: View {
+public struct TextFieldUtilView<Header: View>: View {
     var placeholder: String = ""
     @Binding var inputText: String
     var font: Font = .title
@@ -105,7 +105,7 @@ public struct UtilTextField<Header: View>: View {
     }
 }
 
-extension UtilTextField where Header == EmptyView {
+extension TextFieldUtilView where Header == EmptyView {
     init(
         _ placeholder: String = "",
         inputText: Binding<String>,
