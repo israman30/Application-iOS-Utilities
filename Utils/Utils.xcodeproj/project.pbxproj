@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D41782A2DA6BBD30085EB5B /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4178292DA6BBD30085EB5B /* ButtonView.swift */; };
 		4D5C09592B40FD9C00882087 /* Utils.docc in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09582B40FD9C00882087 /* Utils.docc */; };
 		4D5C095F2B40FD9C00882087 /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5C09542B40FD9C00882087 /* Utils.framework */; };
 		4D5C09642B40FD9C00882087 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09632B40FD9C00882087 /* UtilsTests.swift */; };
@@ -32,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D4178292DA6BBD30085EB5B /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		4D5C09542B40FD9C00882087 /* Utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5C09572B40FD9C00882087 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		4D5C09582B40FD9C00882087 /* Utils.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Utils.docc; sourceTree = "<group>"; };
@@ -94,6 +96,7 @@
 				4D5C09742B41038800882087 /* GridView.swift */,
 				4DED9B462DA0F14700FA50EF /* SquareGridView.swift */,
 				4D5C09762B4B806700882087 /* TextFieldUtils.swift */,
+				4D4178292DA6BBD30085EB5B /* ButtonView.swift */,
 				4DC408982DA4CF7C00821276 /* FormView.swift */,
 				4D7826852B67389E0034AC4D /* ToastView.swift */,
 				4D5C09582B40FD9C00882087 /* Utils.docc */,
@@ -220,6 +223,7 @@
 			files = (
 				4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */,
 				4DED9B472DA0F14700FA50EF /* SquareGridView.swift in Sources */,
+				4D41782A2DA6BBD30085EB5B /* ButtonView.swift in Sources */,
 				4D7826862B67389E0034AC4D /* ToastView.swift in Sources */,
 				4D5C09772B4B806700882087 /* TextFieldUtils.swift in Sources */,
 				4D5C09592B40FD9C00882087 /* Utils.docc in Sources */,
