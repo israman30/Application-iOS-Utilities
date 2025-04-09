@@ -9,7 +9,18 @@ import SwiftUI
 
 struct FloatingButtonView: View {
     var body: some View {
-        FloatingButtonUtilsView()
+        NavigationView {
+            ZStack {
+                List(0..<10) { item in
+                    NavigationLink {
+                        
+                    } label: {
+                        Text("Item \((item + 1))")
+                    }
+                }
+                FloatingButtonUtilsView()
+            }
+        }
     }
 }
 
@@ -18,6 +29,7 @@ struct FloatingButtonView: View {
 }
 
 public struct FloatingButtonUtilsView: View {
+    let color: Color = .blue
     public var body: some View {
         ZStack(alignment: .bottomTrailing) {
             VStack {
@@ -30,7 +42,7 @@ public struct FloatingButtonUtilsView: View {
                         Image(systemName: "plus")
                             .font(.title.weight(.semibold))
                             .padding()
-                            .background(Color.pink)
+                            .background(color)
                             .foregroundColor(.white)
                             .clipShape(Circle())
                     }
