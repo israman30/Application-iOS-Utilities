@@ -9,9 +9,13 @@ import SwiftUI
 
 struct FormView: View {
     var body: some View {
-        FormViewUtil(header: "Header", content: {
-            Text("Body text")
-        }, footer: "Footer")
+        FormViewUtil {
+            Text("Body Form")
+        } header: {
+            Text("header")
+        } footer: {
+            Text("Footer")
+        }
     }
 }
 
@@ -19,14 +23,15 @@ struct FormView: View {
     FormView()
 }
 
-public struct FormViewUtil<Content: View>: View {
-    var header: String = ""
-    var content: () -> Content
-    var footer: String = ""
+public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
+    let content: () -> Content
+    var header: (() -> Header)? = nil
+    var footer: (() -> Footer)? = nil
     
-    init(header: String = "",
+    init(
         @ViewBuilder content: @escaping () -> Content,
-        footer: String = ""
+        header: (() -> Header)? = nil,
+        footer: (() -> Footer)? = nil
     ) {
         self.content = content
         self.header = header
@@ -39,12 +44,39 @@ public struct FormViewUtil<Content: View>: View {
                 Section {
                     content()
                 } header: {
-                    Text(header)
+                    if let header = header {
+                        header()
+                    }
                 } footer: {
-                    Text(footer)
+                    if let footer = footer {
+                        footer()
+                    }
                 }
             }
         }
     }
 }
 
+extension FormViewUtil where Header == EmptyView {
+    init(@ViewBuilder content: @escaping () -> Content, footer: @escaping () -> Footer) {
+        self.content = content
+        self.header = nil
+        self.footer = footer
+    }
+}
+
+extension FormViewUtil where Footer == EmptyView {
+    init(@ViewBuilder content: @escaping () -> Content, header: @escaping () -> Header) {
+        self.content = content
+        self.header = header
+        self.footer = nil
+    }
+}
+
+extension FormViewUtil where Header == EmptyView, Footer == EmptyView {
+    init (@ViewBuilder content: @escaping () -> Content) {
+        self.content = content
+        self.header = nil
+        self.footer = nil
+    }
+}
