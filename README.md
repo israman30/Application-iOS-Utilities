@@ -4,3 +4,5 @@
 
 > [!NOTE] 
 > For now only supports ```SwiftUI```
+
+&copy; 2025 Israel Manzo. All rights reserved.
