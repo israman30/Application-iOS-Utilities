@@ -9,12 +9,9 @@ import SwiftUI
 
 struct FormView: View {
     var body: some View {
-        FormViewUtil {
+        FormViewUtil(header: "Header", content: {
             Text("Body text")
-        } header: {
-            Text("Header")
-        }
-
+        }, footer: "Footer")
     }
 }
 
@@ -22,14 +19,18 @@ struct FormView: View {
     FormView()
 }
 
-public struct FormViewUtil<Content: View, Header: View>: View {
-    
+public struct FormViewUtil<Content: View>: View {
+    var header: String = ""
     var content: () -> Content
-    var header: () -> Header
+    var footer: String = ""
     
-    init(@ViewBuilder content: @escaping () -> Content, @ViewBuilder header: @escaping () -> Header) {
+    init(header: String = "",
+        @ViewBuilder content: @escaping () -> Content,
+        footer: String = ""
+    ) {
         self.content = content
         self.header = header
+        self.footer = footer
     }
     
     public var body: some View {
@@ -38,9 +39,12 @@ public struct FormViewUtil<Content: View, Header: View>: View {
                 Section {
                     content()
                 } header: {
-                    Text("Header")
+                    Text(header)
+                } footer: {
+                    Text(footer)
                 }
             }
         }
     }
 }
+
