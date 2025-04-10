@@ -8,10 +8,20 @@
 import SwiftUI
 
 struct SliderControlView: View {
-    @State var value = 50
+    @State var value: Double = 50
     var body: some View {
-        VStack {}
-
+        VStack {
+            Text("\(value)")
+            SliderControlViewUtils(
+                value: $value,
+                min: 0,
+                max: 100,
+                minIcon: "plus.circle.fill",
+                maxIcon: "minus.circle.fill"
+            ) { _ in
+                
+            }
+        }
     }
 }
 
@@ -22,52 +32,64 @@ struct SliderControlView: View {
 
 public struct SliderControlViewUtils: View {
     
+    var label: String? = nil
     @Binding var value: Double
     var min: Double = 0
     var max: Double = 100
-    var label: String? = nil
-    var minimumValueLabel: String? = nil
-    var maximumValueLabel: String? = nil
-    var step: Double = 1
-    var didChange: (Bool) -> Void
+    var minIcon: String? = nil
+    var maxIcon: String? = nil
+    
+    let minTapAction: (() -> Void)? = nil
+    let maxTapAction: (() -> Void)? = nil
+    let onUpdate: (() -> Void)? = nil
+    var onEditingChanged: ((Bool) -> Void)? = nil
     
     init(
         value: Binding<Double>,
         min: Double,
         max: Double,
-        label: String? = nil,
+        minIcon: String? = nil,
+        maxIcon: String? = nil,
         minimumValueLabel: String? = nil,
         maximumValueLabel: String? = nil,
-        step: Double,
-        didChange: @escaping (Bool) -> Void
+        onEditingChanged: ((Bool) -> Void)? = nil
     ) {
         self._value = value
         self.min = min
         self.max = max
-        self.label = label
-        self.minimumValueLabel = minimumValueLabel
-        self.maximumValueLabel = maximumValueLabel
-        self.step = step
-        self.didChange = didChange
+        self.minIcon = minIcon
+        self.maxIcon = maxIcon
+        self.onEditingChanged = onEditingChanged
     }
     
     public var body: some View {
         HStack {
-            Slider(value: $value, in: min...max, step: step) { didChange in
-               
+            if let minIcon {
+                Image(systemName: minIcon)
             }
-            Slider(value: $value, in: min...max) {
-                if let label {
-                    Text(label)
+            if let onEditingChanged {
+                Slider(
+                    value: Binding<Double>(
+                        get: {
+                            value
+                        },
+                        set: { newValue in
+                            let setValue = Swift.max(Swift.min(newValue, max), min)
+                            value = setValue
+                            onUpdate?()
+                        }
+                    ),
+                    in: min...max,
+                    step: 1,
+                    onEditingChanged: onEditingChanged
+                ) {
+                    if let label {
+                        Text(label)
+                    }
                 }
-            } minimumValueLabel: {
-                if let minimumValueLabel {
-                    Text(minimumValueLabel)
-                }
-            } maximumValueLabel: {
-                if let maximumValueLabel {
-                    Text(maximumValueLabel)
-                }
+            }
+            if let maxIcon {
+                Image(systemName: maxIcon)
             }
         }
     }
