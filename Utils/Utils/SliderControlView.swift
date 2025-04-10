@@ -66,6 +66,9 @@ public struct SliderControlViewUtils: View {
         HStack {
             if let minIcon {
                 Image(systemName: minIcon)
+                    .onTapGesture {
+                        minTapAction?()
+                    }
             }
             if let onEditingChanged {
                 Slider(
@@ -90,6 +93,9 @@ public struct SliderControlViewUtils: View {
             }
             if let maxIcon {
                 Image(systemName: maxIcon)
+                    .onTapGesture {
+                        maxTapAction?()
+                    }
             }
         }
     }
