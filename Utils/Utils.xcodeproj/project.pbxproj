@@ -11,6 +11,7 @@
 		4D41782C2DA6DE610085EB5B /* FloatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */; };
 		4D41782E2DA708710085EB5B /* SliderControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D41782D2DA708710085EB5B /* SliderControlView.swift */; };
 		4D537BDA2DA83F0F00D34B0C /* ToggleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D537BD92DA83F0F00D34B0C /* ToggleView.swift */; };
+		4D537BDC2DA85DF900D34B0C /* PickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D537BDB2DA85DF900D34B0C /* PickerView.swift */; };
 		4D5C09592B40FD9C00882087 /* Utils.docc in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09582B40FD9C00882087 /* Utils.docc */; };
 		4D5C095F2B40FD9C00882087 /* Utils.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D5C09542B40FD9C00882087 /* Utils.framework */; };
 		4D5C09642B40FD9C00882087 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09632B40FD9C00882087 /* UtilsTests.swift */; };
@@ -40,6 +41,7 @@
 		4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonView.swift; sourceTree = "<group>"; };
 		4D41782D2DA708710085EB5B /* SliderControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderControlView.swift; sourceTree = "<group>"; };
 		4D537BD92DA83F0F00D34B0C /* ToggleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToggleView.swift; sourceTree = "<group>"; };
+		4D537BDB2DA85DF900D34B0C /* PickerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PickerView.swift; sourceTree = "<group>"; };
 		4D5C09542B40FD9C00882087 /* Utils.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Utils.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		4D5C09572B40FD9C00882087 /* Utils.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Utils.h; sourceTree = "<group>"; };
 		4D5C09582B40FD9C00882087 /* Utils.docc */ = {isa = PBXFileReference; lastKnownFileType = folder.documentationcatalog; path = Utils.docc; sourceTree = "<group>"; };
@@ -105,6 +107,7 @@
 				4D4178292DA6BBD30085EB5B /* ButtonView.swift */,
 				4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */,
 				4D41782D2DA708710085EB5B /* SliderControlView.swift */,
+				4D537BDB2DA85DF900D34B0C /* PickerView.swift */,
 				4D537BD92DA83F0F00D34B0C /* ToggleView.swift */,
 				4DC408982DA4CF7C00821276 /* FormView.swift */,
 				4D7826852B67389E0034AC4D /* ToastView.swift */,
@@ -242,6 +245,7 @@
 				4DC408992DA4CF7C00821276 /* FormView.swift in Sources */,
 				4D5C09752B41038800882087 /* GridView.swift in Sources */,
 				4D5C09712B41012200882087 /* RatingHeartsView.swift in Sources */,
+				4D537BDC2DA85DF900D34B0C /* PickerView.swift in Sources */,
 				4D537BDA2DA83F0F00D34B0C /* ToggleView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
