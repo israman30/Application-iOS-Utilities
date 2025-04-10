@@ -19,12 +19,13 @@ struct SliderControlView: View {
                 minIcon: "minus.circle.fill",
                 maxIcon: "plus.circle.fill"
             ) { _ in
-                
+                // update
             } minTapAction: {
                 value -= 1
             } maxTapAction: {
                 value += 1
             }
+            .padding()
         }
     }
 }
