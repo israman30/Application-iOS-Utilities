@@ -16,10 +16,14 @@ struct SliderControlView: View {
                 value: $value,
                 min: 0,
                 max: 100,
-                minIcon: "plus.circle.fill",
-                maxIcon: "minus.circle.fill"
+                minIcon: "minus.circle.fill",
+                maxIcon: "plus.circle.fill"
             ) { _ in
                 
+            } minTapAction: {
+                value -= 1
+            } maxTapAction: {
+                value += 1
             }
         }
     }
@@ -39,10 +43,10 @@ public struct SliderControlViewUtils: View {
     var minIcon: String? = nil
     var maxIcon: String? = nil
     
-    let minTapAction: (() -> Void)? = nil
-    let maxTapAction: (() -> Void)? = nil
     let onUpdate: (() -> Void)? = nil
     var onEditingChanged: ((Bool) -> Void)? = nil
+    var minTapAction: (() -> Void)? = nil
+    var maxTapAction: (() -> Void)? = nil
     
     init(
         value: Binding<Double>,
@@ -52,7 +56,9 @@ public struct SliderControlViewUtils: View {
         maxIcon: String? = nil,
         minimumValueLabel: String? = nil,
         maximumValueLabel: String? = nil,
-        onEditingChanged: ((Bool) -> Void)? = nil
+        onEditingChanged: ((Bool) -> Void)? = nil,
+        minTapAction: (() -> Void)? = nil,
+        maxTapAction: (() -> Void)? = nil
     ) {
         self._value = value
         self.min = min
@@ -60,12 +66,16 @@ public struct SliderControlViewUtils: View {
         self.minIcon = minIcon
         self.maxIcon = maxIcon
         self.onEditingChanged = onEditingChanged
+        self.minTapAction = minTapAction
+        self.maxTapAction = maxTapAction
     }
     
     public var body: some View {
         HStack {
             if let minIcon {
                 Image(systemName: minIcon)
+                    .resizable()
+                    .frame(width: 30, height: 30)
                     .onTapGesture {
                         minTapAction?()
                     }
@@ -93,6 +103,8 @@ public struct SliderControlViewUtils: View {
             }
             if let maxIcon {
                 Image(systemName: maxIcon)
+                    .resizable()
+                    .frame(width: 30, height: 30)
                     .onTapGesture {
                         maxTapAction?()
                     }
