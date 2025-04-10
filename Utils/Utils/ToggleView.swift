@@ -20,10 +20,17 @@ struct ToggleView: View {
 }
 
 public struct ToggleViewUtils: View {
-    var titleKey: LocalizedStringKey
+    var titleKey: LocalizedStringKey = ""
     @Binding var isOn: Bool
+    var tintColor: Color? = .blue
+    var backgroundColor: Color? = Color.gray.opacity(0.2)
+    var cornerRadius: CGFloat = 5
     
     public var body: some View {
         Toggle(titleKey, isOn: $isOn)
+            .padding()
+            .tint(tintColor)
+            .background(backgroundColor)
+            .cornerRadius(cornerRadius)
     }
 }
