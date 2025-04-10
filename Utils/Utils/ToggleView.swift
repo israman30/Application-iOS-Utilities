@@ -8,8 +8,10 @@
 import SwiftUI
 
 struct ToggleView: View {
+    @State var isOn = false
     var body: some View {
-        Text("Hello, World!")
+        ToggleViewUtils(titleKey: "title", isOn: $isOn)
+            .padding()
     }
 }
 
