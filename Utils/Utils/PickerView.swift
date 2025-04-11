@@ -10,12 +10,20 @@ import SwiftUI
 struct PickerView: View {
     @State var selection: String = ""
     let options = ["Car", "Plane", "Boat", "Train"]
+    @State var date = Date.now
     var body: some View {
         VStack {
             PickerViewUtils(titleKey: "Select a transport", selection: $selection, opions: options) {
                 // update
             }
             .pickerStyle(.wheel)
+            
+            DatePickerViewUtils(
+                date: $date,
+                labelKey: "Select a date",
+                label: "this is a custom label",
+                alignment: .center
+            )
         }
     }
 }
@@ -40,6 +48,22 @@ public struct PickerViewUtils<T: Hashable>: View {
         }
         .onChange(of: selection) { oldValue, newValue in
             onUpdate?()
+        }
+    }
+}
+
+public struct DatePickerViewUtils: View {
+    @Binding var date: Date
+    var labelKey: String = ""
+    var label: String = ""
+    var alignment: HorizontalAlignment = .leading
+    
+    public var body: some View {
+        VStack(alignment: alignment) {
+            DatePicker(labelKey, selection: $date)
+            Text(
+                "\(String(describing: label)) \(date.formatted(date: .long, time: .omitted))"
+            )
         }
     }
 }
