@@ -64,6 +64,7 @@ public struct DatePickerViewUtils: View {
             Text(
                 "\(String(describing: label)) \(date.formatted(date: .long, time: .omitted))"
             )
+            .font(.body)
         }
     }
 }
