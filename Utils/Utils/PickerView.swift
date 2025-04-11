@@ -15,8 +15,8 @@ struct PickerView: View {
             PickerViewUtils(titleKey: "Select a transport", selection: $selection, opions: options) {
                 // update
             }
+            .pickerStyle(.wheel)
         }
-        
     }
 }
 
