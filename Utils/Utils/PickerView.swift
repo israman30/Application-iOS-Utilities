@@ -19,8 +19,8 @@ struct PickerView: View {
             .pickerStyle(.wheel)
             
             DatePickerViewUtils(
-                date: $date,
                 labelKey: "Select a date",
+                date: $date,
                 label: "this is a custom label",
                 alignment: .center
             )
@@ -53,8 +53,8 @@ public struct PickerViewUtils<T: Hashable>: View {
 }
 
 public struct DatePickerViewUtils: View {
-    @Binding var date: Date
     var labelKey: String = ""
+    @Binding var date: Date
     var label: String = ""
     var alignment: HorizontalAlignment = .leading
     
