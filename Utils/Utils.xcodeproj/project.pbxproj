@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D3ECD0E2E1A0F910047604D /* AccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3ECD0D2E1A0F910047604D /* AccessibilityView.swift */; };
 		4D41782A2DA6BBD30085EB5B /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4178292DA6BBD30085EB5B /* ButtonView.swift */; };
 		4D41782C2DA6DE610085EB5B /* FloatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */; };
 		4D41782E2DA708710085EB5B /* SliderControlView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D41782D2DA708710085EB5B /* SliderControlView.swift */; };
@@ -38,6 +39,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D3ECD0D2E1A0F910047604D /* AccessibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityView.swift; sourceTree = "<group>"; };
 		4D4178292DA6BBD30085EB5B /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonView.swift; sourceTree = "<group>"; };
 		4D41782D2DA708710085EB5B /* SliderControlView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SliderControlView.swift; sourceTree = "<group>"; };
@@ -112,6 +114,7 @@
 				4D537BDD2DA94EE900D34B0C /* StepperView.swift */,
 				4D537BDB2DA85DF900D34B0C /* PickerView.swift */,
 				4D537BD92DA83F0F00D34B0C /* ToggleView.swift */,
+				4D3ECD0D2E1A0F910047604D /* AccessibilityView.swift */,
 				4DC408982DA4CF7C00821276 /* FormView.swift */,
 				4D7826852B67389E0034AC4D /* ToastView.swift */,
 				4D5C09582B40FD9C00882087 /* Utils.docc */,
@@ -241,6 +244,7 @@
 				4DED9B472DA0F14700FA50EF /* SquareGridView.swift in Sources */,
 				4D41782A2DA6BBD30085EB5B /* ButtonView.swift in Sources */,
 				4D7826862B67389E0034AC4D /* ToastView.swift in Sources */,
+				4D3ECD0E2E1A0F910047604D /* AccessibilityView.swift in Sources */,
 				4D41782C2DA6DE610085EB5B /* FloatingButtonView.swift in Sources */,
 				4D41782E2DA708710085EB5B /* SliderControlView.swift in Sources */,
 				4D5C09772B4B806700882087 /* TextFieldUtils.swift in Sources */,
