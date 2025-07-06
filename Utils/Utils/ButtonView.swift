@@ -21,17 +21,17 @@ struct ButtonView: View {
             Button("Success") {
                 // action
             }
-            .utilButtonStyle(.primary)
+            .utilButtonType(.primary)
             
             Button("Secondary") {
                 // action
             }
-            .utilButtonStyle(.secondary)
+            .utilButtonType(.secondary)
             
             Button("Destructive") {
                 // action
             }
-            .utilButtonStyle(.destructive)
+            .utilButtonType(.destructive)
         }
     }
 }
@@ -246,7 +246,7 @@ public struct SystemButtonModifier: ViewModifier {
 }
 
 extension View {
-    func utilButtonStyle(_ type: ButtonStyleType) -> some View {
+    func utilButtonType(_ type: ButtonStyleType) -> some View {
         modifier(SystemButtonModifier(type: type))
     }
 }
