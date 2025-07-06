@@ -277,13 +277,66 @@ HeartLikeView(isLiked: $isLiked)
 
 ### AccessibilityView
 
-Accessibility-focused view components.
+Accessibility-focused view components with advanced accessibility options.
 
 ```swift
+// Basic accessibility usage
 AccessibilityView {
     Text("Accessible content")
 }
 .accessibilityLabel("Important information")
+
+// Advanced accessibility with options modifier
+Text("Main Heading")
+    .font(.largeTitle)
+    .accessibility(options: [
+        .traits([.isHeader]),
+        .heading(level: .h1)
+    ])
+
+// Slider with comprehensive accessibility
+Slider(value: $sliderValue)
+    .accessibility(options: [
+        .labels("Volume Control"),
+        .value("\(sliderValue)"),
+        .hint("Drag to adjust volume level"),
+        .behaviour(children: .ignore)
+    ])
+
+// Container with combined accessibility behavior
+VStack {
+    Text("Item 1")
+    Text("Item 2")
+    Text("Item 3")
+}
+.accessibility(options: [.behaviour(children: .combine)])
+```
+
+**Available Accessibility Options:**
+
+- **`.traits([AccessibilityTraits])`** - Add accessibility traits like `.isHeader`, `.isButton`, `.isLink`
+- **`.labels(String)`** - Set accessibility label for screen readers
+- **`.value(String)`** - Set accessibility value (useful for sliders, progress bars)
+- **`.hint(String)`** - Provide helpful hints for screen reader users
+- **`.accessibilityHidden`** - Hide element from accessibility services
+- **`.behaviour(children: AccessibilityChildBehavior)`** - Control how child elements are handled
+  - `.combine` - Combine all children into single accessibility element
+  - `.ignore` - Ignore child elements in accessibility
+  - `.contain` - Contain child elements (default behavior)
+- **`.heading(level: AccessibilityHeadingLevel)`** - Set heading level for navigation
+  - `.h1`, `.h2`, `.h3`, `.h4`, `.h5`, `.h6`
+
+**Example with Multiple Options:**
+```swift
+Button("Submit Form") {
+    // action
+}
+.accessibility(options: [
+    .traits([.isButton]),
+    .labels("Submit Application Form"),
+    .hint("Double tap to submit your application"),
+    .behaviour(children: .ignore)
+])
 ```
 
 ## 🎨 Customization
