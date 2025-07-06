@@ -52,6 +52,8 @@ class SomeModel: ObservableObject {
         }
     }
 }
+
+// MARK: - Usage View
 struct GridTextView: View {
     @StateObject var model = SomeModel()
     var body: some View {
