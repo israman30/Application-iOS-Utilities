@@ -7,9 +7,29 @@
 
 import SwiftUI
 
+// MARK: - Usage View
 struct AccessibilityView: View {
+    @State var value = 0.1
+    
     var body: some View {
-        Text("Hello, World!")
+        Text("Accessibility View")
+            .font(.largeTitle)
+            .accessibility(options: [
+                .traits([.isHeader]),
+                .heading(level: .h1)
+            ])
+        
+        VStack {
+            Slider(value: $value)
+                .accessibility(options: [
+                    .labels("Value Slider"),
+                    .value("\(value)"),
+                    .hint("Drag to change value"),
+                    .behaviour(children: .ignore)
+                ])
+            Text("\(Int(value))")
+        }
+        .accessibility(options: [.behaviour(children: .combine)])
     }
 }
 
