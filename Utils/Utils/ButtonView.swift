@@ -8,12 +8,31 @@
 import SwiftUI
 
 struct ButtonView: View {
+    @State var isTapped: Bool = true
+    
     var body: some View {
-        ButtonViewUtils(label: "Tap here", icon: "xmark.circle") {
-            // action
+        VStack {
+            ButtonViewUtils(label: "Tap here", icon: "xmark.circle") {
+                // action
+            }
+            .padding()
+            .buttonStyle(.dangerUtil)
+            
+            Button("Success") {
+                // action
+            }
+            .utilButtonStyle(.primary)
+            
+            Button("Secondary") {
+                // action
+            }
+            .utilButtonStyle(.secondary)
+            
+            Button("Destructive") {
+                // action
+            }
+            .utilButtonStyle(.destructive)
         }
-        .padding()
-        .buttonStyle(.dangerUtil)
     }
 }
 
@@ -190,5 +209,44 @@ struct ClearButtonUtilsStyle: ButtonStyle {
                             .fill(Color.clear.opacity(0.2))
                     }
             }
+    }
+}
+
+// MARK: - Button Style 2
+enum ButtonStyleType {
+    case primary
+    case secondary
+    case destructive
+}
+
+public struct SystemButtonModifier: ViewModifier {
+    let type: ButtonStyleType
+    
+    public func body(content: Content) -> some View {
+        let backgroundColor: Color
+        let foregroundColor: Color
+        
+        switch type {
+        case .primary:
+            backgroundColor = .blue
+            foregroundColor = .white
+        case .secondary:
+            backgroundColor = .gray.opacity(0.2)
+            foregroundColor = .black
+        case .destructive:
+            backgroundColor = .red
+            foregroundColor = .white
+        }
+        return content
+            .padding()
+            .background(backgroundColor)
+            .foregroundStyle(foregroundColor)
+            .presentationCornerRadius(8)
+    }
+}
+
+extension View {
+    func utilButtonStyle(_ type: ButtonStyleType) -> some View {
+        modifier(SystemButtonModifier(type: type))
     }
 }
