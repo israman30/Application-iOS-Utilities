@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D15171F2E7662370064DC31 /* TooltipView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D15171E2E7662370064DC31 /* TooltipView.swift */; };
 		4D3ECD0E2E1A0F910047604D /* AccessibilityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D3ECD0D2E1A0F910047604D /* AccessibilityView.swift */; };
 		4D41782A2DA6BBD30085EB5B /* ButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D4178292DA6BBD30085EB5B /* ButtonView.swift */; };
 		4D41782C2DA6DE610085EB5B /* FloatingButtonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */; };
@@ -39,6 +40,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		4D15171E2E7662370064DC31 /* TooltipView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TooltipView.swift; sourceTree = "<group>"; };
 		4D3ECD0D2E1A0F910047604D /* AccessibilityView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessibilityView.swift; sourceTree = "<group>"; };
 		4D4178292DA6BBD30085EB5B /* ButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ButtonView.swift; sourceTree = "<group>"; };
 		4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FloatingButtonView.swift; sourceTree = "<group>"; };
@@ -110,6 +112,7 @@
 				4D5C09762B4B806700882087 /* TextFieldUtils.swift */,
 				4D4178292DA6BBD30085EB5B /* ButtonView.swift */,
 				4D41782B2DA6DE610085EB5B /* FloatingButtonView.swift */,
+				4D15171E2E7662370064DC31 /* TooltipView.swift */,
 				4D41782D2DA708710085EB5B /* SliderControlView.swift */,
 				4D537BDD2DA94EE900D34B0C /* StepperView.swift */,
 				4D537BDB2DA85DF900D34B0C /* PickerView.swift */,
@@ -251,6 +254,7 @@
 				4D5C09592B40FD9C00882087 /* Utils.docc in Sources */,
 				4D5C09732B4101A600882087 /* HeartLikeView.swift in Sources */,
 				4DC408992DA4CF7C00821276 /* FormView.swift in Sources */,
+				4D15171F2E7662370064DC31 /* TooltipView.swift in Sources */,
 				4D5C09752B41038800882087 /* GridView.swift in Sources */,
 				4D5C09712B41012200882087 /* RatingHeartsView.swift in Sources */,
 				4D537BDC2DA85DF900D34B0C /* PickerView.swift in Sources */,
