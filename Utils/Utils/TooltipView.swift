@@ -8,8 +8,25 @@
 import SwiftUI
 
 struct TooltipView: View {
+    var list: [TooltipModel] = [
+        TooltipModel(title: "Hello World")
+    ]
+    
+    var list2: [TooltipModel] = [
+        TooltipModel(icon: "heart.fill", title: "31")
+    ]
+    
+    var list3: [TooltipModel] = [
+        TooltipModel(icon: "bubble.fill", title: "31")
+    ]
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(spacing: 50) {
+            Tooltip(items: list, type: .bottom)
+            Tooltip(items: list2, type: .top)
+            Tooltip(items: list3, type: .left)
+            Tooltip(items: list, type: .right)
+        }
     }
 }
 
@@ -40,7 +57,7 @@ struct Triangle: Shape {
     }
 }
 
-struct TooltipModel {
+public struct TooltipModel {
     let id = UUID().uuidString
     var icon: String? = nil
     let title: String
