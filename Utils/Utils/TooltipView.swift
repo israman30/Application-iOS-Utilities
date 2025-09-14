@@ -39,3 +39,13 @@ struct Triangle: Shape {
         return path
     }
 }
+
+struct TooltipModel {
+    let id = UUID().uuidString
+    var icon: String? = nil
+    let title: String
+}
+
+enum TooltipDirection {
+    case top, left, right, bottom
+}
