@@ -11,18 +11,18 @@ struct TooltipView: View {
     
     var body: some View {
         VStack(spacing: 50) {
-            ActivityItem("Label")
+            ActivityItemUtils("Label")
             
-            ActivityItem("Label 2") {
+            ActivityItemUtils("Label 2") {
                 Image(systemName: "heart.fill")
             }
             
-            ActivityItem("12", type: .left) {
+            ActivityItemUtils("12", type: .left) {
                 Image(systemName: "bubble.fill")
             }
             
             HStack {
-                ActivityItem("12", type: .right) {
+                ActivityItemUtils("12", type: .right) {
                     Image(systemName: "bubble.fill")
                 }
                 Text("Some text here")
@@ -67,7 +67,7 @@ enum TooltipDirection {
     case top, left, right, bottom
 }
 
-public struct ActivityItem<Icon: View>: View {
+public struct ActivityItemUtils<Icon: View>: View {
     var title: String
     var type: TooltipDirection = .bottom
     var icon: Icon
@@ -138,21 +138,6 @@ public struct ActivityItem<Icon: View>: View {
             .fill(Color.red.opacity(0.5))
             .frame(width: 20, height: 10)
     }
-    
-    private func ActivityItem(title: String, icon: String? = nil) -> some View {
-        HStack(spacing: 2) {
-            if let icon = icon {
-                Image(systemName: icon)
-                    .resizable()
-                    .foregroundStyle(.white)
-                    .frame(width: 16, height: 16)
-            }
-            
-            Text(title)
-                .font(.system(size: 14, weight: .semibold))
-                .lineLimit(1)
-                .foregroundStyle(.white)
-        }
-    }
+
 }
 
