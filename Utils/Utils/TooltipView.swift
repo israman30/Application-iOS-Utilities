@@ -26,6 +26,7 @@ struct TooltipView: View {
             Tooltip(items: list2, type: .top)
             Tooltip(items: list3, type: .left)
             Tooltip(items: list, type: .right)
+            ActivityItem("Label")
         }
     }
 }
@@ -66,6 +67,98 @@ public struct TooltipModel {
 enum TooltipDirection {
     case top, left, right, bottom
 }
+
+public struct ActivityItem: View {
+    var title: String
+    var type: TooltipDirection = .bottom
+    var icon: String?
+    
+    init(_ title: String, type: TooltipDirection = .bottom, icon: String? = nil) {
+        self.title = title
+        self.type = type
+        self.icon = icon
+    }
+    
+    public var body: some View {
+        ZStack(alignment: alignment) {
+            HStack {
+                HStack(spacing: 2) {
+                    if let icon = icon {
+                        Image(systemName: icon)
+                            .resizable()
+                            .foregroundStyle(.white)
+                            .frame(width: 16, height: 16)
+                    }
+                    
+                    Text(title)
+                        .font(.system(size: 14, weight: .semibold))
+                        .lineLimit(1)
+                        .foregroundStyle(.white)
+                }
+                .padding(8)
+                .background(Color.red.opacity(0.5))
+                .cornerRadius(8)
+            }
+            
+            switch type {
+            case .top:
+                triangle()
+                    .offset(y: -10)
+            case .left:
+                triangle()
+                    .rotationEffect(.degrees(-90))
+                    .offset(x: -15)
+            case .right:
+                triangle()
+                    .rotationEffect(.degrees(90))
+                    .offset(x: 15)
+            case .bottom:
+                triangle()
+                    .rotationEffect(.degrees(180))
+                    .offset(y: 10)
+            }
+        }
+    }
+    
+    private var alignment: Alignment {
+        switch type {
+        case .top:
+            return .top
+        case .left:
+            return .leading
+        case .right:
+            return .trailing
+        case .bottom:
+            return .bottom
+        }
+    }
+    
+    private func triangle() -> some View {
+        Triangle()
+            .fill(Color.red.opacity(0.5))
+            .frame(width: 20, height: 10)
+    }
+    
+    private func ActivityItem(title: String, icon: String? = nil) -> some View {
+        HStack(spacing: 2) {
+            if let icon = icon {
+                Image(systemName: icon)
+                    .resizable()
+                    .foregroundStyle(.white)
+                    .frame(width: 16, height: 16)
+            }
+            
+            Text(title)
+                .font(.system(size: 14, weight: .semibold))
+                .lineLimit(1)
+                .foregroundStyle(.white)
+        }
+    }
+}
+
+
+
+
 
 public struct Tooltip: View {
     var items: [TooltipModel]
