@@ -20,6 +20,18 @@ struct TooltipView: View {
             ActivityItem("12", type: .left) {
                 Image(systemName: "bubble.fill")
             }
+            
+            HStack {
+                ActivityItem("12", type: .right) {
+                    Image(systemName: "bubble.fill")
+                }
+                Text("Some text here")
+                    .padding()
+                    .foregroundStyle(.white)
+                    .background(.cyan)
+                    .cornerRadius(8)
+            }
+            
         }
     }
 }
