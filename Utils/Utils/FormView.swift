@@ -9,12 +9,20 @@ import SwiftUI
 
 struct FormView: View {
     var body: some View {
-        FormViewUtil {
-            Text("Body Form")
-        } header: {
-            Text("header")
-        } footer: {
-            Text("Footer")
+        VStack {
+            FormViewUtil {
+                Text("Body Form")
+            } header: {
+                Text("header")
+            } footer: {
+                Text("Footer")
+            }
+            
+            FormViewUtil {
+                Text("Some View")
+            } footer: {
+                Text("Some footer")
+            }
         }
     }
 }
