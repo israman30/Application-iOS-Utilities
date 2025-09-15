@@ -31,7 +31,6 @@ struct TooltipView: View {
                     .background(.cyan)
                     .cornerRadius(8)
             }
-            
         }
     }
 }
@@ -49,7 +48,6 @@ struct Triangle: Shape {
         
         path.move(to: bottomLeft)
         path.addLine(to: bottomRight)
-        
         path.addArc(
             center: CGPoint(x: topMiddle.x, y: topMiddle.y),
             radius: 0,
@@ -57,7 +55,6 @@ struct Triangle: Shape {
             endAngle: .degrees(180),
             clockwise: true
         )
-        
         path.addLine(to: bottomLeft)
         return path
     }
