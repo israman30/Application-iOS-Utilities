@@ -1,0 +1,16 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/TooltipView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Some text here",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 28
+        }
+      }
+    ]
+  },
+  "version": 1
+}

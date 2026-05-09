@@ -27,9 +27,13 @@ struct TextFieldUtils: View {
     }
 }
 
-#Preview {
-    TextFieldUtils()
+#if DEBUG
+struct TextFieldUtils_Previews: PreviewProvider {
+    static var previews: some View {
+        TextFieldUtils()
+    }
 }
+#endif
 
 public struct TextFieldViewUtil<Header: View>: View {
     var placeholder: String = ""

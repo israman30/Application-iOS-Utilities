@@ -35,9 +35,13 @@ struct TooltipView: View {
     }
 }
 
-#Preview {
-    TooltipView()
+#if DEBUG
+struct TooltipView_Previews: PreviewProvider {
+    static var previews: some View {
+        TooltipView()
+    }
 }
+#endif
 
 struct Triangle: Shape {
     nonisolated func path(in rect: CGRect) -> Path {

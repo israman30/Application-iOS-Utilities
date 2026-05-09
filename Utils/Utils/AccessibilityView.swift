@@ -33,9 +33,13 @@ struct AccessibilityView: View {
     }
 }
 
-#Preview {
-    AccessibilityView()
+#if DEBUG
+struct AccessibilityView_Previews: PreviewProvider {
+    static var previews: some View {
+        AccessibilityView()
+    }
 }
+#endif
 
 public enum AccessibilityOption {
     case traits([AccessibilityTraits])

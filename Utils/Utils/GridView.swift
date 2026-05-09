@@ -74,6 +74,10 @@ struct GridViewDisplay: View {
     }
 }
 
-#Preview {
-    GridViewDisplay()
+#if DEBUG
+struct GridViewDisplay_Previews: PreviewProvider {
+    static var previews: some View {
+        GridViewDisplay()
+    }
 }
+#endif

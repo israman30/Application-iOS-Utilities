@@ -46,6 +46,10 @@ public struct ToastView: View {
     }
 }
 
-#Preview {
-    ToastView(text: "Toast text", isVisible: .constant(true))
+#if DEBUG
+struct ToastView_Previews: PreviewProvider {
+    static var previews: some View {
+        ToastView(text: "Toast text", isVisible: .constant(true))
+    }
 }
+#endif

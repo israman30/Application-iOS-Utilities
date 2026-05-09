@@ -37,6 +37,11 @@ public struct RatingStarsView: View {
        }
     }
 }
-#Preview {
-    RatingStarsView(rating: 3.5, maxRating: 5)
+
+#if DEBUG
+struct RatingStarsView_Previews: PreviewProvider {
+    static var previews: some View {
+        RatingStarsView(rating: 3.5, maxRating: 5)
+    }
 }
+#endif

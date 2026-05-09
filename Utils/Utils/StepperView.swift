@@ -16,9 +16,13 @@ struct StepperView: View {
     }
 }
 
-#Preview {
-    StepperView()
+#if DEBUG
+struct StepperView_Previews: PreviewProvider {
+    static var previews: some View {
+        StepperView()
+    }
 }
+#endif
 
 public struct StepperViewUtils: View {
     var title: String = ""

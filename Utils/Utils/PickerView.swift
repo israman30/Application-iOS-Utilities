@@ -28,9 +28,13 @@ struct PickerView: View {
     }
 }
 
-#Preview {
-    PickerView()
+#if DEBUG
+struct PickerView_Previews: PreviewProvider {
+    static var previews: some View {
+        PickerView()
+    }
 }
+#endif
 
 public struct PickerViewUtils<T: Hashable>: View {
     var titleKey: String

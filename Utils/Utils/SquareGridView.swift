@@ -58,7 +58,7 @@ struct GridTextView: View {
     @StateObject var model = SomeModel()
     var body: some View {
         SquareGridView(items: model.characters, totalCount: model.totalCount, columns: 3, columnSpacing: 2, rowSpacing: 2) { item in
-                Text("Item: \(item)")
+                Text("Item: " + String(item))
             }
             .onAppear {
                 model.loadMoreCharacters()
@@ -66,6 +66,10 @@ struct GridTextView: View {
     }
 }
 
-#Preview(body: {
-    GridTextView()
-})
+#if DEBUG
+struct GridTextView_Previews: PreviewProvider {
+    static var previews: some View {
+        GridTextView()
+    }
+}
+#endif

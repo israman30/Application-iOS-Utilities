@@ -30,9 +30,13 @@ struct SliderControlView: View {
     }
 }
 
-#Preview {
-    SliderControlView()
+#if DEBUG
+struct SliderControlView_Previews: PreviewProvider {
+    static var previews: some View {
+        SliderControlView()
+    }
 }
+#endif
 
 
 public struct SliderControlViewUtils: View {

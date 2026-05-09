@@ -45,6 +45,10 @@ public struct HeartLikeView: View {
     }
 }
 
-#Preview {
-    HeartLikeView(isLiked: .constant(false))
+#if DEBUG
+struct HeartLikeView_Previews: PreviewProvider {
+    static var previews: some View {
+        HeartLikeView(isLiked: .constant(false))
+    }
 }
+#endif

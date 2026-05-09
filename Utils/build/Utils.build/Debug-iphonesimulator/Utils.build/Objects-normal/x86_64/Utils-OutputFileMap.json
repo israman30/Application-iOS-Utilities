@@ -1,0 +1,169 @@
+{
+  "" : {
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/Utils-primary.dia",
+    "emit-module-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/Utils-primary-emit-module.d",
+    "emit-module-diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/Utils-primary-emit-module.dia",
+    "pch" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/Utils-primary-Bridging-header.pch",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/Utils-primary.swiftdeps"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/AccessibilityView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/AccessibilityView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/ButtonView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ButtonView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/FloatingButtonView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FloatingButtonView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/FormView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/FormView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/GridView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/GridView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/HeartLikeView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/HeartLikeView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/PickerView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/PickerView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/RatingHeartsView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingHeartsView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/RatingStartsView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/RatingStartsView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/SliderControlView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SliderControlView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/SquareGridView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/SquareGridView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/StepperView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/StepperView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/TextFieldUtils.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TextFieldUtils~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/ToastView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToastView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/ToggleView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/ToggleView~partial.swiftmodule"
+  },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/TooltipView.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/build/Utils.build/Debug-iphonesimulator/Utils.build/Objects-normal/x86_64/TooltipView~partial.swiftmodule"
+  }
+}

@@ -26,9 +26,13 @@ struct FloatingButtonView: View {
     }
 }
 
-#Preview {
-    FloatingButtonView()
+#if DEBUG
+struct FloatingButtonView_Previews: PreviewProvider {
+    static var previews: some View {
+        FloatingButtonView()
+    }
 }
+#endif
 
 /// numerate the `alignments` for the floating button
 enum AlignmentFloatingButton {

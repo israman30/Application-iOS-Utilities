@@ -15,9 +15,13 @@ struct ToggleView: View {
     }
 }
 
-#Preview {
-    ToggleView()
+#if DEBUG
+struct ToggleView_Previews: PreviewProvider {
+    static var previews: some View {
+        ToggleView()
+    }
 }
+#endif
 
 public struct ToggleViewUtils: View {
     var titleKey: LocalizedStringKey = ""

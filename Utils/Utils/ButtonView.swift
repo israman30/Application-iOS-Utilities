@@ -36,9 +36,13 @@ struct ButtonView: View {
     }
 }
 
-#Preview {
-    ButtonView()
+#if DEBUG
+struct ButtonView_Previews: PreviewProvider {
+    static var previews: some View {
+        ButtonView()
+    }
 }
+#endif
 
 public struct ButtonViewUtils: View {
     let label: String

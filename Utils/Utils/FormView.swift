@@ -27,9 +27,13 @@ struct FormView: View {
     }
 }
 
-#Preview {
-    FormView()
+#if DEBUG
+struct FormView_Previews: PreviewProvider {
+    static var previews: some View {
+        FormView()
+    }
 }
+#endif
 
 public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
     let content: () -> Content
