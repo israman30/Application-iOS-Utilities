@@ -18,6 +18,19 @@ struct ButtonView: View {
             .padding()
             .buttonStyle(.dangerUtil)
             
+            ButtonViewUtils(action: {
+                // action
+            }) {
+                VStack(spacing: 6) {
+                    Label("Upload", systemImage: "arrow.up.circle.fill")
+                    Text("Tap to start")
+                        .font(.footnote)
+                        .opacity(0.8)
+                }
+            }
+            .padding()
+            .buttonStyle(.blueUtil)
+            
             Button("Success") {
                 // action
             }
@@ -45,29 +58,81 @@ struct ButtonView_Previews: PreviewProvider {
 #endif
 
 public struct ButtonViewUtils: View {
-    let label: String
-    let icon: String?
-    let action: () -> Void
+    private let title: String?
+    private let icon: String?
+    private let action: () -> Void
+    private let customLabel: AnyView?
     
-    init(label: String, icon: String? = nil, action: @escaping() -> Void) {
-        self.label = label
+    /// Creates a util button with an optional default title (shown when no custom label is provided).
+    public init(title: String? = nil, icon: String? = nil, action: @escaping () -> Void) {
+        self.title = title
         self.icon = icon
         self.action = action
+        self.customLabel = nil
+    }
+
+    /// Creates a util button with a fully custom SwiftUI label (Text/Image/VStack/Label/etc.).
+    public init<Content: View>(
+        title: String? = nil,
+        icon: String? = nil,
+        action: @escaping () -> Void,
+        @ViewBuilder label: () -> Content
+    ) {
+        self.title = title
+        self.icon = icon
+        self.action = action
+        self.customLabel = AnyView(label())
+    }
+    
+    /// Backwards-compatible initializer.
+    public init(label: String, icon: String? = nil, action: @escaping () -> Void) {
+        self.init(title: label, icon: icon, action: action)
     }
     
     public var body: some View {
         Button {
             action()
         } label: {
+            labelView
+        }
+        .utilAccessibilityLabel(accessibilityTitle)
+    }
+    
+    private var accessibilityTitle: String? {
+        if let title, !title.isEmpty { return title }
+        return nil
+    }
+    
+    @ViewBuilder
+    private var labelView: some View {
+        if let customLabel {
+            customLabel
+                .font(.title2)
+                .padding(.vertical, 12)
+                .frame(maxWidth: .infinity)
+        } else {
             HStack(spacing: 10) {
                 if let icon = icon {
                     Image(systemName: icon)
                 }
-                Text(label)
+                if let title, !title.isEmpty {
+                    Text(title)
+                }
             }
             .font(.title2)
             .padding(.vertical, 12)
             .frame(maxWidth: .infinity)
+        }
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func utilAccessibilityLabel(_ title: String?) -> some View {
+        if let title, !title.isEmpty {
+            self.accessibilityLabel(title)
+        } else {
+            self
         }
     }
 }
