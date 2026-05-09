@@ -1,37 +1,33 @@
 # Application-iOS-Utilities
 
-A comprehensive SwiftUI utilities framework providing reusable components for iOS applications.
+Reusable SwiftUI utilities (buttons, text fields, toast, grid layouts, ratings, etc.) plus a few reference/demo screens you can copy into your app.
 
-> [!NOTE] 
-> This framework currently supports **SwiftUI** only.
+> [!NOTE]
+> This project currently supports **SwiftUI** only.
 
 ## 📦 Installation
 
-### Using Swift Package Manager in Xcode
+This repository ships an Xcode framework project (`Utils/Utils.xcodeproj`). There is currently **no** `Package.swift`, so Swift Package Manager isn’t available out of the box.
 
-1. Open your Xcode project
-2. Go to **File** → **Add Package Dependencies...**
-3. In the search bar, paste the repository URL:
-   ```
-   https://github.com/yourusername/Application-iOS-Utilities.git
-   ```
-4. Click **Add Package**
-5. Select your target and click **Add Package**
-
-### Manual Installation
+### Option A: Add the `Utils` framework (Xcode subproject)
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/Application-iOS-Utilities.git
+   git clone https://github.com/israman30/Application-iOS-Utilities.git
    ```
-2. Drag the `Utils.xcodeproj` file into your Xcode project
-3. Add the Utils framework to your target's dependencies
+2. In Xcode, drag `Utils/Utils.xcodeproj` into your app project.
+3. Select your app target → **General** → **Frameworks, Libraries, and Embedded Content**.
+4. Add `Utils.framework` and choose the appropriate embed option for your app.
+
+### Option B: Copy the source files (quickest way to use everything)
+
+Copy the Swift files from `Utils/Utils/` into your app target (for example, if you want to tweak styles or avoid framework integration).
+
+> Some types in this repo are marked `public` but currently rely on **internal initializers or internal helper enums**. Copying the source files is the most frictionless way to use all utilities immediately. If you prefer consuming `Utils` as a compiled framework, consider exposing `public init` where needed.
 
 ## 🚀 Getting Started
 
-### Import the Framework
-
-Add the following import statement to your SwiftUI views:
+If you integrated the framework target, import the module:
 
 ```swift
 import Utils
@@ -39,45 +35,33 @@ import Utils
 
 ## 📱 Components
 
-### ButtonViewUtils
-
-Customizable button component with various styles and icons.
+### Buttons (`ButtonViewUtils`, button styles, and system button modifier)
 
 ```swift
-// Basic button with icon
 ButtonViewUtils(label: "Tap here", icon: "xmark.circle") {
-    // Your action here
+    // action
 }
 .buttonStyle(.dangerUtil)
 
-// System button types
-Button("Success") {
-    // action
-}
-.utilButtonType(.primary)
+Button("Primary") { }
+    .utilButtonType(.primary)
 
-Button("Secondary") {
-    // action
-}
-.utilButtonType(.secondary)
+Button("Secondary") { }
+    .utilButtonType(.secondary)
 
-Button("Destructive") {
-    // action
-}
-.utilButtonType(.destructive)
+Button("Destructive") { }
+    .utilButtonType(.destructive)
 ```
 
-**Available Button Styles:**
-- `.dangerUtil` - Red danger style
-- `.warningUtil` - Orange warning style
-- `.grayUtil` - Gray style
-- `.greenUtil` - Green style
-- `.blueUtil` - Blue style
-- `.clearUtil` - Clear style
+**Available `ButtonStyle`s**
+- `.dangerUtil`
+- `.warningUtil`
+- `.grayUtil`
+- `.greenUtil`
+- `.blueUtil`
+- `.clearUtil`
 
-### ToastView
-
-Display temporary notification messages with auto-dismiss functionality.
+### Toast (`ToastView`)
 
 ```swift
 @State private var showToast = false
@@ -90,67 +74,39 @@ ToastView(
 )
 ```
 
-### FloatingButtonUtilsView
-
-Floating action button that can be positioned on screen.
+### Floating Action Button (`FloatingButtonUtilsView`)
 
 ```swift
-FloatingButtonUtilsView(
-    alignment: .trailing,
-    color: .blue,
-    icon: "plus"
-) {
-    // Your action here
+FloatingButtonUtilsView {
+    // action
 }
 ```
 
-**Alignment Options:**
-- `.leading` - Left side of screen
-- `.trailing` - Right side of screen
-
-### TextFieldViewUtil
-
-Enhanced text field with custom styling and optional headers.
+### Text field (`TextFieldViewUtil`)
 
 ```swift
 @State private var email = ""
 @State private var password = ""
 
-// Basic text field
-TextFieldViewUtil("Enter email", inputText: $email) {
+TextFieldViewUtil("Email", inputText: $email, iconPlaceholder: "envelope.fill") {
     Text("Email Address")
 }
 
-// Secure text field with icon
-TextFieldViewUtil(
-    "Enter password",
-    inputText: $password,
-    iconPlaceholder: "lock.fill",
-    isSecure: true
-) {
+TextFieldViewUtil("Password", inputText: $password, iconPlaceholder: "lock.fill", isSecure: true) {
     Text("Password")
 }
 ```
 
-### RatingStarsView
-
-Star rating component with customizable rating display.
+### Ratings (`RatingStarsView`, `RatingHeartsView`)
 
 ```swift
 RatingStarsView(rating: 3.5, maxRating: 5)
+RatingHeartsView(rating: 4.0, maxRating: 5)
 ```
 
-### RatingHeartsView
+### Slider with controls (`SliderControlViewUtils`)
 
-Heart rating component for like/dislike functionality.
-
-```swift
-RatingHeartsView(rating: 4, maxRating: 5)
-```
-
-### SliderControlViewUtils
-
-Advanced slider with custom controls and icons.
+`SliderControlViewUtils` supports optional icons with tap actions and an `onEditingChanged` callback.
 
 ```swift
 @State private var sliderValue: Double = 50
@@ -160,203 +116,148 @@ SliderControlViewUtils(
     min: 0,
     max: 100,
     minIcon: "minus.circle.fill",
-    maxIcon: "plus.circle.fill"
-) { _ in
-    // On value update
-} minTapAction: {
-    sliderValue -= 1
-} maxTapAction: {
-    sliderValue += 1
-}
-```
-
-### GridView
-
-Flexible grid layout component supporting both vertical and horizontal orientations.
-
-```swift
-// Vertical grid with 2 columns
-GridView(columns: 2) {
-    ForEach(0..<10) { index in
-        Text("Item \(index)")
-            .padding()
-            .background(Color.blue.opacity(0.2))
-            .cornerRadius(8)
-    }
-}
-
-// Horizontal grid with 3 rows
-GridView(.horizontal, rows: 3) {
-    ForEach(0..<6) { index in
-        Text("Item \(index)")
-            .padding()
-            .background(Color.green.opacity(0.2))
-            .cornerRadius(8)
-    }
-}
-```
-
-### SquareGridView
-
-Square grid layout for image galleries or card layouts.
-
-```swift
-SquareGridView(columns: 3) {
-    ForEach(0..<9) { index in
-        RoundedRectangle(cornerRadius: 8)
-            .fill(Color.blue.opacity(0.2))
-            .aspectRatio(1, contentMode: .fit)
-    }
-}
-```
-
-### StepperView
-
-Custom stepper component with increment/decrement functionality.
-
-```swift
-@State private var stepperValue = 0
-
-StepperView(value: $stepperValue, range: 0...10)
-```
-
-### PickerView
-
-Enhanced picker component with custom styling.
-
-```swift
-@State private var selectedOption = "Option 1"
-let options = ["Option 1", "Option 2", "Option 3"]
-
-PickerView(
-    selection: $selectedOption,
-    options: options
+    maxIcon: "plus.circle.fill",
+    onEditingChanged: { isEditing in
+        // editing started/ended
+    },
+    minTapAction: { sliderValue -= 1 },
+    maxTapAction: { sliderValue += 1 }
 )
 ```
 
-### ToggleView
-
-Custom toggle switch component.
+### Grid layouts (`GridView`, `SquareGridView`)
 
 ```swift
-@State private var isEnabled = false
-
-ToggleView(isOn: $isEnabled)
-```
-
-### FormView
-
-Form container with organized layout.
-
-```swift
-FormView {
-    TextFieldViewUtil("Name", inputText: $name) {
-        Text("Full Name")
+GridView(columns: 2) {
+    ForEach(0..<10) { index in
+        Text("Item \(index)")
+            .padding(8)
+            .background(Color.blue.opacity(0.15))
+            .cornerRadius(8)
     }
-    
-    TextFieldViewUtil("Email", inputText: $email) {
-        Text("Email Address")
-    }
-    
-    ButtonViewUtils(label: "Submit", icon: "checkmark") {
-        // Submit action
-    }
-    .buttonStyle(.blueUtil)
 }
 ```
 
-### HeartLikeView
+```swift
+SquareGridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
+    RoundedRectangle(cornerRadius: 8)
+        .fill(Color.blue.opacity(0.15))
+        .overlay(Text("\(item)"))
+}
+```
 
-Animated heart like button.
+### Stepper (`StepperViewUtils`)
+
+```swift
+@State private var value = 0
+
+StepperViewUtils(title: "Quantity", value: $value, min: 0, max: 100, step: 1) {
+    // onUpdate
+}
+```
+
+### Pickers (`PickerViewUtils`, `DatePickerViewUtils`)
+
+```swift
+@State private var selection = "Car"
+let options = ["Car", "Plane", "Boat", "Train"]
+
+PickerViewUtils(titleKey: "Select a transport", selection: $selection, opions: options) {
+    // onUpdate
+}
+.pickerStyle(.wheel)
+```
+
+```swift
+@State private var date = Date()
+
+DatePickerViewUtils(
+    labelKey: "Select a date",
+    date: $date,
+    label: "Selected:",
+    alignment: .leading
+)
+```
+
+### Toggle (`ToggleViewUtils`)
+
+```swift
+@State private var isOn = false
+
+ToggleViewUtils(titleKey: "Enable feature", isOn: $isOn)
+```
+
+### Forms (`FormViewUtil`)
+
+```swift
+FormViewUtil {
+    Text("Body")
+} header: {
+    Text("Header")
+} footer: {
+    Text("Footer")
+}
+```
+
+### Like button (`HeartLikeView`)
 
 ```swift
 @State private var isLiked = false
-
 HeartLikeView(isLiked: $isLiked)
 ```
 
-### AccessibilityView
-
-Accessibility-focused view components with advanced accessibility options.
+### Tooltip / activity pill (`ActivityItemUtils`)
 
 ```swift
-// Basic accessibility usage
-AccessibilityView {
-    Text("Accessible content")
+ActivityItemUtils("12", type: .left) {
+    Image(systemName: "bubble.fill")
 }
-.accessibilityLabel("Important information")
+```
 
-// Advanced accessibility with options modifier
+### Accessibility utilities (`.accessibility(options:)`)
+
+```swift
 Text("Main Heading")
     .font(.largeTitle)
     .accessibility(options: [
         .traits([.isHeader]),
-        .heading(level: .h1)
+        .heading(level: .h1),
+        .labels("Main heading")
     ])
-
-// Slider with comprehensive accessibility
-Slider(value: $sliderValue)
-    .accessibility(options: [
-        .labels("Volume Control"),
-        .value("\(sliderValue)"),
-        .hint("Drag to adjust volume level"),
-        .behaviour(children: .ignore)
-    ])
-
-// Container with combined accessibility behavior
-VStack {
-    Text("Item 1")
-    Text("Item 2")
-    Text("Item 3")
-}
-.accessibility(options: [.behaviour(children: .combine)])
 ```
 
-**Available Accessibility Options:**
+**Available options**
+- `.traits([AccessibilityTraits])`
+- `.labels(String)`
+- `.value(String)`
+- `.hint(String)`
+- `.accessibilityHidden`
+- `.behaviour(children: AccessibilityChildBehavior)` (`.combine`, `.ignore`, `.contain`)
+- `.heading(level: AccessibilityHeadingLevel)` (`.h1` ... `.h6`)
 
-- **`.traits([AccessibilityTraits])`** - Add accessibility traits like `.isHeader`, `.isButton`, `.isLink`
-- **`.labels(String)`** - Set accessibility label for screen readers
-- **`.value(String)`** - Set accessibility value (useful for sliders, progress bars)
-- **`.hint(String)`** - Provide helpful hints for screen reader users
-- **`.accessibilityHidden`** - Hide element from accessibility services
-- **`.behaviour(children: AccessibilityChildBehavior)`** - Control how child elements are handled
-  - `.combine` - Combine all children into single accessibility element
-  - `.ignore` - Ignore child elements in accessibility
-  - `.contain` - Contain child elements (default behavior)
-- **`.heading(level: AccessibilityHeadingLevel)`** - Set heading level for navigation
-  - `.h1`, `.h2`, `.h3`, `.h4`, `.h5`, `.h6`
+## 🧭 Navigation coordinator (reference implementation)
 
-**Example with Multiple Options:**
-```swift
-Button("Submit Form") {
-    // action
-}
-.accessibility(options: [
-    .traits([.isButton]),
-    .labels("Submit Application Form"),
-    .hint("Double tap to submit your application"),
-    .behaviour(children: .ignore)
-])
-```
+`Utils/Utils/NavigationCoordinator.swift` contains a coordinator-style `NavigationStack` reference, including:
+- Navigation history
+- “replace stack” support
+- Basic deep linking via `URLComponents`
 
-## 🎨 Customization
-
-All components support extensive customization through parameters. Refer to individual component documentation for detailed customization options.
+It uses the Observation framework (`@Observable`) and includes placeholder views to demonstrate navigation. If you want to reuse it in your app, copy the file and replace `NavigationDestination` and the placeholder views with your own.
 
 ## 📋 Requirements
 
-- iOS 14.0+
-- Xcode 12.0+
-- Swift 5.3+
+- iOS 17.0+
+- Xcode 15.0+
+- Swift 5.9+
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+Contributions are welcome. Please open an issue or submit a Pull Request.
 
 ## 📄 License
 
-This project is licensed under the MIT License - see the LICENSE file for details.
+MIT License. See `LICENSE`.
 
 ---
 
-&copy; 2025 Israel Manzo. All rights reserved.
+&copy; 2026 Israel Manzo. All rights reserved.
