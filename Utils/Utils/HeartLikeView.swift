@@ -7,16 +7,58 @@
 
 import SwiftUI
 
+/// Sample usage for `HeartLikeView`.
+///
+/// This is a small, copy/paste-friendly example that demonstrates how to:
+/// - Keep `isLiked` as local state
+/// - Bind it into `HeartLikeView`
+/// - React to changes in the binding (e.g. show “Liked” / “Not liked”)
+struct HeartLikeSampleView: View {
+    @State private var isLiked = false
+    
+    var body: some View {
+        VStack(spacing: 16) {
+            HeartLikeView(isLiked: $isLiked)
+            
+            Text(isLiked ? "Liked" : "Not liked")
+                .font(.subheadline)
+                .foregroundStyle(.secondary)
+        }
+        .padding()
+    }
+}
+
+/// A tappable “like” heart that animates both **shape** and **color** when toggled.
+///
+/// ## Usage
+/// Provide a binding that represents the current liked state.
+///
+/// Example:
+/// ```swift
+/// @State private var isLiked = false
+///
+/// var body: some View {
+///     HeartLikeView(isLiked: $isLiked)
+/// }
+/// ```
+///
+/// ## Implementation notes
+/// - Uses SF Symbols `"heart"` / `"heart.fill"` and switches between them based on `isLiked`.
+/// - The `isLiked` toggle is performed inside `withAnimation(...)` so the foreground color
+///   transition (gray ↔︎ red) animates rather than snapping.
+/// - A brief scale “pulse” is driven by `isAnimating` and then reset after `animationDuration`.
 public struct HeartLikeView: View {
     
     @Binding var isLiked: Bool
-    @State var animationAmount = 1.0
     
-    private let animationDuration = 0.1
+    private let animationDuration: Double = 0.12
     
     private var animationScale: CGFloat {
-        isLiked ? 0.7 : 1.3
+        isLiked ? 1.3 : 0.7
     }
+    
+    private let heartFill = "heart.fill"
+    private let heart = "heart"
     
     @State private var isAnimating = false
     
@@ -25,22 +67,28 @@ public struct HeartLikeView: View {
             self.executeButtonAnimation()
         } label: {
             VStack {
-                Image(systemName: isLiked ? "heart.fill" : "heart")
+                Image(systemName: isLiked ? heartFill : heart)
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
                     .foregroundStyle(isLiked ? .red : .gray)
+                    .contentTransition(.symbolEffect(.replace))
             }
             .scaleEffect(isAnimating ? animationScale : 1)
-            .animation(.easeInOut(duration: animationDuration), value: animationDuration)
         }
+        .buttonStyle(.plain)
     }
     
     private func executeButtonAnimation() {
-        self.isAnimating = true
+        withAnimation(.easeInOut(duration: animationDuration)) {
+            isLiked.toggle()
+            isAnimating = true
+        }
+        
         DispatchQueue.main.asyncAfter(deadline: .now() + animationDuration) {
-            self.isAnimating = false
-            self.isLiked.toggle()
+            withAnimation(.easeInOut(duration: animationDuration)) {
+                isAnimating = false
+            }
         }
     }
 }
@@ -48,7 +96,7 @@ public struct HeartLikeView: View {
 #if DEBUG
 struct HeartLikeView_Previews: PreviewProvider {
     static var previews: some View {
-        HeartLikeView(isLiked: .constant(false))
+        HeartLikeSampleView()
     }
 }
 #endif
