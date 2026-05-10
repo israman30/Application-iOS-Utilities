@@ -24,8 +24,13 @@ struct RatingStarsSampleView: View {
                 RatingStarsView(rating: CGFloat(rating), maxRating: maxRating)
                     .frame(height: 28)
                 
-                RatingStarsView(rating: CGFloat(rating), maxRating: maxRating, color: .blue, backgroundColor: Color(.systemGray3))
-                    .frame(height: 28)
+                RatingStarsView(
+                    rating: CGFloat(rating),
+                    maxRating: maxRating,
+                    color: .blue,
+                    backgroundColor: Color(.systemGray3)
+                )
+                .frame(height: 28)
                 
                 Text("\(rating, specifier: "%.1f") / \(maxRating)")
                     .font(.subheadline)
