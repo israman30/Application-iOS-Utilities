@@ -24,6 +24,9 @@ struct RatingStarsSampleView: View {
                 RatingStarsView(rating: CGFloat(rating), maxRating: maxRating)
                     .frame(height: 28)
                 
+                RatingStarsView(rating: CGFloat(rating), maxRating: maxRating, color: .blue, backgroundColor: Color(.systemGray3))
+                    .frame(height: 28)
+                
                 Text("\(rating, specifier: "%.1f") / \(maxRating)")
                     .font(.subheadline)
                     .foregroundColor(.secondary)
@@ -56,14 +59,33 @@ public struct RatingStarsView: View {
     private let rating: CGFloat
     /// Maximum number of stars to display (commonly 5).
     private let maxRating: Int
+    
+    /// SF Symbol used to draw each star.
+    /// - Note: Defaults to `"star.fill"`. Keep it as a filled symbol so masking looks correct.
+    private var startsIcon: String = "star.fill"
+    
+    /// Foreground fill color for the “filled” portion of the rating.
+    private var starColor: Color = .yellow
+    
+    /// Color used for the unfilled stars behind the overlay.
+    private var backgroundColor: Color = .gray
 
     /// Creates a star rating view.
     /// - Parameters:
     ///   - rating: The current rating (typically \(0...maxRating\)).
     ///   - maxRating: Total number of stars to draw.
-    public init(rating: CGFloat, maxRating: Int) {
+    ///   - color: Fill color for the rated portion of the stars.
+    ///   - backgroundColor: Color of the unfilled stars.
+    public init(
+        rating: CGFloat,
+        maxRating: Int,
+        color: Color = .yellow,
+        backgroundColor: Color = .gray
+    ) {
         self.rating = rating
         self.maxRating = maxRating
+        self.starColor = color
+        self.backgroundColor = backgroundColor
     }
 
     public var body: some View {
@@ -75,19 +97,19 @@ public struct RatingStarsView: View {
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .frame(width: width)
-                        .foregroundColor(.yellow)
+                        .foregroundColor(starColor)
                 }
             }
             .mask(stars)
         )
-        .foregroundColor(.gray)
+        .foregroundColor(backgroundColor)
     }
     
     /// Star silhouettes used both for drawing and masking.
     var stars: some View {
         HStack(spacing: 0) {
            ForEach(0..<maxRating, id: \.self) { _ in
-               Image(systemName: "star.fill")
+               Image(systemName: startsIcon)
                    .resizable()
                    .aspectRatio(contentMode: .fit)
            }
@@ -96,6 +118,8 @@ public struct RatingStarsView: View {
 }
 
 #if DEBUG
+/// Preview for `RatingStarsView` using `RatingStarsSampleView`, which includes both
+/// default and customized color usage.
 struct RatingStarsView_Previews: PreviewProvider {
     static var previews: some View {
         RatingStarsSampleView()
