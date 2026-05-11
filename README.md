@@ -215,7 +215,7 @@ StepperViewUtils(
 @State private var selection = "Car"
 let options = ["Car", "Plane", "Boat", "Train"]
 
-PickerViewUtils(titleKey: "Select a transport", selection: $selection, opions: options) {
+PickerViewUtils(titleKey: "Select a transport", selection: $selection, options: options) {
     // onUpdate
 }
 .pickerStyle(.wheel)
@@ -227,7 +227,7 @@ PickerViewUtils(titleKey: "Select a transport", selection: $selection, opions: o
 DatePickerViewUtils(
     labelKey: "Select a date",
     date: $date,
-    label: "Selected:",
+    valuePrefix: "Selected:",
     alignment: .leading
 )
 ```

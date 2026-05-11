@@ -1,0 +1,64 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/SliderControlView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Value: %lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 15
+        }
+      },
+      {
+        "comment": "",
+        "key": "Brightness",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "Decrease",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 293
+        }
+      },
+      {
+        "comment": "",
+        "key": "Decreases by %@",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 294
+        }
+      },
+      {
+        "comment": "",
+        "key": "Increase",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 318
+        }
+      },
+      {
+        "comment": "",
+        "key": "Increases by %@",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 319
+        }
+      },
+      {
+        "comment": "",
+        "key": "Value",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 204
+        }
+      }
+    ]
+  },
+  "version": 1
+}

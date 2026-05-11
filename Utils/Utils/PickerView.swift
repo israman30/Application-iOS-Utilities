@@ -7,68 +7,375 @@
 
 import SwiftUI
 
+// MARK: - Demo / usage
 struct PickerView: View {
-    @State var selection: String = ""
+    @State var selection: String = "Car"
     let options = ["Car", "Plane", "Boat", "Train"]
     @State var date = Date.now
     var body: some View {
-        VStack {
-            PickerViewUtils(titleKey: "Select a transport", selection: $selection, opions: options) {
-                // update
+        VStack(alignment: .leading, spacing: 16) {
+            Text("Pickers")
+                .font(.title2.weight(.semibold))
+
+            PickerViewUtils(
+                titleKey: "Transport",
+                selection: $selection,
+                options: options,
+                showsSelectedValue: true,
+                tintColor: .blue
+            ) {
+                // onUpdate
+            }
+
+            PickerViewUtils(titleKey: "Wheel style", selection: $selection, opions: options) {
+                // onUpdate
             }
             .pickerStyle(.wheel)
-            
+
             DatePickerViewUtils(
-                labelKey: "Select a date",
+                labelKey: "Date",
                 date: $date,
-                label: "this is a custom label",
-                alignment: .center
+                valuePrefix: "Selected:",
+                displayedComponents: [.date],
+                alignment: .leading,
+                tintColor: .blue
             )
         }
+        .padding()
     }
 }
 
 #if DEBUG
 struct PickerView_Previews: PreviewProvider {
     static var previews: some View {
-        PickerView()
+        Group {
+            PickerView()
+                .previewDisplayName("Light")
+
+            PickerView()
+                .preferredColorScheme(.dark)
+                .previewDisplayName("Dark")
+
+            PickerView()
+                .dynamicTypeSize(.accessibility5)
+                .previewDisplayName("AX XXXL")
+        }
     }
 }
 #endif
 
 public struct PickerViewUtils<T: Hashable>: View {
-    var titleKey: String
-    @Binding var selection: T
-    var opions: [T]
-    
-    let onUpdate: (() -> Void)?
-    
+    private let titleKey: LocalizedStringKey?
+    @Binding private var selection: T
+    private let options: [T]
+
+    private let showsSelectedValue: Bool
+    private let valueText: (T) -> String
+    private let tintColor: Color?
+    private let backgroundColor: Color
+    private let cornerRadius: CGFloat
+    private let usesHaptics: Bool
+
+    private let onUpdate: (() -> Void)?
+
+    /// Backwards-compatible initializer.
+    ///
+    /// - Important: `opions` is intentionally misspelled to preserve source compatibility
+    ///   with older call sites. Prefer using `init(titleKey:selection:options:...)`.
+    public init(
+        titleKey: String,
+        selection: Binding<T>,
+        opions: [T],
+        onUpdate: (() -> Void)? = nil
+    ) {
+        self.titleKey = titleKey.isEmpty ? nil : LocalizedStringKey(titleKey)
+        self._selection = selection
+        self.options = opions
+        self.showsSelectedValue = true
+        self.valueText = { String(describing: $0) }
+        self.tintColor = nil
+        self.backgroundColor = Color.primary.opacity(0.06)
+        self.cornerRadius = 12
+        self.usesHaptics = true
+        self.onUpdate = onUpdate
+    }
+
+    /// Creates a modern picker container with consistent typography and contrast.
+    ///
+    /// This view intentionally does not impose a `pickerStyle`; call sites can apply
+    /// `.pickerStyle(.menu)`, `.pickerStyle(.wheel)`, etc.
+    public init(
+        titleKey: LocalizedStringKey? = nil,
+        selection: Binding<T>,
+        options: [T],
+        showsSelectedValue: Bool = true,
+        valueText: @escaping (T) -> String = { String(describing: $0) },
+        tintColor: Color? = nil,
+        backgroundColor: Color = Color.primary.opacity(0.06),
+        cornerRadius: CGFloat = 12,
+        usesHaptics: Bool = true,
+        onUpdate: (() -> Void)? = nil
+    ) {
+        self.titleKey = titleKey
+        self._selection = selection
+        self.options = options
+        self.showsSelectedValue = showsSelectedValue
+        self.valueText = valueText
+        self.tintColor = tintColor
+        self.backgroundColor = backgroundColor
+        self.cornerRadius = cornerRadius
+        self.usesHaptics = usesHaptics
+        self.onUpdate = onUpdate
+    }
+
+    /// Convenience overload that accepts a `String` title.
+    public init(
+        titleKey: String,
+        selection: Binding<T>,
+        options: [T],
+        showsSelectedValue: Bool = true,
+        valueText: @escaping (T) -> String = { String(describing: $0) },
+        tintColor: Color? = nil,
+        backgroundColor: Color = Color.primary.opacity(0.06),
+        cornerRadius: CGFloat = 12,
+        usesHaptics: Bool = true,
+        onUpdate: (() -> Void)? = nil
+    ) {
+        self.init(
+            titleKey: titleKey.isEmpty ? nil : LocalizedStringKey(titleKey),
+            selection: selection,
+            options: options,
+            showsSelectedValue: showsSelectedValue,
+            valueText: valueText,
+            tintColor: tintColor,
+            backgroundColor: backgroundColor,
+            cornerRadius: cornerRadius,
+            usesHaptics: usesHaptics,
+            onUpdate: onUpdate
+        )
+    }
+
     public var body: some View {
-        Picker(titleKey, selection: $selection) {
-            ForEach(opions, id: \.self) { option in
-                Text(String(describing: option))
-                    .tag(option as T?)
+        VStack(alignment: .leading, spacing: 10) {
+            header
+            picker
+        }
+        .padding(12)
+        .background(backgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .tint(tintColor)
+        .onChange(of: selection) { _, _ in
+            onUpdate?()
+            if usesHaptics { Haptics.selectionChanged() }
+        }
+        .accessibilityElement(children: .contain)
+        .utilAccessibilityLabel(titleKey)
+        .accessibilityValue(valueText(selection))
+    }
+
+    private var header: some View {
+        HStack(alignment: .firstTextBaseline, spacing: 12) {
+            if let titleKey {
+                Text(titleKey)
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+
+            Spacer(minLength: 0)
+
+            if showsSelectedValue {
+                Text(valueText(selection))
+                    .font(.subheadline.weight(.semibold))
+                    .foregroundStyle(.secondary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+                    .accessibilityHidden(true)
             }
         }
-        .onChange(of: selection) { oldValue, newValue in
-            onUpdate?()
+    }
+
+    private var picker: some View {
+        Picker(selection: $selection) {
+            ForEach(options, id: \.self) { option in
+                Text(valueText(option))
+                    .tag(option)
+            }
+        } label: {
+            if let titleKey {
+                Text(titleKey)
+            }
         }
+        .labelsHidden()
+        .accessibilityValue(valueText(selection))
     }
 }
 
 public struct DatePickerViewUtils: View {
-    var labelKey: String = ""
-    @Binding var date: Date
-    var label: String = ""
-    var alignment: HorizontalAlignment = .leading
-    
+    private let labelKey: LocalizedStringKey?
+    @Binding private var date: Date
+    private let alignment: HorizontalAlignment
+
+    private let displayedComponents: DatePickerComponents
+    private let showsValue: Bool
+    private let valuePrefix: String?
+    private let valueText: (Date) -> String
+
+    private let tintColor: Color?
+    private let backgroundColor: Color
+    private let cornerRadius: CGFloat
+    private let usesHaptics: Bool
+    private let onUpdate: (() -> Void)?
+
+    /// Backwards-compatible initializer.
+    public init(
+        labelKey: String = "",
+        date: Binding<Date>,
+        label: String = "",
+        alignment: HorizontalAlignment = .leading
+    ) {
+        self.labelKey = labelKey.isEmpty ? nil : LocalizedStringKey(labelKey)
+        self._date = date
+        self.alignment = alignment
+        self.displayedComponents = [.date]
+        self.showsValue = true
+        self.valuePrefix = label.isEmpty ? nil : label
+        self.valueText = { $0.formatted(date: .long, time: .omitted) }
+        self.tintColor = nil
+        self.backgroundColor = Color.primary.opacity(0.06)
+        self.cornerRadius = 12
+        self.usesHaptics = true
+        self.onUpdate = nil
+    }
+
+    /// Creates a date picker container with consistent typography and contrast.
+    public init(
+        labelKey: LocalizedStringKey? = nil,
+        date: Binding<Date>,
+        valuePrefix: String? = nil,
+        displayedComponents: DatePickerComponents = [.date],
+        showsValue: Bool = true,
+        valueText: @escaping (Date) -> String = { $0.formatted(date: .long, time: .omitted) },
+        alignment: HorizontalAlignment = .leading,
+        tintColor: Color? = nil,
+        backgroundColor: Color = Color.primary.opacity(0.06),
+        cornerRadius: CGFloat = 12,
+        usesHaptics: Bool = true,
+        onUpdate: (() -> Void)? = nil
+    ) {
+        self.labelKey = labelKey
+        self._date = date
+        self.valuePrefix = valuePrefix
+        self.displayedComponents = displayedComponents
+        self.showsValue = showsValue
+        self.valueText = valueText
+        self.alignment = alignment
+        self.tintColor = tintColor
+        self.backgroundColor = backgroundColor
+        self.cornerRadius = cornerRadius
+        self.usesHaptics = usesHaptics
+        self.onUpdate = onUpdate
+    }
+
+    /// Convenience overload that accepts a `String` label.
+    public init(
+        labelKey: String,
+        date: Binding<Date>,
+        valuePrefix: String? = nil,
+        displayedComponents: DatePickerComponents = [.date],
+        showsValue: Bool = true,
+        valueText: @escaping (Date) -> String = { $0.formatted(date: .long, time: .omitted) },
+        alignment: HorizontalAlignment = .leading,
+        tintColor: Color? = nil,
+        backgroundColor: Color = Color.primary.opacity(0.06),
+        cornerRadius: CGFloat = 12,
+        usesHaptics: Bool = true,
+        onUpdate: (() -> Void)? = nil
+    ) {
+        self.init(
+            labelKey: labelKey.isEmpty ? nil : LocalizedStringKey(labelKey),
+            date: date,
+            valuePrefix: valuePrefix,
+            displayedComponents: displayedComponents,
+            showsValue: showsValue,
+            valueText: valueText,
+            alignment: alignment,
+            tintColor: tintColor,
+            backgroundColor: backgroundColor,
+            cornerRadius: cornerRadius,
+            usesHaptics: usesHaptics,
+            onUpdate: onUpdate
+        )
+    }
+
     public var body: some View {
-        VStack(alignment: alignment) {
-            DatePicker(labelKey, selection: $date)
-            Text(
-                "\(String(describing: label)) \(date.formatted(date: .long, time: .omitted))"
-            )
-            .font(.body)
+        VStack(alignment: alignment, spacing: 10) {
+            header
+            datePicker
+            if showsValue {
+                valueLine
+            }
+        }
+        .padding(12)
+        .background(backgroundColor)
+        .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
+        .tint(tintColor)
+        .onChange(of: date) { _, _ in
+            onUpdate?()
+            if usesHaptics { Haptics.selectionChanged() }
+        }
+        .accessibilityElement(children: .contain)
+        .utilAccessibilityLabel(labelKey)
+        .accessibilityValue(valueText(date))
+    }
+
+    private var header: some View {
+        Group {
+            if let labelKey {
+                Text(labelKey)
+                    .font(.headline)
+                    .foregroundStyle(.primary)
+                    .lineLimit(1)
+                    .minimumScaleFactor(0.85)
+            }
+        }
+    }
+
+    private var datePicker: some View {
+        DatePicker(selection: $date, displayedComponents: displayedComponents) {
+            if let labelKey {
+                Text(labelKey)
+            }
+        }
+        .labelsHidden()
+        .accessibilityValue(valueText(date))
+    }
+
+    private var valueLine: some View {
+        let prefix = valuePrefix.map { "\($0) " } ?? ""
+        return Text("\(prefix)\(valueText(date))")
+            .font(.subheadline)
+            .foregroundStyle(.secondary)
+            .accessibilityHidden(true)
+    }
+}
+
+private enum Haptics {
+    static func selectionChanged() {
+#if canImport(UIKit)
+        UISelectionFeedbackGenerator().selectionChanged()
+#endif
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func utilAccessibilityLabel(_ titleKey: LocalizedStringKey?) -> some View {
+        if let titleKey {
+            self.accessibilityLabel(Text(titleKey))
+        } else {
+            self
         }
     }
 }
