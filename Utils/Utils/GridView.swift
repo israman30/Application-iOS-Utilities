@@ -7,13 +7,25 @@
 
 import SwiftUI
 
+/// Controls which axis the grid scrolls on and which lazy grid type is used.
+///
+/// - **vertical**: Uses `LazyVGrid` inside a vertical `ScrollView`. Configure `columns`.
+/// - **horizontal**: Uses `LazyHGrid` inside a horizontal `ScrollView`. Configure `rows`.
 public enum GridOrientation: Hashable {
     case vertical
     case horizontal
 }
 
+/// A lightweight wrapper around `LazyVGrid` / `LazyHGrid` that provides a consistent API
+/// and embeds the grid in the appropriate `ScrollView`.
+///
+/// This component is best when you want:
+/// - A scrollable grid (vertical or horizontal)
+/// - Simple configuration via a fixed number of columns/rows
+/// - Lazy rendering for large datasets
 public struct GridView<Content: View>: View {
     
+    // MARK: - Configuration
     private let orientation: GridOrientation
     private let columns: Int?
     private let rows: Int?
@@ -21,6 +33,7 @@ public struct GridView<Content: View>: View {
     private let showsIndicators: Bool
     private let content: () -> Content
     
+    // MARK: - Internal
     private var axis: Axis.Set {
         orientation == .vertical ? .vertical : .horizontal
     }
@@ -54,6 +67,19 @@ public struct GridView<Content: View>: View {
         }
     }
     
+    /// Creates a scrollable grid with a fixed number of columns (vertical) or rows (horizontal).
+    ///
+    /// - Parameters:
+    ///   - orientation: Whether the grid scrolls vertically (`LazyVGrid`) or horizontally (`LazyHGrid`).
+    ///   - columns: Number of columns for a **vertical** grid. If `nil`, defaults to 1.
+    ///   - rows: Number of rows for a **horizontal** grid. If `nil`, defaults to 1.
+    ///   - spacing: Spacing between items in the grid.
+    ///   - showsIndicators: Whether the enclosing `ScrollView` shows scroll indicators.
+    ///   - content: The grid content. Typically a `ForEach` of your data, returning cells.
+    ///
+    /// Notes:
+    /// - If `columns`/`rows` are less than 1, the grid falls back to 1 to avoid invalid layouts.
+    /// - If you pass both `columns` and `rows`, only the one matching `orientation` is used.
     public init(
         _ orientation: GridOrientation = .vertical,
         columns: Int? = nil,
@@ -71,6 +97,13 @@ public struct GridView<Content: View>: View {
     }
 }
 
+// MARK: - Usage
+/// A small, interactive view that demonstrates how to use `GridView`.
+///
+/// This is meant for previews / manual QA:
+/// - Switch orientation to see `LazyVGrid` vs `LazyHGrid`
+/// - Adjust `columns`/`rows`, `spacing`, and scroll indicators
+/// - Uses simple colored cells to make layout behavior obvious at a glance
 struct GridViewSampleView: View {
     private let items = Array(1...30)
     private let cellSize: CGFloat = 72
@@ -123,6 +156,7 @@ struct GridViewSampleView: View {
                 spacing: spacing,
                 showsIndicators: showsIndicators
             ) {
+                // Typical usage: drive the grid with a `ForEach` over your data source.
                 ForEach(items, id: \.self) { item in
                     gridCell(item)
                 }
@@ -134,6 +168,8 @@ struct GridViewSampleView: View {
         .padding()
     }
     
+    /// Gives the demo a stable height so it behaves like a "component preview"
+    /// rather than expanding to fill all available space.
     private var previewHeight: CGFloat {
         if orientation == .vertical {
             return 320
@@ -141,6 +177,7 @@ struct GridViewSampleView: View {
         return CGFloat(rows) * cellSize + CGFloat(max(rows - 1, 0)) * spacing + 24
     }
     
+    /// A simple square cell used by the sample view.
     private func gridCell(_ item: Int) -> some View {
         RoundedRectangle(cornerRadius: 12)
             .fill(Color(hue: Double(item % 12) / 12.0, saturation: 0.35, brightness: 0.95))
