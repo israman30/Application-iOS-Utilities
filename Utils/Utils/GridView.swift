@@ -23,6 +23,10 @@ public enum GridOrientation: Hashable {
 /// - A scrollable grid (vertical or horizontal)
 /// - Simple configuration via a fixed number of columns/rows
 /// - Lazy rendering for large datasets
+///
+/// Prefer this component over `GridView` when you **don’t** need square cells and you want:
+/// - `.flexible()` grid items that naturally size to their content
+/// - Horizontal grids (`LazyHGrid`)
 public struct ScrollGridView<Content: View>: View {
     
     // MARK: - Configuration
@@ -39,6 +43,8 @@ public struct ScrollGridView<Content: View>: View {
     }
     
     private var adaptiveColumns: [GridItem] {
+        // Using `.flexible()` keeps this layout generic: cell size is driven by available space
+        // and the content itself, rather than enforcing a square aspect ratio.
         Array(
             repeating: GridItem(.flexible(), spacing: spacing),
             count: max(columns ?? 1, 1)
@@ -120,6 +126,7 @@ struct ScrollGridViewSampleView: View {
                 .font(.title2.weight(.semibold))
             
             VStack(alignment: .leading, spacing: 12) {
+                // The sample exposes the knobs you typically tweak when tuning a grid layout.
                 Picker("Orientation", selection: $orientation) {
                     Text("Vertical").tag(GridOrientation.vertical)
                     Text("Horizontal").tag(GridOrientation.horizontal)

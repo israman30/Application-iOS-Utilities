@@ -7,6 +7,9 @@
 
 import SwiftUI
 
+/// Backwards-compatible alias for the old name.
+///
+/// Prefer using `GridView` directly.
 @available(*, deprecated, renamed: "GridView")
 public typealias SquareGridView<Content: View, Item: Hashable> = GridView<Content, Item>
 
@@ -15,6 +18,11 @@ public typealias SquareGridView<Content: View, Item: Hashable> = GridView<Conten
 /// This view calculates the cell size from the available width and the provided
 /// number of `columns`, then uses a `LazyVGrid` with fixed-size columns so
 /// each item renders in a square.
+///
+/// Use this component when:
+/// - Your grid scrolls vertically
+/// - Cells should be square (e.g. photo thumbnails, icon pickers)
+/// - You want simple "N columns" configuration
 public struct GridView<Content: View, Item: Hashable>: View {
     // MARK: - Configuration
     private let items: [Item]
@@ -25,6 +33,17 @@ public struct GridView<Content: View, Item: Hashable>: View {
     private let showsIndicators: Bool
     private let buildItem: (Item) -> Content
     
+    /// Creates a square-celled vertical grid.
+    ///
+    /// - Parameters:
+    ///   - items: The backing data source.
+    ///   - totalCount: Limits how many items render from `items`. This is useful when you’re
+    ///     incrementally revealing items (pagination / “load more”), without reallocating arrays.
+    ///   - columns: Number of columns to display. Values < 1 are clamped to 1.
+    ///   - columnSpacing: Horizontal spacing between columns.
+    ///   - rowSpacing: Vertical spacing between rows.
+    ///   - showsIndicators: Whether the `ScrollView` shows scroll indicators.
+    ///   - content: A view builder that produces a cell for an item.
     public init(
         items: [Item],
         totalCount: Int,
@@ -52,11 +71,14 @@ public struct GridView<Content: View, Item: Hashable>: View {
     
     public var body: some View {
         GeometryReader { proxy in
+            // `LazyVGrid` spacing is separate from the column widths.
+            // To keep cells square, we subtract the total *inter-column* spacing before dividing.
             let totalSpacing = CGFloat(max(columns - 1, 0)) * columnSpacing
             let cellSize = (proxy.size.width - totalSpacing) / CGFloat(columns)
             
             ScrollView(.vertical, showsIndicators: showsIndicators) {
                 LazyVGrid(columns: fixedColumns(cellSize: cellSize), spacing: rowSpacing) {
+                    // Render only the first `totalCount` items (useful for progressive loading).
                     ForEach(items.prefix(totalCount), id: \.self) { item in
                         buildItem(item)
                             .frame(width: cellSize, height: cellSize)
@@ -69,6 +91,12 @@ public struct GridView<Content: View, Item: Hashable>: View {
 
 #if DEBUG
 // MARK: - Sample usage
+/// A small, interactive view that demonstrates how to use `GridView`.
+///
+/// This is meant for previews / manual QA:
+/// - Adjust the number of columns and see cells stay perfectly square
+/// - Adjust spacing and see how it affects cell size
+/// - Adjust `totalCount` to simulate incremental rendering (“load more”)
 struct GridViewSampleView: View {
     private let items = Array(0..<120)
     
@@ -84,6 +112,7 @@ struct GridViewSampleView: View {
                 .font(.title3.weight(.semibold))
             
             VStack(alignment: .leading, spacing: 10) {
+                // These controls just tweak the grid configuration live.
                 Stepper("Columns: \(columns)", value: $columns, in: 1...8)
                 Stepper("Items: \(totalCount)", value: $totalCount, in: 0...items.count)
                 

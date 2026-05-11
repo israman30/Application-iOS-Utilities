@@ -7,7 +7,7 @@
         "key": "GridView (square cells)",
         "location": {
           "startingColumn": 18,
-          "startingLine": 83
+          "startingLine": 111
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Columns: %lld",
         "location": {
           "startingColumn": 25,
-          "startingLine": 87
+          "startingLine": 116
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Items: %lld",
         "location": {
           "startingColumn": 25,
-          "startingLine": 88
+          "startingLine": 117
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Show scroll indicators",
         "location": {
           "startingColumn": 24,
-          "startingLine": 106
+          "startingLine": 135
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Column spacing",
         "location": {
           "startingColumn": 26,
-          "startingLine": 91
+          "startingLine": 120
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "%lld",
         "location": {
           "startingColumn": 26,
-          "startingLine": 93
+          "startingLine": 122
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "Row spacing",
         "location": {
           "startingColumn": 26,
-          "startingLine": 99
+          "startingLine": 128
         }
       },
       {
@@ -63,7 +63,7 @@
         "key": "%lld",
         "location": {
           "startingColumn": 26,
-          "startingLine": 101
+          "startingLine": 130
         }
       },
       {
@@ -71,7 +71,7 @@
         "key": "%lld",
         "location": {
           "startingColumn": 30,
-          "startingLine": 122
+          "startingLine": 151
         }
       }
     ]

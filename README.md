@@ -128,6 +128,7 @@ SliderControlViewUtils(
 ### Grid layouts (`GridView`, `ScrollGridView`)
 
 ```swift
+// Generic scrollable grid using `.flexible()` cells.
 ScrollGridView(columns: 2) {
     ForEach(0..<10) { index in
         Text("Item \(index)")
@@ -139,6 +140,7 @@ ScrollGridView(columns: 2) {
 ```
 
 ```swift
+// Square-celled vertical grid (great for thumbnails).
 GridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
     RoundedRectangle(cornerRadius: 8)
         .fill(Color.blue.opacity(0.15))
