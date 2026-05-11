@@ -58,6 +58,16 @@ struct StepperView_Previews: PreviewProvider {
 #endif
 
 // MARK: - Public component
+/// A modern, quantity-style stepper control.
+///
+/// Unlike SwiftUI’s built-in `Stepper` row, `StepperViewUtils` renders as a compact
+/// “pill” control with +/- buttons and an optional live value readout. This design
+/// improves tap-target clarity, works well in settings forms, and provides more
+/// predictable min/max behavior for integer quantities.
+///
+/// Accessibility:
+/// - VoiceOver reads the current value and a range hint.
+/// - +/- buttons expose explicit Increase/Decrease labels and step hints.
 public struct StepperViewUtils: View {
     private let titleKey: LocalizedStringKey?
     @Binding private var value: Int
@@ -106,8 +116,10 @@ public struct StepperViewUtils: View {
         let normalizedMax = Swift.max(min, max)
         self.titleKey = title.isEmpty ? nil : LocalizedStringKey(title)
         self._value = value
+        // Normalize bounds so behavior is deterministic even if call sites pass reversed values.
         self.min = normalizedMin
         self.max = normalizedMax
+        // Avoid surprising “no-op” steppers if the call site passes 0 or a negative step.
         self.step = step > 0 ? step : 1
         self.showsValue = showsValue
         self.valueText = valueText
@@ -135,8 +147,10 @@ public struct StepperViewUtils: View {
         let normalizedMax = Swift.max(min, max)
         self.titleKey = titleKey
         self._value = value
+        // Normalize bounds so behavior is deterministic even if call sites pass reversed values.
         self.min = normalizedMin
         self.max = normalizedMax
+        // Avoid surprising “no-op” steppers if the call site passes 0 or a negative step.
         self.step = step > 0 ? step : 1
         self.showsValue = showsValue
         self.valueText = valueText
@@ -174,6 +188,8 @@ public struct StepperViewUtils: View {
         .tint(tintColor)
         .onAppear { clampIfNeeded() }
         .onChange(of: value) { _, _ in
+            // If the value is out-of-bounds (e.g. from external writes), clamp it without
+            // calling `onUpdate` to avoid double-firing side effects.
             if clampIfNeeded() { return }
             onUpdate?()
         }
@@ -274,6 +290,7 @@ public struct StepperViewUtils: View {
 private enum Haptics {
     static func selectionChanged() {
 #if canImport(UIKit)
+        // Keep the file usable in contexts without UIKit availability.
         UISelectionFeedbackGenerator().selectionChanged()
 #endif
     }
