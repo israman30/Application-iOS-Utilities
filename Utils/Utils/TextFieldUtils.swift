@@ -9,13 +9,19 @@ import SwiftUI
 
 import UIKit
 
-/// A lightweight SwiftUI text field wrapper that provides:
-/// - Optional header (label)
-/// - Optional leading SF Symbol icon
-/// - Optional helper/error message
-/// - Clear button while editing
-/// - Password reveal toggle for secure fields
-/// - Focus styling
+/// A lightweight, reusable SwiftUI text-field component with sensible UX defaults.
+///
+/// Use `TextFieldViewUtil` when you want a consistent input surface across screens:
+/// - **Label/header**: either via the `header` view-builder or `headerText`
+/// - **Leading icon**: optional SF Symbol
+/// - **Supporting / error text**: shows below the field; error state also changes the border
+/// - **Clear while editing**: optional trailing clear button
+/// - **Secure reveal**: optional eye toggle for password fields
+/// - **Focus styling**: border + shadow changes on focus
+///
+/// Notes:
+/// - This component is UI-only; validation is up to the caller (pass `errorText` when invalid).
+/// - `header` takes precedence over `headerText` when both are provided.
 public struct TextFieldViewUtil<Header: View>: View {
     private let placeholder: String
     @Binding private var inputText: String
@@ -48,6 +54,24 @@ public struct TextFieldViewUtil<Header: View>: View {
     @FocusState private var isFocused: Bool
     @State private var isSecureRevealed: Bool = false
     
+    /// Creates a styled input field.
+    ///
+    /// - Parameters:
+    ///   - placeholder: Placeholder displayed inside the text field.
+    ///   - inputText: Binding for the field text.
+    ///   - font: Font applied to the input and icon.
+    ///   - iconPlaceholder: Leading SF Symbol name (optional).
+    ///   - headerText: Small label shown above the field when `header` is not provided.
+    ///   - isSecure: Uses secure input by default, with an optional reveal toggle.
+    ///   - supportingText: Optional helper text shown below the field when not errored.
+    ///   - errorText: Optional validation message. When non-empty, turns the border/message red.
+    ///   - showsClearButton: Shows a clear button when focused and non-empty.
+    ///   - showsSecureToggle: Shows an eye button for secure fields to reveal/hide text.
+    ///   - submitLabel: Keyboard submit label.
+    ///   - onSubmit: Invoked when the keyboard submit action fires.
+    ///   - keyboardType: iOS keyboard type (e.g. `.emailAddress`).
+    ///   - textContentType: iOS text content type (e.g. `.emailAddress`, `.password`).
+    ///   - header: Optional view-builder for a custom label/header above the field.
     public init(
         _ placeholder: String = "",
         inputText: Binding<String>,
@@ -162,11 +186,13 @@ public struct TextFieldViewUtil<Header: View>: View {
     }
 
     private var messageText: String? {
+        // Error message takes precedence over supporting text.
         if isErrored { return errorText }
         return supportingText
     }
 
     private var borderColor: Color {
+        // Priority order: error -> focused -> default.
         if isErrored { return .red }
         if isFocused { return .accentColor }
         return Color.secondary.opacity(0.35)
@@ -215,6 +241,7 @@ public struct TextFieldViewUtil<Header: View>: View {
 }
 
 extension TextFieldViewUtil where Header == EmptyView {
+    /// Convenience initializer when you don’t need a custom `header` view.
     public init(
         _ placeholder: String = "",
         inputText: Binding<String>,
@@ -265,6 +292,10 @@ extension TextFieldViewUtil where Header == EmptyView {
 
 // MARK: - Usage
 /// A small, interactive view that demonstrates how to use `TextFieldViewUtil`.
+///
+/// This is intended for previews / manual QA:
+/// - Toggle error state to see validation styling.
+/// - Toggle disabled state to verify readability and affordances.
 struct TextFieldViewUtilSampleView: View {
     @State private var email: String = ""
     @State private var password: String = ""

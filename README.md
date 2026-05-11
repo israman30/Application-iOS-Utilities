@@ -88,14 +88,28 @@ FloatingButtonUtilsView {
 @State private var email = ""
 @State private var password = ""
 
-TextFieldViewUtil("Email", inputText: $email, iconPlaceholder: "envelope.fill") {
-    Text("Email Address")
-}
+TextFieldViewUtil(
+    "Email",
+    inputText: $email,
+    iconPlaceholder: "envelope.fill",
+    headerText: "Email Address",
+    supportingText: "We’ll only use this to contact you.",
+    keyboardType: .emailAddress,
+    textContentType: .emailAddress
+)
 
-TextFieldViewUtil("Password", inputText: $password, iconPlaceholder: "lock.fill", isSecure: true) {
-    Text("Password")
-}
+TextFieldViewUtil(
+    "Password",
+    inputText: $password,
+    iconPlaceholder: "lock.fill",
+    headerText: "Password",
+    isSecure: true,
+    supportingText: "Use 8+ characters.",
+    textContentType: .password
+)
 ```
+
+For a ready-to-run preview/demo screen, see `TextFieldViewUtilSampleView` in `Utils/Utils/TextFieldUtils.swift`.
 
 ### Ratings (`RatingStarsView`, `RatingHeartsView`)
 
