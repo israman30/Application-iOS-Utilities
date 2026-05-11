@@ -1,0 +1,96 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/GridView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "ScrollGridView",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 119
+        }
+      },
+      {
+        "comment": "",
+        "key": "Orientation",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 123
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show scroll indicators",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 147
+        }
+      },
+      {
+        "comment": "",
+        "key": "Vertical",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 124
+        }
+      },
+      {
+        "comment": "",
+        "key": "Horizontal",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 125
+        }
+      },
+      {
+        "comment": "",
+        "key": "Columns: %lld",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 130
+        }
+      },
+      {
+        "comment": "",
+        "key": "Rows: %lld",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Spacing",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 142
+        }
+      },
+      {
+        "comment": "",
+        "key": "#%lld",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 186
+        }
+      },
+      {
+        "comment": "",
+        "key": "Tap target",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 188
+        }
+      }
+    ]
+  },
+  "version": 1
+}

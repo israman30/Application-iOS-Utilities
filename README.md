@@ -125,10 +125,10 @@ SliderControlViewUtils(
 )
 ```
 
-### Grid layouts (`GridView`, `SquareGridView`)
+### Grid layouts (`GridView`, `ScrollGridView`)
 
 ```swift
-GridView(columns: 2) {
+ScrollGridView(columns: 2) {
     ForEach(0..<10) { index in
         Text("Item \(index)")
             .padding(8)
@@ -139,7 +139,7 @@ GridView(columns: 2) {
 ```
 
 ```swift
-SquareGridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
+GridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
     RoundedRectangle(cornerRadius: 8)
         .fill(Color.blue.opacity(0.15))
         .overlay(Text("\(item)"))

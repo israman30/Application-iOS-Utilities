@@ -23,7 +23,7 @@ public enum GridOrientation: Hashable {
 /// - A scrollable grid (vertical or horizontal)
 /// - Simple configuration via a fixed number of columns/rows
 /// - Lazy rendering for large datasets
-public struct GridView<Content: View>: View {
+public struct ScrollGridView<Content: View>: View {
     
     // MARK: - Configuration
     private let orientation: GridOrientation
@@ -98,13 +98,13 @@ public struct GridView<Content: View>: View {
 }
 
 // MARK: - Usage
-/// A small, interactive view that demonstrates how to use `GridView`.
+/// A small, interactive view that demonstrates how to use `ScrollGridView`.
 ///
 /// This is meant for previews / manual QA:
 /// - Switch orientation to see `LazyVGrid` vs `LazyHGrid`
 /// - Adjust `columns`/`rows`, `spacing`, and scroll indicators
 /// - Uses simple colored cells to make layout behavior obvious at a glance
-struct GridViewSampleView: View {
+struct ScrollGridViewSampleView: View {
     private let items = Array(1...30)
     private let cellSize: CGFloat = 72
     
@@ -116,7 +116,7 @@ struct GridViewSampleView: View {
     
     var body: some View {
         VStack(alignment: .leading, spacing: 16) {
-            Text("GridView")
+            Text("ScrollGridView")
                 .font(.title2.weight(.semibold))
             
             VStack(alignment: .leading, spacing: 12) {
@@ -149,7 +149,7 @@ struct GridViewSampleView: View {
             
             Divider()
             
-            GridView(
+            ScrollGridView(
                 orientation,
                 columns: orientation == .vertical ? columns : nil,
                 rows: orientation == .horizontal ? rows : nil,
@@ -196,9 +196,9 @@ struct GridViewSampleView: View {
 }
 
 #if DEBUG
-struct GridViewSampleView_Previews: PreviewProvider {
+struct ScrollGridViewSampleView_Previews: PreviewProvider {
     static var previews: some View {
-        GridViewSampleView()
+        ScrollGridViewSampleView()
     }
 }
 #endif
