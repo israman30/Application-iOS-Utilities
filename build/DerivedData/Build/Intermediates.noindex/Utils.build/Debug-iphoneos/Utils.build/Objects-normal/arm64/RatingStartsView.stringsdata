@@ -7,7 +7,7 @@
         "key": "Rating",
         "location": {
           "startingColumn": 22,
-          "startingLine": 17
+          "startingLine": 21
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "%.1f / %lld",
         "location": {
           "startingColumn": 22,
-          "startingLine": 23
+          "startingLine": 35
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Adjust rating",
         "location": {
           "startingColumn": 22,
-          "startingLine": 29
+          "startingLine": 41
         }
       }
     ]

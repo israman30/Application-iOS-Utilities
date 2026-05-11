@@ -49,7 +49,7 @@
     "overrides" : {
       "commandLine" : {
         "table" : {
-          "SDKROOT" : "iphoneos26.4"
+
         }
       },
       "synthesized" : {

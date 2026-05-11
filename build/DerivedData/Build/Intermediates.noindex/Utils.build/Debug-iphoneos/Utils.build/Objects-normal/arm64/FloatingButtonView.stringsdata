@@ -4,10 +4,82 @@
     "Localizable": [
       {
         "comment": "",
+        "key": "Floating Button",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 58
+        }
+      },
+      {
+        "comment": "",
+        "key": "Detail for item %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
         "key": "Item %lld",
         "location": {
           "startingColumn": 30,
-          "startingLine": 18
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Floating Button",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 28
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last event: %@",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 37
+        }
+      },
+      {
+        "comment": "",
+        "key": "Right",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Left",
+        "location": {
+          "startingColumn": 63,
+          "startingLine": 61
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loading",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 53,
+          "startingLine": 169
+        }
+      },
+      {
+        "comment": "",
+        "key": "Loading",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 154
         }
       }
     ]

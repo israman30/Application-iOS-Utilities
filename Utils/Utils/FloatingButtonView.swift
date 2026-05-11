@@ -6,20 +6,63 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct FloatingButtonView: View {
+    @State private var isCreating: Bool = false
+    @State private var lastEvent: String = "No events yet"
+    @State private var alignment: AlignmentFloatingButton = .trailing
+
     var body: some View {
-        NavigationView {
+        NavigationStack {
             ZStack {
                 List(0..<50) { item in
                     NavigationLink {
-                        
+                        Text("Detail for item \(item + 1)")
                     } label: {
                         Text("Item \((item + 1))")
                     }
                 }
-                FloatingButtonUtilsView {
-                    // action
+
+                VStack(alignment: .leading, spacing: 6) {
+                    Text("Floating Button")
+                        .font(.title2.weight(.semibold))
+                        .padding(.horizontal)
+                        .padding(.top, 10)
+
+                    Text(lastEvent)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .padding(.horizontal)
+                        .accessibilityLabel("Last event: \(lastEvent)")
+
+                    Spacer()
+                }
+
+                FloatingButtonUtilsView(
+                    title: "Add item",
+                    alignment: alignment,
+                    tint: .blue,
+                    icon: "plus",
+                    isLoading: isCreating,
+                    onLongPress: { lastEvent = "Long pressed: Add item" }
+                ) {
+                    lastEvent = "Tapped: Add item"
+                    isCreating = true
+                    DispatchQueue.main.asyncAfter(deadline: .now() + 1.0) {
+                        isCreating = false
+                        lastEvent = "Finished: Add item"
+                    }
+                }
+            }
+            .navigationTitle("Floating Button")
+            .toolbar {
+                ToolbarItem(placement: .topBarTrailing) {
+                    Button(alignment == .trailing ? "Right" : "Left") {
+                        alignment = (alignment == .trailing) ? .leading : .trailing
+                        lastEvent = "Alignment: \(alignment == .trailing ? "Right" : "Left")"
+                    }
+                    .utilButtonType(.secondary)
                 }
             }
         }
@@ -35,28 +78,46 @@ struct FloatingButtonView_Previews: PreviewProvider {
 #endif
 
 /// numerate the `alignments` for the floating button
-enum AlignmentFloatingButton {
+public enum AlignmentFloatingButton {
     case leading
     case trailing
 }
 
 /// Custom input `params` for customize the floating button
 public struct FloatingButtonUtilsView: View {
-    var icon: String = "plus"
-    var color: Color = .blue
-    var action: () -> Void
-    var alignment: AlignmentFloatingButton = .trailing
+    private let title: String?
+    private let icon: String
+    private let tint: Color
+    private let size: CGFloat
+    private let isLoading: Bool
+    private let action: () -> Void
+    private let alignment: AlignmentFloatingButton
+    private let onLongPress: (() -> Void)?
+    private let longPressDuration: Double
+    private let pressHaptic: UIImpactFeedbackGenerator.FeedbackStyle?
     
-    init(
+    public init(
+        title: String? = nil,
         alignment: AlignmentFloatingButton = .trailing,
-        color: Color = .blue,
+        tint: Color = .blue,
         icon: String = "plus",
+        size: CGFloat = 56,
+        isLoading: Bool = false,
+        pressHaptic: UIImpactFeedbackGenerator.FeedbackStyle? = .light,
+        onLongPress: (() -> Void)? = nil,
+        longPressDuration: Double = 0.45,
         action: @escaping () -> Void
     ) {
-        self.color = color
+        self.title = title
+        self.tint = tint
         self.icon = icon
+        self.size = max(44, size)
+        self.isLoading = isLoading
         self.action = action
         self.alignment = alignment
+        self.onLongPress = onLongPress
+        self.longPressDuration = longPressDuration
+        self.pressHaptic = pressHaptic
     }
     
     public var body: some View {
@@ -78,16 +139,123 @@ public struct FloatingButtonUtilsView: View {
     
     private var floatingButton: some View {
         Button {
+            guard !isLoading else { return }
             action()
         } label: {
-            Image(systemName: icon)
-                .font(.title.weight(.semibold))
-                .padding()
-                .background(color)
-                .foregroundColor(.white)
-                .clipShape(Circle())
-                .shadow(radius: 4, x: 0, y: 4)
+            ZStack {
+                Image(systemName: icon)
+                    .font(.title2.weight(.semibold))
+                    .opacity(isLoading ? 0 : 1)
+
+                if isLoading {
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .tint(effectiveForeground)
+                        .accessibilityLabel("Loading")
+                }
+            }
+            .frame(width: size, height: size)
+            .contentShape(Circle())
         }
-        .padding()
+        .buttonStyle(
+            FloatingButtonUtilsStyle(
+                tint: tint,
+                foreground: effectiveForeground,
+                size: size,
+                pressHaptic: pressHaptic
+            )
+        )
+        .utilAccessibilityLabel(title ?? "Floating button")
+        .accessibilityValue(isLoading ? "Loading" : "")
+        .disabled(isLoading)
+        .simultaneousGesture(longPressGesture)
+        .padding(16)
+    }
+
+    private var effectiveForeground: Color {
+        titleContrastForeground(for: tint)
+    }
+
+    private func titleContrastForeground(for tint: Color) -> Color {
+        let uiColor = UIColor(tint)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+
+        guard uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return .white
+        }
+
+        let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+        return luminance > 0.60 ? .black : .white
+    }
+
+    private var longPressGesture: some Gesture {
+        LongPressGesture(minimumDuration: longPressDuration)
+            .onEnded { _ in
+                guard !isLoading else { return }
+                onLongPress?()
+            }
+    }
+}
+
+private struct FloatingButtonUtilsStyle: ButtonStyle {
+    let tint: Color
+    let foreground: Color
+    let size: CGFloat
+    let pressHaptic: UIImpactFeedbackGenerator.FeedbackStyle?
+
+    @Environment(\.isEnabled) private var isEnabled: Bool
+
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: size, height: size)
+            .foregroundStyle(isEnabled ? foreground : foreground.opacity(0.6))
+            .background { backgroundView(isPressed: configuration.isPressed) }
+            .overlay { borderView(isPressed: configuration.isPressed) }
+            .clipShape(Circle())
+            .shadow(color: shadowColor(isPressed: configuration.isPressed), radius: 10, x: 0, y: 5)
+            .scaleEffect(configuration.isPressed ? 0.96 : 1)
+            .opacity(effectiveOpacity(isPressed: configuration.isPressed))
+            .animation(.snappy(duration: 0.18), value: configuration.isPressed)
+            .onChange(of: configuration.isPressed) { _, isPressed in
+                guard isPressed, isEnabled, let pressHaptic else { return }
+                UIImpactFeedbackGenerator(style: pressHaptic).impactOccurred()
+            }
+    }
+
+    private func effectiveOpacity(isPressed: Bool) -> Double {
+        guard isEnabled else { return 0.55 }
+        return isPressed ? 0.92 : 1.0
+    }
+
+    private func shadowColor(isPressed: Bool) -> Color {
+        guard isEnabled else { return .clear }
+        return Color.black.opacity(isPressed ? 0.12 : 0.20)
+    }
+
+    @ViewBuilder
+    private func backgroundView(isPressed: Bool) -> some View {
+        Circle()
+            .fill(tint.gradient)
+            .opacity(isEnabled ? (isPressed ? 0.90 : 1.0) : 0.55)
+    }
+
+    @ViewBuilder
+    private func borderView(isPressed: Bool) -> some View {
+        Circle()
+            .strokeBorder(Color.white.opacity(isEnabled ? (isPressed ? 0.18 : 0.10) : 0.0), lineWidth: 1)
+    }
+}
+
+private extension View {
+    @ViewBuilder
+    func utilAccessibilityLabel(_ title: String?) -> some View {
+        if let title, !title.isEmpty {
+            self.accessibilityLabel(title)
+        } else {
+            self
+        }
     }
 }
