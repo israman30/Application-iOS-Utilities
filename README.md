@@ -134,17 +134,30 @@ RatingHeartsView(rating: 4.0, maxRating: 5)
 
 ### Slider with controls (`SliderControlViewUtils`)
 
-`SliderControlViewUtils` supports optional icons with tap actions and an `onEditingChanged` callback.
+`SliderControlViewUtils` is a settings-style slider that supports:
+- Optional title and live value readout
+- Optional +/- buttons with custom tap actions
+- Optional min/max labels under the slider
+- Optional `onEditingChanged` callback and `onUpdate` value-change callback
 
 ```swift
 @State private var sliderValue: Double = 50
 
 SliderControlViewUtils(
+    titleKey: "Brightness",
     value: $sliderValue,
     min: 0,
     max: 100,
-    minIcon: "minus.circle.fill",
-    maxIcon: "plus.circle.fill",
+    step: 1,
+    minIcon: "minus",
+    maxIcon: "plus",
+    minimumValueLabel: "0",
+    maximumValueLabel: "100",
+    showsValue: true,
+    tintColor: .blue,
+    onUpdate: {
+        // value changed
+    },
     onEditingChanged: { isEditing in
         // editing started/ended
     },

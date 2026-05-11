@@ -55,6 +55,16 @@ struct SliderControlView_Previews: PreviewProvider {
 #endif
 
 
+/// A settings-style slider with optional +/- controls.
+///
+/// Use this when you want a `Slider` that:
+/// - Shows an optional title and a live value readout
+/// - Supports optional increment/decrement buttons with large hit targets
+/// - Clamps values safely to the provided bounds
+/// - Works well with Dynamic Type and accessibility (VoiceOver reads the value)
+///
+/// Tip: prefer simple SF Symbols like `minus` / `plus` for the buttons, since this control
+/// already provides its own circular button background.
 public struct SliderControlViewUtils: View {
 
     private let titleKey: LocalizedStringKey?
@@ -82,6 +92,27 @@ public struct SliderControlViewUtils: View {
     private let minTapAction: (() -> Void)?
     private let maxTapAction: (() -> Void)?
     
+    /// Creates a slider control view.
+    /// - Parameters:
+    ///   - titleKey: Optional title shown above the slider.
+    ///   - value: The current value binding.
+    ///   - min: Lower bound. If `min > max`, bounds are normalized.
+    ///   - max: Upper bound. If `min > max`, bounds are normalized.
+    ///   - step: Step size for the slider and default +/- behavior.
+    ///   - minIcon: Optional SF Symbol for the decrement button.
+    ///   - maxIcon: Optional SF Symbol for the increment button.
+    ///   - minimumValueLabel: Optional label shown at the minimum end of the slider.
+    ///   - maximumValueLabel: Optional label shown at the maximum end of the slider.
+    ///   - showsValue: Whether to show a live value readout in the header.
+    ///   - valueText: Converts `value` (and `step`) to a displayable string. Used for the
+    ///     header readout and accessibility.
+    ///   - tintColor: Optional tint applied to the slider accent.
+    ///   - backgroundColor: Card background for contrast in light/dark mode.
+    ///   - cornerRadius: Card corner radius.
+    ///   - onUpdate: Called whenever `value` changes (via slider or buttons).
+    ///   - onEditingChanged: Optional callback invoked when the user begins/ends sliding.
+    ///   - minTapAction: Optional custom action when tapping the decrement button.
+    ///   - maxTapAction: Optional custom action when tapping the increment button.
     public init(
         titleKey: LocalizedStringKey? = nil,
         value: Binding<Double>,
@@ -109,6 +140,7 @@ public struct SliderControlViewUtils: View {
     ) {
         self.titleKey = titleKey
         self._value = value
+        // Normalize bounds to keep behavior predictable even if call sites pass reversed values.
         self.min = Swift.min(min, max)
         self.max = Swift.max(min, max)
         self.step = step
@@ -176,6 +208,8 @@ public struct SliderControlViewUtils: View {
     }
 
     private var slider: some View {
+        // Clamp writes so the `Slider`, custom tap actions, and external updates all share
+        // the same bounds enforcement.
         let clampedValue = Binding<Double>(
             get: { value },
             set: { newValue in
@@ -201,6 +235,7 @@ public struct SliderControlViewUtils: View {
 
         return Group {
             if let onEditingChanged {
+                // Use the initializer that includes `onEditingChanged` only when provided.
                 Slider(
                     value: clampedValue,
                     in: min...max,
@@ -288,6 +323,8 @@ public struct SliderControlViewUtils: View {
 private enum Haptics {
     static func selectionChanged() {
 #if canImport(UIKit)
+        // Keep this file platform-flexible (e.g. previews / macCatalyst) without adding
+        // a hard UIKit dependency.
         UISelectionFeedbackGenerator().selectionChanged()
 #endif
     }
