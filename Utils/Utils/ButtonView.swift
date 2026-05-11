@@ -67,6 +67,35 @@ struct ButtonView_Previews: PreviewProvider {
 #endif
 
 // MARK: - Public component
+/// A reusable SwiftUI button wrapper with sensible UX defaults.
+///
+/// `ButtonViewUtils` provides:
+/// - **Consistent tap target**: a minimum 44pt height.
+/// - **Optional SF Symbol**: show an icon next to the title.
+/// - **Loading state**: `isLoading` swaps the label with a `ProgressView` and disables taps.
+/// - **Optional long-press event**: `onLongPress` can be used for secondary actions.
+/// - **Accessibility**: when `title` is provided, it is also used as the accessibility label.
+///
+/// Most projects will pair it with the included styles:
+/// - `.buttonStyle(.blueUtil)` for primary actions
+/// - `.buttonStyle(.dangerUtil)` for destructive actions
+/// - `.buttonStyle(.grayUtil)` for neutral/secondary actions
+///
+/// Example:
+/// ```swift
+/// @State private var isSaving = false
+///
+/// ButtonViewUtils(
+///     title: "Save",
+///     icon: "checkmark.circle.fill",
+///     isLoading: isSaving,
+///     onLongPress: { /* show options */ }
+/// ) {
+///     isSaving = true
+///     // perform work...
+/// }
+/// .buttonStyle(.blueUtil)
+/// ```
 public struct ButtonViewUtils: View {
     private let title: String?
     private let icon: String?
@@ -77,7 +106,16 @@ public struct ButtonViewUtils: View {
     private let onLongPress: (() -> Void)?
     private let longPressDuration: Double
     
-    /// Creates a util button with an optional default title (shown when no custom label is provided).
+    /// Creates a `ButtonViewUtils` with a default label (title + optional SF Symbol).
+    ///
+    /// - Parameters:
+    ///   - title: The button title. When provided, it is also used as the accessibility label.
+    ///   - icon: Optional SF Symbol name to show next to the title (e.g. `"trash"`).
+    ///   - role: Optional `ButtonRole` (e.g. `.destructive`) for system semantics.
+    ///   - isLoading: When `true`, shows a spinner and disables interaction.
+    ///   - onLongPress: Optional long-press handler for secondary actions.
+    ///   - longPressDuration: Minimum press duration before `onLongPress` fires.
+    ///   - action: Invoked on tap when not loading.
     public init(
         title: String? = nil,
         icon: String? = nil,
@@ -97,7 +135,12 @@ public struct ButtonViewUtils: View {
         self.customLabel = nil
     }
 
-    /// Creates a util button with a fully custom SwiftUI label (Text/Image/VStack/Label/etc.).
+    /// Creates a `ButtonViewUtils` with a fully custom label view.
+    ///
+    /// Use this when you need richer layouts (e.g. a `VStack` with a subtitle).
+    /// The label view is responsible for its own typography and layout.
+    ///
+    /// - Important: If you omit `title`, the button will not set a custom accessibility label.
     public init<Content: View>(
         title: String? = nil,
         icon: String? = nil,
@@ -119,6 +162,8 @@ public struct ButtonViewUtils: View {
     }
     
     /// Backwards-compatible initializer.
+    ///
+    /// Prefer `init(title:icon:role:isLoading:onLongPress:longPressDuration:action:)` for new code.
     public init(label: String, icon: String? = nil, action: @escaping () -> Void) {
         self.init(title: label, icon: icon, action: action)
     }
@@ -204,6 +249,7 @@ enum ButtonUtilsStyle {
 }
 
 // MARK: - Shared style implementation
+/// Defines the surface treatment used by `UtilButtonUtilsStyle`.
 private enum UtilButtonSurface {
     case filled
     case soft
@@ -211,12 +257,21 @@ private enum UtilButtonSurface {
     case clear
 }
 
+/// Captures a small set of colors used by `UtilButtonUtilsStyle`.
+///
+/// The palette is intentionally small so button styles remain consistent across the library.
 private struct UtilButtonPalette {
     let tint: Color
     let foreground: Color
     let surface: UtilButtonSurface
 }
 
+/// Internal implementation used by the public `.dangerUtil/.blueUtil/...` button styles.
+///
+/// This style focuses on a few UX pillars:
+/// - **Legibility**: high-contrast foreground/background pairing for primary variants.
+/// - **Press affordance**: subtle scale/opacity animation while pressed.
+/// - **Tactile feedback**: optional haptic on press for primary/destructive actions.
 private struct UtilButtonUtilsStyle: ButtonStyle {
     let palette: UtilButtonPalette
     let cornerRadius: CGFloat
@@ -315,6 +370,7 @@ extension ButtonStyle where Self == ClearButtonUtilsStyle {
 }
 
 // Button style components
+/// A high-contrast destructive style (filled red) with press animation and light haptics.
 struct DangerButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         UtilButtonUtilsStyle(
@@ -326,6 +382,7 @@ struct DangerButtonUtilsStyle: ButtonStyle {
     }
 }
 
+/// A high-contrast warning style (filled orange) with press animation and light haptics.
 struct WarningButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         UtilButtonUtilsStyle(
@@ -337,6 +394,7 @@ struct WarningButtonUtilsStyle: ButtonStyle {
     }
 }
 
+/// A neutral, outline style that adapts well to light/dark mode.
 struct GrayButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         UtilButtonUtilsStyle(
@@ -348,6 +406,7 @@ struct GrayButtonUtilsStyle: ButtonStyle {
     }
 }
 
+/// A high-contrast success style (filled green) with press animation and light haptics.
 struct GreenButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         UtilButtonUtilsStyle(
@@ -359,6 +418,7 @@ struct GreenButtonUtilsStyle: ButtonStyle {
     }
 }
 
+/// A high-contrast primary style (filled blue) with press animation and light haptics.
 struct BlueButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         UtilButtonUtilsStyle(
@@ -370,6 +430,7 @@ struct BlueButtonUtilsStyle: ButtonStyle {
     }
 }
 
+/// A lightweight, clear-background style intended for inline actions.
 struct ClearButtonUtilsStyle: ButtonStyle {
     func makeBody(configuration: Configuration) -> some View {
         UtilButtonUtilsStyle(
@@ -388,6 +449,11 @@ enum ButtonStyleType {
     case destructive
 }
 
+/// Applies a system button appearance preset.
+///
+/// This modifier is a lightweight convenience wrapper around SwiftUI's built-in button styles.
+/// Prefer it when you want buttons that match the platform conventions (instead of the custom
+/// `.dangerUtil/.blueUtil/...` styles above).
 public struct SystemButtonModifier: ViewModifier {
     let type: ButtonStyleType
     
@@ -415,6 +481,13 @@ public struct SystemButtonModifier: ViewModifier {
 }
 
 extension View {
+    /// Applies a platform-style preset for system buttons.
+    ///
+    /// Example:
+    /// ```swift
+    /// Button("Primary") { }
+    ///     .utilButtonType(.primary)
+    /// ```
     func utilButtonType(_ type: ButtonStyleType) -> some View {
         modifier(SystemButtonModifier(type: type))
     }
