@@ -239,9 +239,9 @@ HeartLikeView(isLiked: $isLiked)
 ### Tooltip / activity pill (`ActivityItemUtils`)
 
 ```swift
-ActivityItemUtils("12", type: .left) {
+ActivityItemUtils("12", type: .left, icon: {
     Image(systemName: "bubble.fill")
-}
+})
 ```
 
 ### Accessibility utilities (`.accessibility(options:)`)

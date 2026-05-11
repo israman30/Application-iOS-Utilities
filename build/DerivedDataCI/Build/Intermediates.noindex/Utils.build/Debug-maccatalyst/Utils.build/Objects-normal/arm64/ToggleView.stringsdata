@@ -1,0 +1,24 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/ToggleView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "title",
+        "location": {
+          "startingColumn": 35,
+          "startingLine": 13
+        }
+      },
+      {
+        "comment": "",
+        "key": "",
+        "location": {
+          "startingColumn": 40,
+          "startingLine": 27
+        }
+      }
+    ]
+  },
+  "version": 1
+}
