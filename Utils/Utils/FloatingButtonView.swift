@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 
+// MARK: - Demo / usage
 struct FloatingButtonView: View {
     @State private var isCreating: Bool = false
     @State private var lastEvent: String = "No events yet"
@@ -77,13 +78,39 @@ struct FloatingButtonView_Previews: PreviewProvider {
 }
 #endif
 
-/// numerate the `alignments` for the floating button
+// MARK: - Public types
+/// Alignment options for placing the floating button in its container.
 public enum AlignmentFloatingButton {
     case leading
     case trailing
 }
 
-/// Custom input `params` for customize the floating button
+// MARK: - Public component
+/// A reusable floating action button (FAB) component for SwiftUI.
+///
+/// `FloatingButtonUtilsView` provides a few UX defaults that make floating buttons feel
+/// consistent across screens:
+/// - **Minimum tap target**: `size` is clamped to at least 44pt.
+/// - **Legibility**: the icon/spinner color is chosen to contrast with `tint`.
+/// - **Press affordance**: subtle scale/opacity animation while pressed.
+/// - **Feedback**: optional haptic when the button is pressed.
+/// - **Loading state**: when `isLoading == true`, shows a spinner and disables interaction.
+/// - **Long press**: optional secondary action via `onLongPress`.
+///
+/// Example:
+/// ```swift
+/// FloatingButtonUtilsView(
+///     title: "Create",
+///     alignment: .trailing,
+///     tint: .blue,
+///     icon: "plus",
+///     isLoading: isSaving,
+///     onLongPress: { showQuickActions = true }
+/// ) {
+///     isSaving = true
+///     // perform work...
+/// }
+/// ```
 public struct FloatingButtonUtilsView: View {
     private let title: String?
     private let icon: String
@@ -96,6 +123,19 @@ public struct FloatingButtonUtilsView: View {
     private let longPressDuration: Double
     private let pressHaptic: UIImpactFeedbackGenerator.FeedbackStyle?
     
+    /// Creates a floating button.
+    ///
+    /// - Parameters:
+    ///   - title: Used for accessibility labeling. Keep it short and action-oriented (e.g. "Add item").
+    ///   - alignment: Places the button on the leading or trailing edge.
+    ///   - tint: The button background color.
+    ///   - icon: SF Symbol name displayed in the circle (e.g. `"plus"`).
+    ///   - size: The circle size. Values under 44 are clamped to 44 to preserve the minimum tap target.
+    ///   - isLoading: When `true`, shows a spinner and disables tap/long-press.
+    ///   - pressHaptic: Optional haptic style fired when the press begins.
+    ///   - onLongPress: Optional long-press handler (useful for secondary actions).
+    ///   - longPressDuration: Minimum press duration before `onLongPress` fires.
+    ///   - action: Invoked on tap when not loading.
     public init(
         title: String? = nil,
         alignment: AlignmentFloatingButton = .trailing,
@@ -177,6 +217,9 @@ public struct FloatingButtonUtilsView: View {
     }
 
     private func titleContrastForeground(for tint: Color) -> Color {
+        // We use a lightweight luminance heuristic (not full WCAG contrast computation)
+        // to choose between black/white foreground. This keeps the API simple while
+        // improving legibility for common solid tints.
         let uiColor = UIColor(tint)
         var red: CGFloat = 0
         var green: CGFloat = 0
@@ -200,6 +243,7 @@ public struct FloatingButtonUtilsView: View {
     }
 }
 
+// MARK: - Internal style
 private struct FloatingButtonUtilsStyle: ButtonStyle {
     let tint: Color
     let foreground: Color
