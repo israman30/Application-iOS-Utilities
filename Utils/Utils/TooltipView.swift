@@ -74,6 +74,9 @@ struct TooltipView_Previews: PreviewProvider {
 }
 #endif
 
+/// A small triangular arrow used by `ActivityItemUtils`.
+///
+/// The arrow is drawn pointing **up**; `ActivityItemUtils` rotates/offsets it based on `TooltipDirection`.
 private struct TooltipArrow: Shape {
     nonisolated func path(in rect: CGRect) -> Path {
         var path = Path()
@@ -85,10 +88,31 @@ private struct TooltipArrow: Shape {
     }
 }
 
+/// Positions the tooltip arrow relative to the pill content.
 public enum TooltipDirection {
     case top, left, right, bottom
 }
 
+/// A compact “activity pill” / tooltip badge with an optional arrow.
+///
+/// This component is designed for small callouts like unread counts, hints, or inline status.
+/// It adapts to light/dark mode using semantic system colors and supports optional interaction.
+///
+/// ## Usage
+/// ```swift
+/// ActivityItemUtils("12", type: .left, tint: .orange, icon: {
+///     Image(systemName: "bubble.fill")
+/// })
+/// ```
+///
+/// ## Interaction
+/// - If `onTap` is provided, the pill becomes a `Button` (with press animation + optional haptic).
+/// - `onLongPress` can be used for secondary actions; if both are provided, an accessibility
+///   action named “More options” is exposed to VoiceOver.
+///
+/// ## Accessibility
+/// - The icon is hidden from VoiceOver and the pill is exposed as a single element.
+/// - Provide `accessibilityLabel`/`accessibilityHint` when the visible title is not descriptive.
 public struct ActivityItemUtils<Icon: View>: View {
     private let title: String
     private let type: TooltipDirection
@@ -105,6 +129,19 @@ public struct ActivityItemUtils<Icon: View>: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.isEnabled) private var isEnabled: Bool
     
+    /// Creates an activity pill / tooltip badge.
+    ///
+    /// - Parameters:
+    ///   - title: Visible text content of the pill.
+    ///   - type: Where the arrow appears relative to the pill.
+    ///   - tint: Optional accent color used for icon and the pill’s soft surface.
+    ///   - onTap: Optional primary action. When set, the view is rendered as a `Button`.
+    ///   - onLongPress: Optional long-press action for secondary behavior.
+    ///   - longPressDuration: Minimum press duration before `onLongPress` fires.
+    ///   - pressHaptic: Optional haptic fired when pressing down (only when `onTap` is set).
+    ///   - accessibilityLabel: Overrides the VoiceOver label (defaults to `title`).
+    ///   - accessibilityHint: Optional VoiceOver hint string.
+    ///   - icon: Optional leading icon (usually an SF Symbol).
     public init(
         _ title: String,
         type: TooltipDirection = .bottom,
@@ -303,6 +340,10 @@ public struct ActivityItemUtils<Icon: View>: View {
     }
 }
 
+/// Press treatment for tappable `ActivityItemUtils` pills.
+///
+/// Intentionally lightweight (scale/opacity + optional haptic) so the component can be used inline
+/// without feeling “button heavy”.
 private struct ActivityItemUtilsButtonStyle: ButtonStyle {
     let pressHaptic: UIImpactFeedbackGenerator.FeedbackStyle?
     
