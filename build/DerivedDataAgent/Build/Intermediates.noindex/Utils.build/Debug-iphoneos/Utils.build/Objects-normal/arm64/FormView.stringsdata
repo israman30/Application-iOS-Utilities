@@ -1,0 +1,48 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/FormView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Body Form",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 14
+        }
+      },
+      {
+        "comment": "",
+        "key": "header",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 16
+        }
+      },
+      {
+        "comment": "",
+        "key": "Footer",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Some View",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 22
+        }
+      },
+      {
+        "comment": "",
+        "key": "Some footer",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 24
+        }
+      }
+    ]
+  },
+  "version": 1
+}

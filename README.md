@@ -194,9 +194,19 @@ GridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
 ```swift
 @State private var value = 0
 
-StepperViewUtils(title: "Quantity", value: $value, min: 0, max: 100, step: 1) {
+StepperViewUtils(
+    title: "Quantity",
+    value: $value,
+    min: 0,
+    max: 100,
+    step: 1,
+    showsValue: true,
+    valueText: { "\($0)" },
+    tintColor: .blue,
+    onUpdate: {
     // onUpdate
-}
+    }
+)
 ```
 
 ### Pickers (`PickerViewUtils`, `DatePickerViewUtils`)
