@@ -38,10 +38,24 @@ import Utils
 ### Buttons (`ButtonViewUtils`, button styles, and system button modifier)
 
 ```swift
+@State private var isUploading = false
+
 ButtonViewUtils(label: "Tap here", icon: "xmark.circle") {
     // action
 }
 .buttonStyle(.dangerUtil)
+
+ButtonViewUtils(
+    title: "Upload",
+    icon: "arrow.up.circle.fill",
+    isLoading: isUploading,
+    onLongPress: {
+        // optional long-press event
+    }
+) {
+    // action
+}
+.buttonStyle(.blueUtil)
 
 Button("Primary") { }
     .utilButtonType(.primary)
