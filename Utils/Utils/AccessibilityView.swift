@@ -10,7 +10,26 @@ import SwiftUI
 import UIKit
 #endif
 
-// MARK: - Usage View
+// MARK: - Accessibility reference screen (demo)
+/// A small, copy-pastable reference screen that demonstrates practical SwiftUI accessibility patterns.
+///
+/// ## Setup
+/// - Drop this file into your project (or open this view from a debug/demo menu).
+/// - Turn on system accessibility settings (Dynamic Type, VoiceOver, Increase Contrast, etc.)
+///   and verify the UI remains readable and navigable.
+///
+/// ## What it demonstrates
+/// - **Typography**: uses semantic text styles so content scales with Dynamic Type.
+/// - **Contrast**: uses adaptive system colors and increases borders in higher-contrast modes.
+/// - **VoiceOver**: assigns clear labels/values/hints and keeps announcements concise via
+///   `.accessibilityElement(children:)`.
+/// - **Differentiate Without Color**: shows a status chip that remains understandable without color.
+/// - **Reduce Motion / Transparency**: avoids animation when Reduce Motion is enabled and favors
+///   system surfaces that remain legible under reduced transparency.
+///
+/// ## Usage
+/// You can use this view as a checklist: compare your production screens against these patterns,
+/// then extract the pieces (cards, rows, and accessibility modifiers) that fit your app.
 struct AccessibilityView: View {
     @State private var sliderValue: Double = 42
     @State private var isFeatureEnabled: Bool = true
@@ -55,6 +74,7 @@ struct AccessibilityView: View {
                 .font(.largeTitle.weight(.bold))
                 .foregroundStyle(.primary)
                 .accessibility(options: [
+                    // Keep the top title discoverable as a semantic heading in VoiceOver rotor navigation.
                     .traits([.isHeader]),
                     .heading(level: .h1),
                     .labels("Accessibility")
@@ -115,6 +135,7 @@ struct AccessibilityView: View {
                         .font(.body.weight(.semibold))
                         .monospacedDigit()
                         .foregroundStyle(.primary)
+                        // Numbers should be spoken as a human-friendly phrase, not as raw symbols.
                         .accessibilityLabel("Order total")
                         .accessibilityValue("\(quantity * 12) dollars")
                 }
@@ -131,6 +152,7 @@ struct AccessibilityView: View {
                     .fixedSize(horizontal: false, vertical: true)
 
                 ConnectionStatusPill(status: status, differentiateWithoutColor: differentiateWithoutColor)
+                    // Expose a single, clean announcement (label + value) for status.
                     .accessibilityElement(children: .ignore)
                     .accessibilityLabel("Connection status")
                     .accessibilityValue(status.accessibilityValue)
@@ -216,12 +238,14 @@ struct AccessibilityView: View {
                             .monospacedDigit()
                     }
                 }
+                // Stepper defaults are decent, but a custom value/hint makes it clearer when embedded in cards.
                 .accessibilityLabel("Quantity")
                 .accessibilityValue("\(quantity)")
                 .accessibilityHint("Adjusts the quantity from one to ten.")
                 .accessibilitySortPriority(1)
 
                 Button {
+                    // Respect Reduce Motion by removing animation.
                     let animation = reduceMotion ? nil : Animation.snappy(duration: 0.22)
                     withAnimation(animation) {
                         showConfirmation = true
@@ -312,6 +336,11 @@ private enum ConnectionStatus: String, CaseIterable {
     }
 }
 
+/// A compact “status” surface that remains understandable under:
+/// - **Increase Contrast** (stronger border)
+/// - **Differentiate Without Color** (adds an additional non-color cue)
+///
+/// The parent view should usually expose this as a single accessibility element.
 private struct ConnectionStatusPill: View {
     let status: ConnectionStatus
     let differentiateWithoutColor: Bool
@@ -358,6 +387,7 @@ private struct ConnectionStatusPill: View {
         if reduceTransparency {
             return Color(uiColor: .secondarySystemBackground)
         }
+        // Prefer system surfaces so the OS can adapt contrast/legibility appropriately.
         return Color(uiColor: .secondarySystemBackground)
 #else
         return Color.primary.opacity(0.06)
@@ -382,6 +412,7 @@ private struct AccessibilityCard<Content: View>: View {
                 .font(.headline)
                 .foregroundStyle(.primary)
                 .accessibility(options: [
+                    // Give each card a rotor-navigable section heading.
                     .traits([.isHeader]),
                     .heading(level: .h2)
                 ])
@@ -433,6 +464,13 @@ private struct EnvironmentRow: View {
     }
 }
 
+// MARK: - Accessibility utility: apply multiple modifiers in one call
+/// A small set of options used by `.accessibility(options:)`.
+///
+/// ## Intent
+/// SwiftUI’s accessibility API is composed of many individual modifiers. This wrapper lets callers
+/// apply a consistent set of label/value/hint/traits/heading behavior in one place, which is useful
+/// for reusable UI components.
 public enum AccessibilityOption {
     case traits([AccessibilityTraits])
     case labels(_ label: String)
@@ -515,6 +553,21 @@ extension View {
         }
     }
     
+    /// Applies multiple accessibility-related modifiers in a single call.
+    ///
+    /// ## Usage
+    /// ```swift
+    /// Text("Main Heading")
+    ///   .accessibility(options: [
+    ///     .traits([.isHeader]),
+    ///     .heading(level: .h1),
+    ///     .labels("Main heading")
+    ///   ])
+    /// ```
+    ///
+    /// Notes:
+    /// - Prefer `.behaviour(children:)` to keep VoiceOver announcements concise (`.combine` is often best).
+    /// - Use `.labels`, `.value`, and `.hint` to make custom controls predictable for screen reader users.
     public func accessibility(options: [AccessibilityOption]) -> some View {
         self.modifier(AccessibilityOptionModifier(options: options))
     }
