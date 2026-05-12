@@ -38,6 +38,9 @@ Temporary Items
 ## User settings
 xcuserdata/
 
+## Derived Data (local build artifacts)
+_DerivedData/
+
 ## Xcode 8 and earlier
 *.xcscmblueprint
 *.xccheckout
