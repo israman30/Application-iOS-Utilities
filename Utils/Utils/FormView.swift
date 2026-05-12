@@ -10,6 +10,7 @@ import SwiftUI
 import UIKit
 #endif
 
+// MARK: - Demo / sample usage
 struct FormView: View {
     @State private var name: String = ""
     @State private var email: String = ""
@@ -120,6 +121,53 @@ struct FormView_Previews: PreviewProvider {
 }
 #endif
 
+// MARK: - Public component
+/// A lightweight, customizable `Form` wrapper that gives you:
+/// - A **single** `Section` with optional header and footer
+/// - A modern iOS look by default (`.insetGrouped` + grouped system backgrounds)
+/// - Better UX defaults like **interactive keyboard dismissal** on iOS 16+
+/// - Sensible accessibility behavior for section headers + optional identifiers
+///
+/// ## Why this exists
+/// SwiftUI’s `Form` is powerful but tends to accumulate one-off styling across screens. `FormViewUtil`
+/// centralizes a few choices so forms look and behave consistently across your app/library.
+///
+/// ## Accessibility notes
+/// - If you provide a `header`, it is marked with `.isHeader` to improve VoiceOver navigation.
+/// - Use `headerText`/`footerText` initializers when you want headings that are also rotor-friendly.
+///
+/// ## Usage
+/// Basic (custom header/footer views):
+/// ```swift
+/// FormViewUtil {
+///     Text("Body")
+/// } header: {
+///     Text("Header")
+/// } footer: {
+///     Text("Footer")
+/// }
+/// ```
+///
+/// Simple (consistent typography + heading semantics):
+/// ```swift
+/// FormViewUtil(
+///     content: { Text("Body") },
+///     headerText: "Header",
+///     footerText: "Footer"
+/// )
+/// ```
+///
+/// Custom look (e.g. embedded in your own card container):
+/// ```swift
+/// FormViewUtil(
+///     content: { Text("Body") },
+///     headerText: "Settings",
+///     backgroundColor: .clear,
+///     sectionBackgroundColor: Color(uiColor: .secondarySystemBackground),
+///     rowSeparatorVisibility: .hidden,
+///     accessibilityIdentifier: "settings-form"
+/// )
+/// ```
 public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
     let content: () -> Content
     var header: (() -> Header)? = nil
@@ -132,6 +180,16 @@ public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
 
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast: ColorSchemeContrast
     
+    /// Creates a form with a single section, plus optional header and footer.
+    ///
+    /// - Parameters:
+    ///   - content: Section body content.
+    ///   - header: Optional section header view.
+    ///   - footer: Optional section footer view.
+    ///   - backgroundColor: Background behind the form. Defaults to grouped system background.
+    ///   - sectionBackgroundColor: Row background for the section. Defaults to secondary grouped background.
+    ///   - rowSeparatorVisibility: Controls separator visibility (use `.hidden` for card-style layouts).
+    ///   - accessibilityIdentifier: Optional identifier for UI tests and assistive tooling.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         header: (() -> Header)? = nil,
@@ -194,6 +252,7 @@ public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
 }
 
 extension FormViewUtil where Header == EmptyView {
+    /// Convenience initializer for forms that only need a footer.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         footer: @escaping () -> Footer,
@@ -215,6 +274,7 @@ extension FormViewUtil where Header == EmptyView {
 }
 
 extension FormViewUtil where Footer == EmptyView {
+    /// Convenience initializer for forms that only need a header.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         header: @escaping () -> Header,
@@ -236,6 +296,7 @@ extension FormViewUtil where Footer == EmptyView {
 }
 
 extension FormViewUtil where Header == EmptyView, Footer == EmptyView {
+    /// Convenience initializer for a single-section form with no header/footer.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         backgroundColor: Color = Color(uiColor: .systemGroupedBackground),
@@ -256,6 +317,11 @@ extension FormViewUtil where Header == EmptyView, Footer == EmptyView {
 }
 
 // MARK: - Convenience: text header/footer
+/// Default header text used by the `headerText` convenience initializers.
+///
+/// This type exists so the convenience initializers can apply consistent typography and
+/// accessibility semantics without constraining `Header == Text` (which would prevent attaching
+/// modifiers that change the resulting view type).
 public struct FormViewUtilHeaderText: View {
     private let text: String
 
@@ -273,6 +339,9 @@ public struct FormViewUtilHeaderText: View {
     }
 }
 
+/// Default footer text used by the `footerText` convenience initializers.
+///
+/// Uses footnote sizing + secondary color, and supports multi-line wrapping at accessibility sizes.
 public struct FormViewUtilFooterText: View {
     private let text: String
 
@@ -287,6 +356,7 @@ public struct FormViewUtilFooterText: View {
 }
 
 extension FormViewUtil where Header == FormViewUtilHeaderText, Footer == FormViewUtilFooterText {
+    /// Convenience initializer that renders a styled, accessible text header + footer.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         headerText: String,
@@ -309,6 +379,7 @@ extension FormViewUtil where Header == FormViewUtilHeaderText, Footer == FormVie
 }
 
 extension FormViewUtil where Header == FormViewUtilHeaderText, Footer == EmptyView {
+    /// Convenience initializer that renders a styled, accessible text header.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         headerText: String,
@@ -330,6 +401,7 @@ extension FormViewUtil where Header == FormViewUtilHeaderText, Footer == EmptyVi
 }
 
 extension FormViewUtil where Header == EmptyView, Footer == FormViewUtilFooterText {
+    /// Convenience initializer that renders a styled footer text.
     public init(
         @ViewBuilder content: @escaping () -> Content,
         footerText: String,
