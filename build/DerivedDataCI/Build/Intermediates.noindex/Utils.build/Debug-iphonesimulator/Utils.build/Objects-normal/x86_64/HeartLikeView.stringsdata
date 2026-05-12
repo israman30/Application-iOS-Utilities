@@ -1,0 +1,24 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/HeartLikeView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Liked",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Not liked",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 23
+        }
+      }
+    ]
+  },
+  "version": 1
+}

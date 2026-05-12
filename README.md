@@ -252,13 +252,13 @@ ToggleViewUtils(titleKey: "Enable feature", isOn: $isOn)
 ### Forms (`FormViewUtil`)
 
 ```swift
-FormViewUtil {
-    Text("Body")
-} header: {
-    Text("Header")
-} footer: {
-    Text("Footer")
-}
+FormViewUtil(
+    content: {
+        Text("Body")
+    },
+    headerText: "Header",
+    footerText: "Footer"
+)
 ```
 
 ### Like button (`HeartLikeView`)
