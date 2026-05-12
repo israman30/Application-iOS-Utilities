@@ -116,7 +116,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
         guard steps > 0, !path.isEmpty else { return }
         let safeSteps = min(steps, path.count)
         if animated {
-           let  _ = withAnimation { path.removeLast(safeSteps) }
+            _ = withAnimation { path.removeLast(safeSteps) }
         } else {
             path.removeLast(safeSteps)
         }
@@ -132,7 +132,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
 
     public func navigateToRoot(animated: Bool = true) {
         if animated {
-           let _ = withAnimation { path.removeAll() }
+            _ = withAnimation { path.removeAll() }
         } else {
             path.removeAll()
         }
@@ -173,40 +173,50 @@ public typealias Navigation<C: Coordinating> = CoordinatorView<C>
 // MARK: - Coordinator Sample (Debug-only)
 
 #if DEBUG
-/// A small demo view you can run in previews to see coordinator navigation in action.
+/// A small demo that showcases the coordinator pattern end-to-end.
 ///
-/// This is compiled only in Debug builds to avoid adding demo types to your Release framework.
-public struct CoordinatorSampleView: View {
+/// - **Root**: the entry point. It creates the coordinator and hosts `CoordinatorView`.
+/// - **Main**: the coordinator’s `rootView()`.
+/// - **Details / Settings**: destination screens pushed via `Route`.
+///
+/// This is compiled only in Debug builds to avoid shipping demo types in Release.
+///
+/// ### Run it
+/// - Open `CoordinatorSampleRootView` in the preview at the bottom of this file, or
+/// - Drop `CoordinatorSampleRootView()` into any SwiftUI hierarchy in a Debug build.
+public struct CoordinatorSampleRootView: View {
     public init() {}
 
     public var body: some View {
-        CoordinatorView(coordinator: SampleCoordinator())
+        CoordinatorView(coordinator: RootCoordinator())
     }
-}
-
-private enum SampleRoute: Hashable {
-    case details(id: String)
-    case settings
 }
 
 @MainActor
-private final class SampleCoordinator: Coordinator<SampleRoute> {
+private final class RootCoordinator: Coordinator<Route> {
     override func rootView() -> AnyView {
-        AnyView(SampleHomeView())
+        AnyView(Main())
     }
 
-    override func destinationView(for route: SampleRoute) -> AnyView {
+    override func destinationView(for route: Route) -> AnyView {
         switch route {
         case .details(let id):
-            AnyView(SampleDetailsView(id: id))
+            AnyView(Details(id: id))
         case .settings:
-            AnyView(SampleSettingsView())
+            AnyView(Settings())
         }
     }
 }
 
-private struct SampleHomeView: View {
-    @EnvironmentObject private var coordinator: SampleCoordinator
+/// Routes that can be pushed onto the navigation stack.
+private enum Route: Hashable {
+    case details(id: String)
+    case settings
+}
+
+/// Main screen for the sample (this is the coordinator’s `rootView()`).
+private struct Main: View {
+    @EnvironmentObject private var coordinator: RootCoordinator
 
     var body: some View {
         List {
@@ -219,7 +229,7 @@ private struct SampleHomeView: View {
                     coordinator.navigate(to: .settings)
                 }
 
-                Button("Push 3 details") {
+                Button("Replace stack with 3 details") {
                     coordinator.setPath([
                         .details(id: "A1"),
                         .details(id: "B2"),
@@ -228,13 +238,14 @@ private struct SampleHomeView: View {
                 }
             }
         }
-        .navigationTitle("Coordinator Sample")
+        .navigationTitle("Main")
     }
 }
 
-private struct SampleDetailsView: View {
+/// Destination screen for `.details`.
+private struct Details: View {
     let id: String
-    @EnvironmentObject private var coordinator: SampleCoordinator
+    @EnvironmentObject private var coordinator: RootCoordinator
 
     var body: some View {
         VStack(spacing: 16) {
@@ -266,8 +277,9 @@ private struct SampleDetailsView: View {
     }
 }
 
-private struct SampleSettingsView: View {
-    @EnvironmentObject private var coordinator: SampleCoordinator
+/// Destination screen for `.settings`.
+private struct Settings: View {
+    @EnvironmentObject private var coordinator: RootCoordinator
 
     var body: some View {
         VStack(spacing: 16) {
@@ -290,9 +302,9 @@ private struct SampleSettingsView: View {
     }
 }
 
-struct CoordinatorSampleView_Previews: PreviewProvider {
+struct CoordinatorSampleRootView_Previews: PreviewProvider {
     static var previews: some View {
-        CoordinatorSampleView()
+        CoordinatorSampleRootView()
     }
 }
 #endif
