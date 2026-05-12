@@ -2,10 +2,53 @@ import SwiftUI
 
 /// Coordinator pattern for `NavigationStack` that is reusable from the `Utils` framework.
 ///
-/// - **Coordinator** (class): owns navigation state (`path`) and provides navigation APIs,
-///   plus two overridable view builders: root view + destination views.
-/// - **CoordinatorView** (struct): builds the `NavigationStack` using `path` and delegates
-///   view construction to the coordinator.
+/// This file provides a small, library-friendly abstraction around `NavigationStack` that
+/// keeps navigation state and view construction in one place (a coordinator), while still
+/// letting SwiftUI own the navigation container.
+///
+/// ### Setup (what you create in your app/module)
+/// 1. Define a `Route` type (usually an enum) that conforms to `Hashable`.
+/// 2. Subclass `Coordinator<Route>` and implement:
+///    - `rootView()` for the first screen
+///    - `destinationView(for:)` for pushed screens
+/// 3. Host everything using `CoordinatorView(coordinator:)`.
+///
+/// ### How it works (implementation summary)
+/// - `Coordinator` owns the navigation stack state as an array of routes (`path: [Route]`)
+/// - `CoordinatorView` creates a `NavigationStack(path:)` bound to that array
+/// - `.navigationDestination(for:)` delegates destination view construction back to the coordinator
+/// - The coordinator is injected into the view tree via `.environmentObject(coordinator)`
+///
+/// ### Usage (copy/paste)
+/// ```swift
+/// import SwiftUI
+/// import Utils
+///
+/// enum AppRoute: Hashable { case details(id: String), settings }
+///
+/// final class AppCoordinator: Coordinator<AppRoute> {
+///     override func rootView() -> AnyView { AnyView(HomeView()) }
+///     override func destinationView(for route: AppRoute) -> AnyView {
+///         switch route {
+///         case .details(let id): AnyView(DetailsView(id: id))
+///         case .settings: AnyView(SettingsView())
+///         }
+///     }
+/// }
+///
+/// struct AppRoot: View {
+///     var body: some View {
+///         CoordinatorView(coordinator: AppCoordinator())
+///     }
+/// }
+///
+/// struct HomeView: View {
+///     @EnvironmentObject var coordinator: AppCoordinator
+///     var body: some View {
+///         Button("Go") { coordinator.navigate(to: .details(id: "123")) }
+///     }
+/// }
+/// ```
 @MainActor
 public protocol Coordinating: ObservableObject {
     associatedtype Route: Hashable
@@ -20,9 +63,10 @@ public protocol Coordinating: ObservableObject {
 
 /// Base coordinator class you can subclass in your app/module.
 ///
-/// Typical usage:
-/// - Define your own `Route: Hashable` (usually an enum)
-/// - Subclass `Coordinator<Route>` and override `rootView()` / `destinationView(for:)`
+/// ### Implementation notes
+/// - The `path` is `[Route]` (instead of `NavigationPath`) so it can be bound directly to
+///   `NavigationStack(path:)` with type safety and without type erasure.
+/// - View construction returns `AnyView` to keep the API surface small and easy to override.
 @MainActor
 open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
     @Published public var path: [Route] = []
@@ -41,7 +85,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
 
     public func navigate(to route: Route, animated: Bool = true) {
         if animated {
-            withAnimation { path.append(route) }
+           let _ = withAnimation { path.append(route) }
         } else {
             path.append(route)
         }
@@ -49,7 +93,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
 
     public func setPath(_ routes: [Route], animated: Bool = true) {
         if animated {
-            withAnimation { path = routes }
+           let _ = withAnimation { path = routes }
         } else {
             path = routes
         }
@@ -62,7 +106,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
     public func navigateBack(animated: Bool = true) {
         guard !path.isEmpty else { return }
         if animated {
-            withAnimation { path.removeLast() }
+            _ = withAnimation { path.removeLast() }
         } else {
             path.removeLast()
         }
@@ -72,7 +116,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
         guard steps > 0, !path.isEmpty else { return }
         let safeSteps = min(steps, path.count)
         if animated {
-            withAnimation { path.removeLast(safeSteps) }
+           let  _ = withAnimation { path.removeLast(safeSteps) }
         } else {
             path.removeLast(safeSteps)
         }
@@ -88,7 +132,7 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
 
     public func navigateToRoot(animated: Bool = true) {
         if animated {
-            withAnimation { path.removeAll() }
+           let _ = withAnimation { path.removeAll() }
         } else {
             path.removeAll()
         }
@@ -96,6 +140,10 @@ open class Coordinator<Route: Hashable>: ObservableObject, Coordinating {
 }
 
 /// A reusable `NavigationStack` host for any coordinator.
+///
+/// ### Usage
+/// Create the coordinator once at the root, and pass it here. `CoordinatorView` will keep it
+/// alive using `@StateObject` and inject it into the environment as an `EnvironmentObject`.
 @MainActor
 public struct CoordinatorView<C: Coordinating>: View {
     @StateObject private var coordinator: C
@@ -121,7 +169,13 @@ public struct CoordinatorView<C: Coordinating>: View {
 @available(*, deprecated, message: "Use CoordinatorView(coordinator:) instead.")
 public typealias Navigation<C: Coordinating> = CoordinatorView<C>
 
+
+// MARK: - Coordinator Sample (Debug-only)
+
 #if DEBUG
+/// A small demo view you can run in previews to see coordinator navigation in action.
+///
+/// This is compiled only in Debug builds to avoid adding demo types to your Release framework.
 public struct CoordinatorSampleView: View {
     public init() {}
 
