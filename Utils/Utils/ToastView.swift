@@ -12,10 +12,37 @@ import UIKit
 
 /// A lightweight toast for transient status messages.
 ///
-/// `ToastView` is designed to be:
-/// - **Readable**: adaptive colors, optional tint, and increased border weight in higher-contrast modes.
-/// - **Accessible**: Dynamic Type-friendly, VoiceOver announcement (optional), and explicit actions.
-/// - **Interactive**: optional action button, close button, tap-to-dismiss, and swipe-to-dismiss.
+/// ## Setup
+/// Prefer presenting toasts via the included overlay helper:
+/// ```swift
+/// content
+///   .toast(text: "Saved", isVisible: $showToast, style: .success)
+/// ```
+/// This keeps your screen layout simple and ensures the toast overlays at the chosen edge.
+///
+/// You can also instantiate `ToastView` directly when you want full control over placement.
+///
+/// ## Implementation
+/// - **Surface + transparency**: uses semantic system surfaces and a small amount of translucency by
+///   default. If the user enables **Reduce Transparency**, the toast becomes fully opaque.
+/// - **Tinting**: `ToastStyle` can apply a colored overlay without sacrificing legibility.
+/// - **Interaction**: supports tap-to-dismiss, swipe-to-dismiss, an optional action, and an optional close button.
+/// - **Accessibility**: Dynamic Type-friendly typography, and optional VoiceOver announcement when shown.
+///
+/// ## Usage
+/// ```swift
+/// @State private var showToast = false
+///
+/// Button("Save") { showToast = true }
+///   .toast(
+///     text: "Operation completed successfully.",
+///     isVisible: $showToast,
+///     title: "Saved",
+///     style: .success,
+///     actionTitle: "Undo",
+///     action: { /* undo */ }
+///   )
+/// ```
 public struct ToastView: View {
     // MARK: - Public API
     private let text: String
@@ -52,20 +79,20 @@ public struct ToastView: View {
     /// - Parameters:
     ///   - text: Primary toast message.
     ///   - isVisible: Controls whether the toast is visible.
-    ///   - delayedAnimation: Auto-dismiss delay in seconds. Set to `0` for no auto-dismiss.
-    ///   - animationDuration: Show/hide animation duration in seconds.
+    ///   - delayedAnimation: Auto-dismiss delay **in seconds**. Set to `0` to disable auto-dismiss.
+    ///   - animationDuration: Show/hide animation duration **in seconds**.
     ///   - title: Optional title shown above `text`.
-    ///   - systemImage: Optional SF Symbol shown leading the text.
-    ///   - style: Visual style variant (tint + default icon).
-    ///   - position: Placement edge.
+    ///   - systemImage: Optional SF Symbol shown leading the text. If `nil`, the style may provide a default icon.
+    ///   - style: Visual style variant (tint + optional default icon).
+    ///   - position: Placement edge (`.top` or `.bottom`).
     ///   - dismissOnTap: If `true`, tapping the toast dismisses it.
     ///   - dismissOnSwipe: If `true`, swiping the toast toward its edge dismisses it.
-    ///   - showsCloseButton: If `true`, shows a close button.
-    ///   - actionTitle: Optional action button title (e.g. "Undo").
+    ///   - showsCloseButton: If `true`, shows a close button (useful when `dismissOnTap` is `false`).
+    ///   - actionTitle: Optional action button title (e.g. `"Undo"`).
     ///   - action: Optional action invoked by the action button.
     ///   - haptic: Optional haptic fired when the toast appears.
-    ///   - announcesForVoiceOver: If `true`, announces the toast via VoiceOver when shown.
-    ///   - onDismiss: Optional callback when the toast is dismissed.
+    ///   - announcesForVoiceOver: If `true`, posts a VoiceOver announcement when the toast appears.
+    ///   - onDismiss: Optional callback invoked when the toast is dismissed.
     public init(
         text: String,
         isVisible: Binding<Bool>,
@@ -430,12 +457,20 @@ public struct ToastView: View {
 }
 
 // MARK: - Supporting types
+/// Defines the toast's semantic appearance (tint + optional default icon).
+///
+/// Use `.neutral` for a system-surface toast with no tint, or `.success/.warning/.error` to convey
+/// status with a tinted surface and an appropriate default SF Symbol.
 public enum ToastStyle: Equatable {
     case neutral
     case info
     case success
     case warning
     case error
+    
+    /// Provide a custom tint and optional default icon.
+    ///
+    /// If you pass `systemImage` to `ToastView`, that always takes precedence.
     case custom(tint: Color?, defaultSystemImage: String? = nil)
     
     fileprivate var tint: Color? {
@@ -461,6 +496,7 @@ public enum ToastStyle: Equatable {
     }
 }
 
+/// Vertical placement for the toast overlay.
 public enum ToastPosition: Equatable {
     case top
     case bottom
@@ -485,6 +521,7 @@ public enum ToastPosition: Equatable {
     }
 }
 
+/// Optional haptic feedback fired when the toast appears.
 public enum ToastHaptic: Equatable {
     case none
     case success
@@ -684,8 +721,17 @@ private enum ToastDemoHapticOption: String, CaseIterable, Identifiable {
 public extension View {
     /// Presents a `ToastView` over the receiver.
     ///
-    /// Example:
+    /// ## Setup
+    /// Apply this modifier near the root of your screen (e.g. on your `NavigationStack` or main
+    /// container) so the toast can overlay the full available area and anchor to `.top` / `.bottom`.
+    ///
+    /// ## Usage
     /// ```swift
+    /// @State private var showToast = false
+    ///
+    /// VStack {
+    ///   Button("Save") { showToast = true }
+    /// }
     /// .toast(text: "Saved", isVisible: $showToast, style: .success)
     /// ```
     func toast(
