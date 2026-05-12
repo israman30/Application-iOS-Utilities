@@ -215,10 +215,18 @@ StepperViewUtils(
 @State private var selection = "Car"
 let options = ["Car", "Plane", "Boat", "Train"]
 
-PickerViewUtils(titleKey: "Select a transport", selection: $selection, options: options) {
-    // onUpdate
-}
-.pickerStyle(.wheel)
+// Picker style is controlled by the call site.
+PickerViewUtils(
+    titleKey: "Select a transport",
+    selection: $selection,
+    options: options,
+    tintColor: .blue,              // optional accent tint
+    usesHaptics: true,             // optional selection haptics
+    onUpdate: {
+        // Called when `selection` changes.
+    }
+)
+.pickerStyle(.wheel)               // e.g. `.menu`, `.wheel`, ...
 ```
 
 ```swift
@@ -227,7 +235,8 @@ PickerViewUtils(titleKey: "Select a transport", selection: $selection, options: 
 DatePickerViewUtils(
     labelKey: "Select a date",
     date: $date,
-    valuePrefix: "Selected:",
+    valuePrefix: "Selected:",       // optional prefix for the value line
+    displayedComponents: [.date],    // `.hourAndMinute` or `[.date, .hourAndMinute]`
     alignment: .leading
 )
 ```

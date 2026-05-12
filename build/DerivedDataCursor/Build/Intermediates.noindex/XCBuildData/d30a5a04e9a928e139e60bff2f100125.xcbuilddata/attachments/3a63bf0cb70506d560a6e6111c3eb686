@@ -1,0 +1,23 @@
+{
+  "version": 0,
+  "use-external-names": false,
+  "case-sensitive": false,
+  "roots": [{
+    "type": "directory",
+    "name": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/build/DerivedDataCursor/Build/Products/Debug-maccatalyst/Utils.framework/Modules",
+    "contents": [{
+      "type": "file",
+      "name": "module.modulemap",
+      "external-contents": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/build/DerivedDataCursor/Build/Intermediates.noindex/Utils.build/Debug-maccatalyst/Utils.build/unextended-module.modulemap",
+    }]
+    },
+    {
+    "type": "directory",
+    "name": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/build/DerivedDataCursor/Build/Products/Debug-maccatalyst/Utils.framework/Headers",
+    "contents": [{
+      "type": "file",
+      "name": "Utils-Swift.h",
+      "external-contents": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/build/DerivedDataCursor/Build/Intermediates.noindex/Utils.build/Debug-maccatalyst/Utils.build/unextended-interface-header.h",
+    }]
+  }]
+}

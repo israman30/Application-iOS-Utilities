@@ -17,6 +17,10 @@ struct PickerView: View {
             Text("Pickers")
                 .font(.title2.weight(.semibold))
 
+            // Default style is controlled by the call site. This wrapper focuses on:
+            // - Typography + contrast (works in light/dark)
+            // - Optional value readout
+            // - Optional haptics + onUpdate callback
             PickerViewUtils(
                 titleKey: "Transport",
                 selection: $selection,
@@ -27,6 +31,7 @@ struct PickerView: View {
                 // onUpdate
             }
 
+            // Backwards-compatible initializer (keeps the historical `opions` parameter name).
             PickerViewUtils(titleKey: "Wheel style", selection: $selection, opions: options) {
                 // onUpdate
             }
@@ -64,6 +69,19 @@ struct PickerView_Previews: PreviewProvider {
 }
 #endif
 
+/// A SwiftUI picker wrapper with consistent typography, contrast, and optional haptics.
+///
+/// Why this exists:
+/// - SwiftUI’s `Picker` visuals vary significantly by style (`.menu`, `.wheel`, `.palette`, etc.).
+/// - This wrapper standardizes the surrounding “card” treatment (padding/background/corner radius),
+///   adds an optional trailing value readout, and wires up accessibility in a predictable way.
+///
+/// What it intentionally does *not* do:
+/// - It does **not** force a `pickerStyle`; call sites can choose the best style for the context.
+///
+/// Accessibility:
+/// - Exposes an accessibility label (when a title is provided).
+/// - Exposes an accessibility value equal to the current selection.
 public struct PickerViewUtils<T: Hashable>: View {
     private let titleKey: LocalizedStringKey?
     @Binding private var selection: T
@@ -104,6 +122,18 @@ public struct PickerViewUtils<T: Hashable>: View {
     ///
     /// This view intentionally does not impose a `pickerStyle`; call sites can apply
     /// `.pickerStyle(.menu)`, `.pickerStyle(.wheel)`, etc.
+    ///
+    /// - Parameters:
+    ///   - titleKey: Optional title displayed above the picker and used as an accessibility label.
+    ///   - selection: Current selected value.
+    ///   - options: Values shown in the picker.
+    ///   - showsSelectedValue: Shows a trailing value readout in the header (helpful for `.menu` pickers).
+    ///   - valueText: Converts each option to display text (and drives accessibility value strings).
+    ///   - tintColor: Optional accent tint applied to the picker controls.
+    ///   - backgroundColor: Container background used to create contrast in light/dark mode.
+    ///   - cornerRadius: Container corner radius.
+    ///   - usesHaptics: When `true`, emits a selection-changed haptic on updates (UIKit platforms only).
+    ///   - onUpdate: Optional callback invoked when the selection changes.
     public init(
         titleKey: LocalizedStringKey? = nil,
         selection: Binding<T>,
@@ -165,6 +195,7 @@ public struct PickerViewUtils<T: Hashable>: View {
         .clipShape(RoundedRectangle(cornerRadius: cornerRadius, style: .continuous))
         .tint(tintColor)
         .onChange(of: selection) { _, _ in
+            // Keep side effects opt-in and lightweight: caller decides what "update" means.
             onUpdate?()
             if usesHaptics { Haptics.selectionChanged() }
         }
@@ -212,6 +243,14 @@ public struct PickerViewUtils<T: Hashable>: View {
     }
 }
 
+/// A date picker wrapper with a consistent container style and an optional value readout.
+///
+/// Why this exists:
+/// - A raw `DatePicker` is functional, but in many screens it benefits from a consistent
+///   “settings card” layout and an explicit formatted value line.
+///
+/// Accessibility:
+/// - Exposes an accessibility label (when provided) and the current formatted value.
 public struct DatePickerViewUtils: View {
     private let labelKey: LocalizedStringKey?
     @Binding private var date: Date
@@ -250,6 +289,20 @@ public struct DatePickerViewUtils: View {
     }
 
     /// Creates a date picker container with consistent typography and contrast.
+    ///
+    /// - Parameters:
+    ///   - labelKey: Optional title shown above the picker and used as an accessibility label.
+    ///   - date: The selected date binding.
+    ///   - valuePrefix: Optional prefix for the formatted value line (e.g. `"Selected:"`).
+    ///   - displayedComponents: Whether the picker shows date, time, or both.
+    ///   - showsValue: Whether to show a formatted value line under the picker.
+    ///   - valueText: Formats the selected date for display and accessibility value.
+    ///   - alignment: Horizontal alignment of the container content.
+    ///   - tintColor: Optional accent tint applied to the picker controls.
+    ///   - backgroundColor: Container background used to create contrast in light/dark mode.
+    ///   - cornerRadius: Container corner radius.
+    ///   - usesHaptics: When `true`, emits a selection-changed haptic on updates (UIKit platforms only).
+    ///   - onUpdate: Optional callback invoked when the date changes.
     public init(
         labelKey: LocalizedStringKey? = nil,
         date: Binding<Date>,
@@ -364,6 +417,8 @@ public struct DatePickerViewUtils: View {
 private enum Haptics {
     static func selectionChanged() {
 #if canImport(UIKit)
+        // Guarded import keeps this file usable for Mac Catalyst and other contexts without
+        // forcing UIKit as a hard dependency for the whole module.
         UISelectionFeedbackGenerator().selectionChanged()
 #endif
     }
@@ -373,6 +428,7 @@ private extension View {
     @ViewBuilder
     func utilAccessibilityLabel(_ titleKey: LocalizedStringKey?) -> some View {
         if let titleKey {
+            // Prefer `Text` so localized keys stay localized in VoiceOver.
             self.accessibilityLabel(Text(titleKey))
         } else {
             self
