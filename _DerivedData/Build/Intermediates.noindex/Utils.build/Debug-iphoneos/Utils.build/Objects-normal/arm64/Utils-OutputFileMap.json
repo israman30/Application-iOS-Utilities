@@ -66,6 +66,16 @@
     "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/HeartLikeView.swiftdeps",
     "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/HeartLikeView~partial.swiftmodule"
   },
+  "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/Navigation.swift" : {
+    "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.swiftconstvalues",
+    "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.d",
+    "diagnostics" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.dia",
+    "index-unit-output-path" : "/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.o",
+    "llvm-bc" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.bc",
+    "object" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.o",
+    "swift-dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation.swiftdeps",
+    "swiftmodule" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/Navigation~partial.swiftmodule"
+  },
   "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/PickerView.swift" : {
     "const-values" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/PickerView.swiftconstvalues",
     "dependencies" : "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/_DerivedData/Build/Intermediates.noindex/Utils.build/Debug-iphoneos/Utils.build/Objects-normal/arm64/PickerView.d",

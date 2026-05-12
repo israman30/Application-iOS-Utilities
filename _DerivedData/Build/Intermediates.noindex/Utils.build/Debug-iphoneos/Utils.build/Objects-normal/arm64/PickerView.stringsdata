@@ -4,10 +4,18 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "%@ %@",
+        "key": "Pickers",
         "location": {
-          "startingColumn": 17,
-          "startingLine": 69
+          "startingColumn": 18,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "%@%@",
+        "location": {
+          "startingColumn": 21,
+          "startingLine": 410
         }
       }
     ]

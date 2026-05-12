@@ -1,5 +1,88 @@
 {
   "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/StepperView.swift",
-  "tables": {},
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Stepper",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Value: %lld",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 20
+        }
+      },
+      {
+        "comment": "",
+        "key": "Current value",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 25
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last event",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 34
+        }
+      },
+      {
+        "comment": "",
+        "key": "Range %@ to %@",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 198
+        }
+      },
+      {
+        "comment": "",
+        "key": "Decrease",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 242
+        }
+      },
+      {
+        "comment": "",
+        "key": "Decreases by %@",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "Increase",
+        "location": {
+          "startingColumn": 29,
+          "startingLine": 263
+        }
+      },
+      {
+        "comment": "",
+        "key": "Increases by %@",
+        "location": {
+          "startingColumn": 28,
+          "startingLine": 264
+        }
+      }
+    ]
+  },
   "version": 1
 }

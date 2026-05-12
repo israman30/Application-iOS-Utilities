@@ -4,42 +4,26 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Body Form",
+        "key": "Form",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 14
+          "startingColumn": 30,
+          "startingLine": 107
         }
       },
       {
         "comment": "",
-        "key": "header",
+        "key": "Validates the form and creates your account.",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 16
+          "startingColumn": 44,
+          "startingLine": 99
         }
       },
       {
         "comment": "",
-        "key": "Footer",
+        "key": "Validate",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 18
-        }
-      },
-      {
-        "comment": "",
-        "key": "Some View",
-        "location": {
-          "startingColumn": 22,
-          "startingLine": 22
-        }
-      },
-      {
-        "comment": "",
-        "key": "Some footer",
-        "location": {
-          "startingColumn": 22,
-          "startingLine": 24
+          "startingColumn": 24,
+          "startingLine": 110
         }
       }
     ]

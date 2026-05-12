@@ -4,26 +4,58 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Email",
+        "key": "Clear text",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 16
+          "startingColumn": 41,
+          "startingLine": 145
         }
       },
       {
         "comment": "",
-        "key": "Password",
+        "key": "Hide password",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 20
+          "startingColumn": 60,
+          "startingLine": 156
         }
       },
       {
         "comment": "",
-        "key": "header",
+        "key": "Show password",
         "location": {
-          "startingColumn": 22,
-          "startingLine": 24
+          "startingColumn": 78,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "TextFieldViewUtil",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validate",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 366
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show error state",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 325
+        }
+      },
+      {
+        "comment": "",
+        "key": "Disable fields",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 326
         }
       }
     ]

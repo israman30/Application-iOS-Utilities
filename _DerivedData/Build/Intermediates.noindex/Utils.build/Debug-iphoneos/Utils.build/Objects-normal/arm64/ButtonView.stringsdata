@@ -4,10 +4,26 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Success",
+        "key": "Buttons",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 18
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last event: %@",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 24
+        }
+      },
+      {
+        "comment": "",
+        "key": "Primary",
         "location": {
           "startingColumn": 20,
-          "startingLine": 34
+          "startingLine": 48
         }
       },
       {
@@ -15,7 +31,7 @@
         "key": "Secondary",
         "location": {
           "startingColumn": 20,
-          "startingLine": 39
+          "startingLine": 51
         }
       },
       {
@@ -23,23 +39,15 @@
         "key": "Destructive",
         "location": {
           "startingColumn": 20,
-          "startingLine": 44
+          "startingLine": 54
         }
       },
       {
         "comment": "",
-        "key": "Tap to start",
+        "key": "Loading",
         "location": {
-          "startingColumn": 26,
-          "startingLine": 26
-        }
-      },
-      {
-        "comment": "",
-        "key": "Upload",
-        "location": {
-          "startingColumn": 27,
-          "startingLine": 25
+          "startingColumn": 45,
+          "startingLine": 182
         }
       }
     ]

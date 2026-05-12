@@ -4,18 +4,242 @@
     "Localizable": [
       {
         "comment": "",
+        "key": "Saved",
+        "location": {
+          "startingColumn": 16,
+          "startingLine": 64
+        }
+      },
+      {
+        "comment": "",
+        "key": "Accessibility",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 60
+        }
+      },
+      {
+        "comment": "",
+        "key": "OK",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 65
+        }
+      },
+      {
+        "comment": "",
+        "key": "Your settings were updated.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 67
+        }
+      },
+      {
+        "comment": "",
         "key": "Accessibility View",
         "location": {
-          "startingColumn": 14,
-          "startingLine": 15
+          "startingColumn": 18,
+          "startingLine": 73
+        }
+      },
+      {
+        "comment": "",
+        "key": "Examples of typography, color/contrast, and VoiceOver-friendly controls.",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 83
+        }
+      },
+      {
+        "comment": "",
+        "key": "Use text styles (headline/body/caption) so content scales with Dynamic Type.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 109
+        }
+      },
+      {
+        "comment": "",
+        "key": "Numbers",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 126
+        }
+      },
+      {
+        "comment": "",
+        "key": "Section title",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 115
+        }
+      },
+      {
+        "comment": "",
+        "key": "Supporting copy that can wrap onto multiple lines at accessibility sizes without truncation.",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 117
+        }
+      },
+      {
+        "comment": "",
+        "key": "Order total",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 131
+        }
+      },
+      {
+        "comment": "",
+        "key": "$%lld.00",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 134
+        }
+      },
+      {
+        "comment": "",
+        "key": "Order total",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 139
+        }
+      },
+      {
+        "comment": "",
+        "key": "%lld dollars",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 140
+        }
+      },
+      {
+        "comment": "",
+        "key": "Avoid meaning-by-color alone. Combine color with text, symbols, or shapes.",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Connection status",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 157
+        }
+      },
+      {
+        "comment": "",
+        "key": "Saves your changes and shows a confirmation.",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 197
+        }
+      },
+      {
+        "comment": "",
+        "key": "Connected",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 164
+        }
+      },
+      {
+        "comment": "",
+        "key": "Limited",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 172
+        }
+      },
+      {
+        "comment": "",
+        "key": "Offline",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 180
+        }
+      },
+      {
+        "comment": "",
+        "key": "Save changes",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 193
+        }
+      },
+      {
+        "comment": "",
+        "key": "Intensity",
+        "location": {
+          "startingColumn": 31,
+          "startingLine": 216
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quantity",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 242
         }
       },
       {
         "comment": "",
         "key": "%lld",
         "location": {
-          "startingColumn": 18,
-          "startingLine": 30
+          "startingColumn": 37,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adjusts the quantity from one to ten.",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 244
+        }
+      },
+      {
+        "comment": "",
+        "key": "Opens a confirmation alert.",
+        "location": {
+          "startingColumn": 36,
+          "startingLine": 258
+        }
+      },
+      {
+        "comment": "",
+        "key": "Quantity",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 233
+        }
+      },
+      {
+        "comment": "",
+        "key": "Current: %lld",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 235
+        }
+      },
+      {
+        "comment": "",
+        "key": "Test confirmation",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 254
+        }
+      },
+      {
+        "comment": "",
+        "key": "Status",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 363
         }
       }
     ]

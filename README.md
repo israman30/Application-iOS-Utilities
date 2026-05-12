@@ -428,14 +428,13 @@ Text("Main Heading")
 
 ## 🧭 Navigation coordinator (reference implementation)
 
-[Source: `Utils/Utils/NavigationCoordinator.swift`](Utils/Utils/NavigationCoordinator.swift)
+[Source: `Utils/Utils/Navigation.swift`](Utils/Utils/Navigation.swift)
 
-`Utils/Utils/NavigationCoordinator.swift` contains a coordinator-style `NavigationStack` reference, including:
-- Navigation history
-- “replace stack” support
-- Basic deep linking via `URLComponents`
+`Utils/Utils/Navigation.swift` provides a reusable coordinator-based `NavigationStack` setup:
+- `Coordinator<Route>`: owns the `path`, builds views, and exposes navigation methods (`navigate`, `navigateBack`, `navigateToRoot`, etc.)
+- `CoordinatorView`: hosts the `NavigationStack` and wires `.navigationDestination` to the coordinator
 
-It uses the Observation framework (`@Observable`) and includes placeholder views to demonstrate navigation. If you want to reuse it in your app, copy the file and replace `NavigationDestination` and the placeholder views with your own.
+To use it, create your own `Route: Hashable` and subclass `Coordinator<Route>` in your app/framework.
 
 ## 📋 Requirements
 

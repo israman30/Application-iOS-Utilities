@@ -4,10 +4,34 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "Some text here",
+        "key": "Tooltip / Activity Pill",
         "location": {
           "startingColumn": 22,
-          "startingLine": 28
+          "startingLine": 17
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last event: %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 23
+        }
+      },
+      {
+        "comment": "",
+        "key": "Some text here",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 52
+        }
+      },
+      {
+        "comment": "",
+        "key": "More options",
+        "location": {
+          "startingColumn": 45,
+          "startingLine": 189
         }
       }
     ]
