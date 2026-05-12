@@ -4,18 +4,26 @@
     "Localizable": [
       {
         "comment": "",
-        "key": "title",
+        "key": "Toggle",
         "location": {
-          "startingColumn": 35,
-          "startingLine": 13
+          "startingColumn": 18,
+          "startingLine": 17
         }
       },
       {
         "comment": "",
-        "key": "",
+        "key": "On",
         "location": {
-          "startingColumn": 40,
-          "startingLine": 27
+          "startingColumn": 41,
+          "startingLine": 149
+        }
+      },
+      {
+        "comment": "",
+        "key": "Off",
+        "location": {
+          "startingColumn": 48,
+          "startingLine": 149
         }
       }
     ]
