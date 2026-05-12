@@ -67,7 +67,41 @@ public struct ToggleViewUtils: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize: DynamicTypeSize
 
-    /// Creates a modern toggle row with improved spacing, contrast, and accessibility.
+    /// A modern “settings row” toggle with better typography, contrast, and accessibility defaults.
+    ///
+    /// This component is designed to feel at-home in Settings-like screens: it wraps SwiftUI’s
+    /// built-in `Toggle` but adds a card surface, optional icon + subtitle, and sensible spacing.
+    ///
+    /// ## Setup
+    /// - Create a `@State` (or `@Binding`) boolean.
+    /// - Provide a title, then optionally add `subtitle`, `icon`, and customization parameters.
+    ///
+    /// ## Usage
+    /// ```swift
+    /// @State private var isOn = false
+    ///
+    /// ToggleViewUtils(
+    ///     title: "Enable feature",
+    ///     subtitle: "Improves recommendations and sync.",
+    ///     icon: "sparkles",
+    ///     isOn: $isOn,
+    ///     tintColor: .blue,
+    ///     usesHaptics: true,
+    ///     onUpdate: { newValue in
+    ///         // Handle value change
+    ///     }
+    /// )
+    /// ```
+    ///
+    /// ## Implementation notes
+    /// - Uses `.secondarySystemBackground` by default for a light/dark adaptive card surface.
+    /// - Adds a subtle “on” wash + border so the row has clear affordance without relying only on color.
+    /// - Animates state changes with `.snappy` unless **Reduce Motion** is enabled.
+    ///
+    /// ## Accessibility
+    /// - Exposes a single accessibility element (label + `On/Off` value) to keep VoiceOver output clean.
+    /// - Uses `subtitle` as an accessibility hint when provided.
+    /// - Avoids truncating title/subtitle at accessibility Dynamic Type sizes.
     ///
     /// - Parameters:
     ///   - title: Main label text. Used as the accessibility label.
