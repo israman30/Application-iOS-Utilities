@@ -97,10 +97,48 @@ ToastView(
 )
 ```
 
+Recommended (overlay modifier):
+
+```swift
+@State private var showToast = false
+
+VStack {
+    Button("Save") { showToast = true }
+}
+.toast(
+    text: "Saved",
+    isVisible: $showToast,
+    title: "Success",
+    style: .success,
+    position: .top,
+    haptic: .success
+)
+```
+
 ### Floating Action Button (`FloatingButtonUtilsView`)
 
 ```swift
 FloatingButtonUtilsView {
+    // action
+}
+```
+
+With configuration (`AlignmentFloatingButton`, loading state, long-press):
+
+```swift
+@State private var isCreating = false
+
+FloatingButtonUtilsView(
+    title: "Add item",
+    alignment: .trailing, // or `.leading`
+    tint: .blue,
+    icon: "plus",
+    isLoading: isCreating,
+    onLongPress: {
+        // optional secondary action
+    }
+) {
+    isCreating = true
     // action
 }
 ```
@@ -179,7 +217,7 @@ SliderControlViewUtils(
 
 ```swift
 // Generic scrollable grid using `.flexible()` cells.
-ScrollGridView(columns: 2) {
+ScrollGridView(.vertical, columns: 2) {
     ForEach(0..<10) { index in
         Text("Item \(index)")
             .padding(8)
@@ -190,11 +228,32 @@ ScrollGridView(columns: 2) {
 ```
 
 ```swift
+// Horizontal scrollable grid (uses `GridOrientation.horizontal` + rows).
+ScrollGridView(.horizontal, rows: 2, spacing: 12, showsIndicators: true) {
+    ForEach(0..<12) { index in
+        RoundedRectangle(cornerRadius: 12)
+            .fill(Color.blue.opacity(0.15))
+            .overlay(Text("Item \(index)"))
+            .frame(width: 120, height: 72)
+    }
+}
+```
+
+```swift
 // Square-celled vertical grid (great for thumbnails).
 GridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
     RoundedRectangle(cornerRadius: 8)
         .fill(Color.blue.opacity(0.15))
         .overlay(Text("\(item)"))
+}
+```
+
+Legacy alias:
+
+```swift
+// `SquareGridView` is a deprecated alias of `GridView`.
+SquareGridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
+    Color.blue.opacity(0.15).overlay(Text("\(item)"))
 }
 ```
 
@@ -270,6 +329,18 @@ FormViewUtil(
 )
 ```
 
+Custom header/footer views (including the provided `FormViewUtilHeaderText` / `FormViewUtilFooterText`):
+
+```swift
+FormViewUtil {
+    Text("Body")
+} header: {
+    FormViewUtilHeaderText("Account")
+} footer: {
+    FormViewUtilFooterText("These settings apply to your current device.")
+}
+```
+
 ### Like button (`HeartLikeView`)
 
 ```swift
@@ -283,6 +354,25 @@ HeartLikeView(isLiked: $isLiked)
 ActivityItemUtils("12", type: .left, icon: {
     Image(systemName: "bubble.fill")
 })
+```
+
+Interactive example (`TooltipDirection`, tap + long-press + haptic):
+
+```swift
+ActivityItemUtils(
+    "Tap me",
+    type: .bottom,
+    tint: .blue,
+    onTap: {
+        // tap
+    },
+    onLongPress: {
+        // long press
+    },
+    pressHaptic: .light
+) {
+    Image(systemName: "hand.tap.fill")
+}
 ```
 
 ### Accessibility utilities (`.accessibility(options:)`)
