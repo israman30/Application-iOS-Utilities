@@ -1,0 +1,10 @@
+framework module Utils {
+  umbrella header "Utils.h"
+  export *
+
+  module * { export * }
+}
+
+module Utils.__Swift {
+  exclude header "Utils-Swift.h"
+}

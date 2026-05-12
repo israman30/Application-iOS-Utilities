@@ -1,0 +1,32 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/RatingHeartsView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Rating",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 21
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1f / %lld",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 35
+        }
+      },
+      {
+        "comment": "",
+        "key": "Adjust rating",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 41
+        }
+      }
+    ]
+  },
+  "version": 1
+}
