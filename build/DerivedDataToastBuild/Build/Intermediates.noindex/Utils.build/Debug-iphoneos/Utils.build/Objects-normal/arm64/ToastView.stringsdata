@@ -1,0 +1,192 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/ToastView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Dismiss",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 158
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dismiss",
+        "location": {
+          "startingColumn": 37,
+          "startingLine": 243
+        }
+      },
+      {
+        "comment": "",
+        "key": "ToastView",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 525
+        }
+      },
+      {
+        "comment": "",
+        "key": "Last event: %@",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 531
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show toast",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 541
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dismiss",
+        "location": {
+          "startingColumn": 38,
+          "startingLine": 550
+        }
+      },
+      {
+        "comment": "",
+        "key": "Toggle toast",
+        "location": {
+          "startingColumn": 50,
+          "startingLine": 550
+        }
+      },
+      {
+        "comment": "",
+        "key": "Style",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 604
+        }
+      },
+      {
+        "comment": "",
+        "key": "Position",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 611
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dismiss on tap",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 617
+        }
+      },
+      {
+        "comment": "",
+        "key": "Dismiss on swipe",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 618
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show close button",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 619
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show action button",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 620
+        }
+      },
+      {
+        "comment": "",
+        "key": "Announce in VoiceOver",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 621
+        }
+      },
+      {
+        "comment": "",
+        "key": "Haptic",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 623
+        }
+      },
+      {
+        "comment": "",
+        "key": "Title",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 584
+        }
+      },
+      {
+        "comment": "",
+        "key": "Message",
+        "location": {
+          "startingColumn": 27,
+          "startingLine": 587
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto-dismiss (seconds)",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 593
+        }
+      },
+      {
+        "comment": "",
+        "key": "Off",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 598
+        }
+      },
+      {
+        "comment": "",
+        "key": "%.1fs",
+        "location": {
+          "startingColumn": 52,
+          "startingLine": 598
+        }
+      },
+      {
+        "comment": "",
+        "key": "Auto-dismiss",
+        "location": {
+          "startingColumn": 26,
+          "startingLine": 596
+        }
+      },
+      {
+        "comment": "",
+        "key": "Top",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 612
+        }
+      },
+      {
+        "comment": "",
+        "key": "Bottom",
+        "location": {
+          "startingColumn": 22,
+          "startingLine": 613
+        }
+      }
+    ]
+  },
+  "version": 1
+}

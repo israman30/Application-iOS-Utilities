@@ -1,0 +1,32 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/FormView.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Form",
+        "location": {
+          "startingColumn": 30,
+          "startingLine": 107
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validates the form and creates your account.",
+        "location": {
+          "startingColumn": 44,
+          "startingLine": 99
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validate",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 110
+        }
+      }
+    ]
+  },
+  "version": 1
+}

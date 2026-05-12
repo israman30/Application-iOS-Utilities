@@ -84,7 +84,16 @@ ToastView(
     text: "Operation completed successfully!",
     isVisible: $showToast,
     delayedAnimation: 3.0,
-    animationDuration: 0.3
+    animationDuration: 0.3,
+    title: "Saved",
+    style: .success,
+    position: .top,
+    showsCloseButton: true,
+    actionTitle: "Undo",
+    action: {
+        // undo action
+    },
+    haptic: .success
 )
 ```
 
