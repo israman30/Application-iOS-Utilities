@@ -37,6 +37,8 @@ import Utils
 
 ### Buttons (`ButtonViewUtils`, button styles, and system button modifier)
 
+[Source: `Utils/Utils/ButtonView.swift`](Utils/Utils/ButtonView.swift)
+
 ```swift
 @State private var isUploading = false
 
@@ -76,6 +78,8 @@ Button("Destructive") { }
 - `.clearUtil`
 
 ### Toast (`ToastView`)
+
+[Source: `Utils/Utils/ToastView.swift`](Utils/Utils/ToastView.swift)
 
 ```swift
 @State private var showToast = false
@@ -117,6 +121,8 @@ VStack {
 
 ### Floating Action Button (`FloatingButtonUtilsView`)
 
+[Source: `Utils/Utils/FloatingButtonView.swift`](Utils/Utils/FloatingButtonView.swift)
+
 ```swift
 FloatingButtonUtilsView {
     // action
@@ -144,6 +150,8 @@ FloatingButtonUtilsView(
 ```
 
 ### Text field (`TextFieldViewUtil`)
+
+[Source: `Utils/Utils/TextFieldUtils.swift`](Utils/Utils/TextFieldUtils.swift)
 
 ```swift
 @State private var email = ""
@@ -174,12 +182,17 @@ For a ready-to-run preview/demo screen, see `TextFieldViewUtilSampleView` in `Ut
 
 ### Ratings (`RatingStarsView`, `RatingHeartsView`)
 
+[Stars source: `Utils/Utils/RatingStartsView.swift`](Utils/Utils/RatingStartsView.swift) ·
+[Hearts source: `Utils/Utils/RatingHeartsView.swift`](Utils/Utils/RatingHeartsView.swift)
+
 ```swift
 RatingStarsView(rating: 3.5, maxRating: 5)
 RatingHeartsView(rating: 4.0, maxRating: 5)
 ```
 
 ### Slider with controls (`SliderControlViewUtils`)
+
+[Source: `Utils/Utils/SliderControlView.swift`](Utils/Utils/SliderControlView.swift)
 
 `SliderControlViewUtils` is a settings-style slider that supports:
 - Optional title and live value readout
@@ -214,6 +227,9 @@ SliderControlViewUtils(
 ```
 
 ### Grid layouts (`GridView`, `ScrollGridView`)
+
+[Scroll grid source: `Utils/Utils/GridView.swift`](Utils/Utils/GridView.swift) ·
+[Square grid source: `Utils/Utils/SquareGridView.swift`](Utils/Utils/SquareGridView.swift)
 
 ```swift
 // Generic scrollable grid using `.flexible()` cells.
@@ -259,6 +275,8 @@ SquareGridView(items: Array(0..<9), totalCount: 9, columns: 3) { item in
 
 ### Stepper (`StepperViewUtils`)
 
+[Source: `Utils/Utils/StepperView.swift`](Utils/Utils/StepperView.swift)
+
 ```swift
 @State private var value = 0
 
@@ -278,6 +296,8 @@ StepperViewUtils(
 ```
 
 ### Pickers (`PickerViewUtils`, `DatePickerViewUtils`)
+
+[Source: `Utils/Utils/PickerView.swift`](Utils/Utils/PickerView.swift)
 
 ```swift
 @State private var selection = "Car"
@@ -311,6 +331,8 @@ DatePickerViewUtils(
 
 ### Toggle (`ToggleViewUtils`)
 
+[Source: `Utils/Utils/ToggleView.swift`](Utils/Utils/ToggleView.swift)
+
 ```swift
 @State private var isOn = false
 
@@ -318,6 +340,8 @@ ToggleViewUtils(titleKey: "Enable feature", isOn: $isOn)
 ```
 
 ### Forms (`FormViewUtil`)
+
+[Source: `Utils/Utils/FormView.swift`](Utils/Utils/FormView.swift)
 
 ```swift
 FormViewUtil(
@@ -343,12 +367,16 @@ FormViewUtil {
 
 ### Like button (`HeartLikeView`)
 
+[Source: `Utils/Utils/HeartLikeView.swift`](Utils/Utils/HeartLikeView.swift)
+
 ```swift
 @State private var isLiked = false
 HeartLikeView(isLiked: $isLiked)
 ```
 
 ### Tooltip / activity pill (`ActivityItemUtils`)
+
+[Source: `Utils/Utils/TooltipView.swift`](Utils/Utils/TooltipView.swift)
 
 ```swift
 ActivityItemUtils("12", type: .left, icon: {
@@ -377,6 +405,8 @@ ActivityItemUtils(
 
 ### Accessibility utilities (`.accessibility(options:)`)
 
+[Source: `Utils/Utils/AccessibilityView.swift`](Utils/Utils/AccessibilityView.swift)
+
 ```swift
 Text("Main Heading")
     .font(.largeTitle)
@@ -397,6 +427,8 @@ Text("Main Heading")
 - `.heading(level: AccessibilityHeadingLevel)` (`.h1` ... `.h6`)
 
 ## 🧭 Navigation coordinator (reference implementation)
+
+[Source: `Utils/Utils/NavigationCoordinator.swift`](Utils/Utils/NavigationCoordinator.swift)
 
 `Utils/Utils/NavigationCoordinator.swift` contains a coordinator-style `NavigationStack` reference, including:
 - Navigation history
