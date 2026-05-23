@@ -20,14 +20,20 @@ struct FormView: View {
 
     private var emailError: String? {
         guard showValidation else { return nil }
-        if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty { return "Email is required." }
-        if !email.contains("@") { return "Please enter a valid email address." }
+        if email.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty {
+            return "Email is required."
+        }
+        if !email.contains("@") {
+            return "Please enter a valid email address."
+        }
         return nil
     }
 
     private var passwordError: String? {
         guard showValidation else { return nil }
-        if password.count < 8 { return "Password must be at least 8 characters." }
+        if password.count < 8 {
+            return "Password must be at least 8 characters."
+        }
         return nil
     }
 
@@ -345,7 +351,9 @@ public struct FormViewUtilHeaderText: View {
 public struct FormViewUtilFooterText: View {
     private let text: String
 
-    public init(_ text: String) { self.text = text }
+    public init(_ text: String) {
+        self.text = text
+    }
 
     public var body: some View {
         Text(text)

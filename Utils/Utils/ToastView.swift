@@ -131,9 +131,15 @@ public struct ToastView: View {
     
     public var body: some View {
         VStack(spacing: 0) {
-            if position == .bottom { Spacer(minLength: 0) }
-            if isVisible { toastSurface }
-            if position == .top { Spacer(minLength: 0) }
+            if position == .bottom {
+                Spacer(minLength: 0)
+            }
+            if isVisible {
+                toastSurface
+            }
+            if position == .top {
+                Spacer(minLength: 0)
+            }
         }
         .frame(maxWidth: .infinity, maxHeight: .infinity, alignment: position.alignment)
         .padding(.horizontal, 16)
@@ -611,7 +617,9 @@ struct ToastViewSampleView: View {
             } : nil,
             haptic: hapticOption.haptic,
             announcesForVoiceOver: announcesForVoiceOver,
-            onDismiss: { lastEvent = "Toast dismissed" }
+            onDismiss: {
+                lastEvent = "Toast dismissed"
+            }
         )
     }
     
