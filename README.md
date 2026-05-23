@@ -25,10 +25,7 @@ This repository ships an Xcode framework project (`Utils/Utils.xcodeproj`). Ther
 ### Option A: Add the `Utils` framework (Xcode subproject)
 
 1. Clone the repository:
-
-```bash
-git clone https://github.com/israman30/Application-iOS-Utilities.git
-```
+   `git clone https://github.com/israman30/Application-iOS-Utilities.git`
 
 2. In Xcode, drag `Utils/Utils.xcodeproj` into your app project.
 3. Select your app target → **General** → **Frameworks, Libraries, and Embedded Content**.
@@ -41,10 +38,7 @@ Copy the Swift files from `Utils/Utils/` into your app target (useful if you wan
 ## 🚀 Quick start
 
 If you integrated the framework target, import the module where you use the components:
-
-```swift
-import Utils
-```
+`import Utils`
 
 Then use any component like you would in a normal SwiftUI view.
 
