@@ -1,6 +1,6 @@
-# Application-iOS-Utilities
+# iOS Utilities
 
-Reusable **SwiftUI** utilities (buttons, text fields, toast, grids, ratings, pickers, steppers, etc.) plus a few **copy/paste-friendly demo screens** you can use as reference when building your own UI.
+A lightweight **SwiftUI utilities library** with reusable UI components and patterns you can drop into iOS apps—buttons, floating action button, toast notifications, validated text fields, ratings, settings-style controls (toggle/stepper/slider/pickers), and grid/layout helpers—plus previewable **sample views** and reference screens (accessibility checklist, navigation coordinator).
 
 > [!NOTE]
 > This project currently supports **SwiftUI** only (iOS 17+).
