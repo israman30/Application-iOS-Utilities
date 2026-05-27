@@ -93,7 +93,7 @@ Contributions are welcome. Please open an issue or submit a Pull Request.
 
 ## 📄 License
 
-MIT License. See `LICENSE.md`.
+MIT License. See [`LICENSE.md`](LICENSE.md).
 
 ---
 
