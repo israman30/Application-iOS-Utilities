@@ -93,8 +93,8 @@ Contributions are welcome. Please open an issue or submit a Pull Request.
 
 ## 📄 License
 
-MIT License. See `LICENSE`.
+MIT License. See `LICENSE.md`.
 
 ---
 
-&copy; 2026 Israel Manzo. All rights reserved.
+&copy; 2026 Israel Manzo.
