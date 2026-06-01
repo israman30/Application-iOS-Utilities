@@ -9,28 +9,35 @@ import XCTest
 @testable import Utils
 
 final class UtilsTests: XCTestCase {
-
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
+    
+    func testRatingStarsView_starCount_isNonNegative() {
+        XCTAssertEqual(RatingStarsView(rating: 0, maxRating: 5).starCount, 5)
+        XCTAssertEqual(RatingStarsView(rating: 0, maxRating: 0).starCount, 0)
+        XCTAssertEqual(RatingStarsView(rating: 0, maxRating: -3).starCount, 0)
     }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
+    
+    func testRatingStarsView_clampedRating_clampsToZeroAndMax() {
+        XCTAssertEqual(RatingStarsView.clampedRating(-1, maxRating: 5), 0)
+        XCTAssertEqual(RatingStarsView.clampedRating(0, maxRating: 5), 0)
+        XCTAssertEqual(RatingStarsView.clampedRating(2.5, maxRating: 5), 2.5)
+        XCTAssertEqual(RatingStarsView.clampedRating(5, maxRating: 5), 5)
+        XCTAssertEqual(RatingStarsView.clampedRating(7, maxRating: 5), 5)
     }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
+    
+    func testRatingStarsView_fillWidth_returnsZeroForInvalidInputs() {
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 3, maxRating: 0, totalWidth: 100), 0)
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 3, maxRating: -1, totalWidth: 100), 0)
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 3, maxRating: 5, totalWidth: 0), 0)
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 3, maxRating: 5, totalWidth: -10), 0)
     }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
+    
+    func testRatingStarsView_fillWidth_scalesLinearlyAndClamps() {
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 0, maxRating: 5, totalWidth: 200), 0)
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 2.5, maxRating: 5, totalWidth: 200), 100)
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 5, maxRating: 5, totalWidth: 200), 200)
+        
+        // Clamping behavior
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: -1, maxRating: 5, totalWidth: 200), 0)
+        XCTAssertEqual(RatingStarsView.fillWidth(rating: 999, maxRating: 5, totalWidth: 200), 200)
     }
-
 }

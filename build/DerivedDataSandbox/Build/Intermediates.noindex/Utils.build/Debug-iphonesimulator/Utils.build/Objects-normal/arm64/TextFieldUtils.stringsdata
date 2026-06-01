@@ -1,0 +1,64 @@
+{
+  "source": "/Users/israelmanzo/Documents/GitHub/Application-iOS-Utilities/Utils/Utils/TextFieldUtils.swift",
+  "tables": {
+    "Localizable": [
+      {
+        "comment": "",
+        "key": "Clear text",
+        "location": {
+          "startingColumn": 41,
+          "startingLine": 145
+        }
+      },
+      {
+        "comment": "",
+        "key": "Hide password",
+        "location": {
+          "startingColumn": 60,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show password",
+        "location": {
+          "startingColumn": 78,
+          "startingLine": 156
+        }
+      },
+      {
+        "comment": "",
+        "key": "TextFieldViewUtil",
+        "location": {
+          "startingColumn": 18,
+          "startingLine": 321
+        }
+      },
+      {
+        "comment": "",
+        "key": "Validate",
+        "location": {
+          "startingColumn": 20,
+          "startingLine": 366
+        }
+      },
+      {
+        "comment": "",
+        "key": "Show error state",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 325
+        }
+      },
+      {
+        "comment": "",
+        "key": "Disable fields",
+        "location": {
+          "startingColumn": 24,
+          "startingLine": 326
+        }
+      }
+    ]
+  },
+  "version": 1
+}
