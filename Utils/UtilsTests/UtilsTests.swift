@@ -109,4 +109,54 @@ final class UtilsTests: XCTestCase {
         // Spacing larger than width should not produce negative sizes.
         XCTAssertEqual(GridView<EmptyView, Int>.cellSize(totalWidth: 10, columns: 3, columnSpacing: 10), 0)
     }
+    
+    func testScrollGridView_axis_matchesOrientation() {
+        XCTAssertEqual(ScrollGridView<EmptyView>.axis(for: .vertical), .vertical)
+        XCTAssertEqual(ScrollGridView<EmptyView>.axis(for: .horizontal), .horizontal)
+    }
+    
+    func testScrollGridView_clampedCount_defaultsAndClampsToAtLeastOne() {
+        XCTAssertEqual(ScrollGridView<EmptyView>.clampedCount(nil), 1)
+        XCTAssertEqual(ScrollGridView<EmptyView>.clampedCount(1), 1)
+        XCTAssertEqual(ScrollGridView<EmptyView>.clampedCount(3), 3)
+        XCTAssertEqual(ScrollGridView<EmptyView>.clampedCount(0), 1)
+        XCTAssertEqual(ScrollGridView<EmptyView>.clampedCount(-10), 1)
+    }
+    
+    func testScrollGridView_gridItemCount_usesColumnsForVerticalRowsForHorizontal() {
+        XCTAssertEqual(
+            ScrollGridView<EmptyView>.gridItemCount(orientation: .vertical, columns: 4, rows: 99),
+            4
+        )
+        XCTAssertEqual(
+            ScrollGridView<EmptyView>.gridItemCount(orientation: .horizontal, columns: 99, rows: 2),
+            2
+        )
+    }
+    
+    func testScrollGridView_gridItemCount_fallsBackToOneForNilOrInvalidValues() {
+        XCTAssertEqual(
+            ScrollGridView<EmptyView>.gridItemCount(orientation: .vertical, columns: nil, rows: 5),
+            1
+        )
+        XCTAssertEqual(
+            ScrollGridView<EmptyView>.gridItemCount(orientation: .vertical, columns: 0, rows: 5),
+            1
+        )
+        XCTAssertEqual(
+            ScrollGridView<EmptyView>.gridItemCount(orientation: .horizontal, columns: 5, rows: nil),
+            1
+        )
+        XCTAssertEqual(
+            ScrollGridView<EmptyView>.gridItemCount(orientation: .horizontal, columns: 5, rows: -2),
+            1
+        )
+    }
+    
+    func testScrollGridView_flexibleGridItems_returnsAtLeastOneItem() {
+        XCTAssertEqual(ScrollGridView<EmptyView>.flexibleGridItems(count: 3, spacing: 8).count, 3)
+        XCTAssertEqual(ScrollGridView<EmptyView>.flexibleGridItems(count: 1, spacing: 8).count, 1)
+        XCTAssertEqual(ScrollGridView<EmptyView>.flexibleGridItems(count: 0, spacing: 8).count, 1)
+        XCTAssertEqual(ScrollGridView<EmptyView>.flexibleGridItems(count: -10, spacing: 8).count, 1)
+    }
 }
