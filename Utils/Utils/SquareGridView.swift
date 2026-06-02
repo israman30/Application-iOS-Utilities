@@ -33,6 +33,24 @@ public struct GridView<Content: View, Item: Hashable>: View {
     private let showsIndicators: Bool
     private let buildItem: (Item) -> Content
     
+    static func clampedColumns(_ columns: Int) -> Int {
+        max(columns, 1)
+    }
+    
+    static func clampedTotalCount(_ totalCount: Int, itemsCount: Int) -> Int {
+        min(max(totalCount, 0), max(itemsCount, 0))
+    }
+    
+    static func cellSize(totalWidth: CGFloat, columns: Int, columnSpacing: CGFloat) -> CGFloat {
+        let columns = clampedColumns(columns)
+        guard totalWidth > 0 else { return 0 }
+        
+        // `LazyVGrid` spacing is separate from the column widths.
+        // To keep cells square, we subtract the total *inter-column* spacing before dividing.
+        let totalSpacing = CGFloat(max(columns - 1, 0)) * columnSpacing
+        return max(0, (totalWidth - totalSpacing) / CGFloat(columns))
+    }
+    
     /// Creates a square-celled vertical grid.
     ///
     /// - Parameters:
@@ -55,7 +73,7 @@ public struct GridView<Content: View, Item: Hashable>: View {
     ) {
         self.items = items
         self.totalCount = totalCount
-        self.columns = max(columns, 1)
+        self.columns = Self.clampedColumns(columns)
         self.columnSpacing = columnSpacing
         self.rowSpacing = rowSpacing
         self.showsIndicators = showsIndicators
@@ -71,15 +89,17 @@ public struct GridView<Content: View, Item: Hashable>: View {
     
     public var body: some View {
         GeometryReader { proxy in
-            // `LazyVGrid` spacing is separate from the column widths.
-            // To keep cells square, we subtract the total *inter-column* spacing before dividing.
-            let totalSpacing = CGFloat(max(columns - 1, 0)) * columnSpacing
-            let cellSize = (proxy.size.width - totalSpacing) / CGFloat(columns)
+            let cellSize = Self.cellSize(
+                totalWidth: proxy.size.width,
+                columns: columns,
+                columnSpacing: columnSpacing
+            )
             
             ScrollView(.vertical, showsIndicators: showsIndicators) {
                 LazyVGrid(columns: fixedColumns(cellSize: cellSize), spacing: rowSpacing) {
                     // Render only the first `totalCount` items (useful for progressive loading).
-                    ForEach(items.prefix(totalCount), id: \.self) { item in
+                    let visibleCount = Self.clampedTotalCount(totalCount, itemsCount: items.count)
+                    ForEach(items.prefix(visibleCount), id: \.self) { item in
                         buildItem(item)
                             .frame(width: cellSize, height: cellSize)
                     }

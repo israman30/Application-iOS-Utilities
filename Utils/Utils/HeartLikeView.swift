@@ -53,12 +53,13 @@ public struct HeartLikeView: View {
     
     private let animationDuration: Double = 0.12
     
-    private var animationScale: CGFloat {
+    static func animationScale(isLiked: Bool) -> CGFloat {
         isLiked ? 1.3 : 0.7
     }
     
-    private let heartFill = "heart.fill"
-    private let heart = "heart"
+    static func symbolName(isLiked: Bool) -> String {
+        isLiked ? "heart.fill" : "heart"
+    }
     
     @State private var isAnimating = false
     
@@ -67,14 +68,14 @@ public struct HeartLikeView: View {
             self.executeButtonAnimation()
         } label: {
             VStack {
-                Image(systemName: isLiked ? heartFill : heart)
+                Image(systemName: Self.symbolName(isLiked: isLiked))
                     .resizable()
                     .aspectRatio(contentMode: .fit)
                     .frame(width: 100, height: 100)
                     .foregroundStyle(isLiked ? .red : .gray)
                     .contentTransition(.symbolEffect(.replace))
             }
-            .scaleEffect(isAnimating ? animationScale : 1)
+            .scaleEffect(isAnimating ? Self.animationScale(isLiked: isLiked) : 1)
         }
         .buttonStyle(.plain)
     }

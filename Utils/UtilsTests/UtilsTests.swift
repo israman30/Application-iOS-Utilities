@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import SwiftUI
 @testable import Utils
 
 final class UtilsTests: XCTestCase {
@@ -70,5 +71,42 @@ final class UtilsTests: XCTestCase {
         // Clamping behavior
         XCTAssertEqual(RatingHeartsView.fillWidth(rating: -1, maxRating: 5, totalWidth: 200), 0)
         XCTAssertEqual(RatingHeartsView.fillWidth(rating: 999, maxRating: 5, totalWidth: 200), 200)
+    }
+    
+    func testHeartLikeView_symbolName_matchesLikedState() {
+        XCTAssertEqual(HeartLikeView.symbolName(isLiked: false), "heart")
+        XCTAssertEqual(HeartLikeView.symbolName(isLiked: true), "heart.fill")
+    }
+    
+    func testHeartLikeView_animationScale_matchesLikedState() {
+        XCTAssertEqual(HeartLikeView.animationScale(isLiked: false), 0.7)
+        XCTAssertEqual(HeartLikeView.animationScale(isLiked: true), 1.3)
+    }
+    
+    func testGridView_clampedColumns_clampsToAtLeastOne() {
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedColumns(3), 3)
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedColumns(1), 1)
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedColumns(0), 1)
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedColumns(-10), 1)
+    }
+    
+    func testGridView_clampedTotalCount_clampsToArrayBounds() {
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedTotalCount(3, itemsCount: 10), 3)
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedTotalCount(0, itemsCount: 10), 0)
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedTotalCount(-1, itemsCount: 10), 0)
+        XCTAssertEqual(GridView<EmptyView, Int>.clampedTotalCount(999, itemsCount: 10), 10)
+    }
+    
+    func testGridView_cellSize_calculatesSquareCellWidth() {
+        let size = GridView<EmptyView, Int>.cellSize(totalWidth: 300, columns: 3, columnSpacing: 2)
+        XCTAssertEqual(size, (300 - 4) / 3, accuracy: 0.0001)
+    }
+    
+    func testGridView_cellSize_returnsZeroForInvalidOrOverconstrainedInputs() {
+        XCTAssertEqual(GridView<EmptyView, Int>.cellSize(totalWidth: 0, columns: 3, columnSpacing: 2), 0)
+        XCTAssertEqual(GridView<EmptyView, Int>.cellSize(totalWidth: -10, columns: 3, columnSpacing: 2), 0)
+        
+        // Spacing larger than width should not produce negative sizes.
+        XCTAssertEqual(GridView<EmptyView, Int>.cellSize(totalWidth: 10, columns: 3, columnSpacing: 10), 0)
     }
 }
