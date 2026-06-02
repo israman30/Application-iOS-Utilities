@@ -7,7 +7,7 @@
         "key": "Clear text",
         "location": {
           "startingColumn": 41,
-          "startingLine": 145
+          "startingLine": 173
         }
       },
       {
@@ -15,7 +15,7 @@
         "key": "Hide password",
         "location": {
           "startingColumn": 60,
-          "startingLine": 156
+          "startingLine": 184
         }
       },
       {
@@ -23,7 +23,7 @@
         "key": "Show password",
         "location": {
           "startingColumn": 78,
-          "startingLine": 156
+          "startingLine": 184
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "TextFieldViewUtil",
         "location": {
           "startingColumn": 18,
-          "startingLine": 321
+          "startingLine": 350
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Validate",
         "location": {
           "startingColumn": 20,
-          "startingLine": 366
+          "startingLine": 395
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "Show error state",
         "location": {
           "startingColumn": 24,
-          "startingLine": 325
+          "startingLine": 354
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "Disable fields",
         "location": {
           "startingColumn": 24,
-          "startingLine": 326
+          "startingLine": 355
         }
       }
     ]

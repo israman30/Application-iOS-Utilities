@@ -159,4 +159,40 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(ScrollGridView<EmptyView>.flexibleGridItems(count: 0, spacing: 8).count, 1)
         XCTAssertEqual(ScrollGridView<EmptyView>.flexibleGridItems(count: -10, spacing: 8).count, 1)
     }
+    
+    func testTextFieldViewUtil_isErrored_trimsWhitespace() {
+        XCTAssertFalse(TextFieldViewUtil<EmptyView>.isErrored(errorText: nil))
+        XCTAssertFalse(TextFieldViewUtil<EmptyView>.isErrored(errorText: ""))
+        XCTAssertFalse(TextFieldViewUtil<EmptyView>.isErrored(errorText: "   \n\t  "))
+        XCTAssertTrue(TextFieldViewUtil<EmptyView>.isErrored(errorText: "Required"))
+    }
+    
+    func testTextFieldViewUtil_messageText_errorTakesPrecedence() {
+        XCTAssertEqual(
+            TextFieldViewUtil<EmptyView>.messageText(supportingText: "Helper", errorText: nil),
+            "Helper"
+        )
+        XCTAssertEqual(
+            TextFieldViewUtil<EmptyView>.messageText(supportingText: "Helper", errorText: "Invalid"),
+            "Invalid"
+        )
+        XCTAssertEqual(
+            TextFieldViewUtil<EmptyView>.messageText(supportingText: nil, errorText: nil),
+            nil
+        )
+    }
+    
+    func testTextFieldViewUtil_borderStyle_priorityOrder() {
+        XCTAssertEqual(TextFieldViewUtil<EmptyView>.borderStyle(isErrored: false, isFocused: false), .normal)
+        XCTAssertEqual(TextFieldViewUtil<EmptyView>.borderStyle(isErrored: false, isFocused: true), .focused)
+        XCTAssertEqual(TextFieldViewUtil<EmptyView>.borderStyle(isErrored: true, isFocused: false), .error)
+        XCTAssertEqual(TextFieldViewUtil<EmptyView>.borderStyle(isErrored: true, isFocused: true), .error)
+    }
+    
+    func testTextFieldViewUtil_normalizedIconName_trimsAndNilsEmpty() {
+        XCTAssertEqual(TextFieldViewUtil<EmptyView>.normalizedIconName("envelope"), "envelope")
+        XCTAssertEqual(TextFieldViewUtil<EmptyView>.normalizedIconName("  lock  "), "lock")
+        XCTAssertNil(TextFieldViewUtil<EmptyView>.normalizedIconName(""))
+        XCTAssertNil(TextFieldViewUtil<EmptyView>.normalizedIconName("   \n\t  "))
+    }
 }
