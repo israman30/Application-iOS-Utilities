@@ -9,22 +9,6 @@
           "startingColumn": 18,
           "startingLine": 17
         }
-      },
-      {
-        "comment": "",
-        "key": "On",
-        "location": {
-          "startingColumn": 41,
-          "startingLine": 183
-        }
-      },
-      {
-        "comment": "",
-        "key": "Off",
-        "location": {
-          "startingColumn": 48,
-          "startingLine": 183
-        }
       }
     ]
   },

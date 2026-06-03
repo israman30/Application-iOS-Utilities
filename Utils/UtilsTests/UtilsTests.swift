@@ -343,4 +343,36 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(DatePickerViewUtils.valueLineText(valuePrefix: "Selected:", valueText: "June 1, 2026"), "Selected: June 1, 2026")
         XCTAssertEqual(DatePickerViewUtils.valueLineText(valuePrefix: "", valueText: "June 1, 2026"), " June 1, 2026")
     }
+    
+    func testToggleViewUtils_accessibilityValueText_matchesState() {
+        XCTAssertEqual(ToggleViewUtils.accessibilityValueText(isOn: true), "On")
+        XCTAssertEqual(ToggleViewUtils.accessibilityValueText(isOn: false), "Off")
+    }
+    
+    func testToggleViewUtils_selectedWashOpacity_respectsDifferentiateWithoutColor() {
+        XCTAssertEqual(ToggleViewUtils.selectedWashOpacity(differentiateWithoutColor: false), 0.10, accuracy: 0.0001)
+        XCTAssertEqual(ToggleViewUtils.selectedWashOpacity(differentiateWithoutColor: true), 0.12, accuracy: 0.0001)
+    }
+    
+    func testToggleViewUtils_borderOpacity_matchesOnState() {
+        XCTAssertEqual(ToggleViewUtils.borderOpacity(isOn: false), 0.12, accuracy: 0.0001)
+        XCTAssertEqual(ToggleViewUtils.borderOpacity(isOn: true), 0.16, accuracy: 0.0001)
+    }
+    
+    func testToggleViewUtils_iconForegroundStyle_dependsOnEnabledAndColorScheme() {
+        XCTAssertEqual(ToggleViewUtils.iconForegroundStyle(isEnabled: false, colorScheme: .light), .secondary)
+        XCTAssertEqual(ToggleViewUtils.iconForegroundStyle(isEnabled: false, colorScheme: .dark), .secondary)
+        
+        XCTAssertEqual(ToggleViewUtils.iconForegroundStyle(isEnabled: true, colorScheme: .light), .base(opacity: 1.0))
+        XCTAssertEqual(ToggleViewUtils.iconForegroundStyle(isEnabled: true, colorScheme: .dark), .base(opacity: 0.9))
+    }
+    
+    func testToggleViewUtils_shouldUseSubtitle_rejectsNilOrEmpty() {
+        XCTAssertFalse(ToggleViewUtils.shouldUseSubtitle(nil))
+        XCTAssertFalse(ToggleViewUtils.shouldUseSubtitle(""))
+        XCTAssertTrue(ToggleViewUtils.shouldUseSubtitle("Details"))
+        
+        // Current behavior: whitespace-only subtitles are considered non-empty.
+        XCTAssertTrue(ToggleViewUtils.shouldUseSubtitle("  "))
+    }
 }
