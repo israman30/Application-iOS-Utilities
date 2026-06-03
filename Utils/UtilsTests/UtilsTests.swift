@@ -264,4 +264,36 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(ActivityItemUtils<EmptyView>.borderWidth(increasedContrast: false), 1.0)
         XCTAssertEqual(ActivityItemUtils<EmptyView>.borderWidth(increasedContrast: true), 2.0)
     }
+    
+    func testSliderControlViewUtils_normalizedBounds_ordersMinAndMax() {
+        let bounds1 = SliderControlViewUtils.normalizedBounds(min: 0, max: 10)
+        XCTAssertEqual(bounds1.min, 0)
+        XCTAssertEqual(bounds1.max, 10)
+        
+        let bounds2 = SliderControlViewUtils.normalizedBounds(min: 10, max: 0)
+        XCTAssertEqual(bounds2.min, 0)
+        XCTAssertEqual(bounds2.max, 10)
+    }
+    
+    func testSliderControlViewUtils_clampedValue_clampsToBounds() {
+        XCTAssertEqual(SliderControlViewUtils.clampedValue(-1, min: 0, max: 10), 0)
+        XCTAssertEqual(SliderControlViewUtils.clampedValue(0, min: 0, max: 10), 0)
+        XCTAssertEqual(SliderControlViewUtils.clampedValue(4.5, min: 0, max: 10), 4.5)
+        XCTAssertEqual(SliderControlViewUtils.clampedValue(10, min: 0, max: 10), 10)
+        XCTAssertEqual(SliderControlViewUtils.clampedValue(999, min: 0, max: 10), 10)
+    }
+    
+    func testSliderControlViewUtils_defaultValueText_formatsIntegersAndDecimals() {
+        XCTAssertEqual(SliderControlViewUtils.defaultValueText(5.0), "5")
+        XCTAssertEqual(SliderControlViewUtils.defaultValueText(-3.0), "-3")
+        XCTAssertEqual(SliderControlViewUtils.defaultValueText(5.125), "5.12")
+        XCTAssertEqual(SliderControlViewUtils.defaultValueText(5.129), "5.13")
+    }
+    
+    func testSliderControlViewUtils_incrementDecrementValues_respectBounds() {
+        XCTAssertEqual(SliderControlViewUtils.decrementValue(current: 0, min: 0, max: 10, step: 1), 0)
+        XCTAssertEqual(SliderControlViewUtils.decrementValue(current: 5, min: 0, max: 10, step: 1), 4)
+        XCTAssertEqual(SliderControlViewUtils.incrementValue(current: 10, min: 0, max: 10, step: 1), 10)
+        XCTAssertEqual(SliderControlViewUtils.incrementValue(current: 9.5, min: 0, max: 10, step: 1), 10)
+    }
 }
