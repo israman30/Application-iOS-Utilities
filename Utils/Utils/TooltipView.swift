@@ -129,6 +129,56 @@ public struct ActivityItemUtils<Icon: View>: View {
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.isEnabled) private var isEnabled: Bool
     
+    enum PrimaryActionKind: Equatable {
+        case none
+        case tap
+        case longPress
+    }
+    
+    static func primaryActionKind(hasTap: Bool, hasLongPress: Bool) -> PrimaryActionKind {
+        if hasTap {
+            return .tap
+        }
+        if hasLongPress {
+            return .longPress
+        }
+        return .none
+    }
+    
+    static func shouldExposeMoreOptions(hasTap: Bool, hasLongPress: Bool) -> Bool {
+        hasTap && hasLongPress
+    }
+    
+    static func arrowRotationDegrees(for type: TooltipDirection) -> Double {
+        switch type {
+        case .top:
+            return 0
+        case .left:
+            return -90
+        case .right:
+            return 90
+        case .bottom:
+            return 180
+        }
+    }
+    
+    static func arrowOffset(for type: TooltipDirection) -> CGSize {
+        switch type {
+        case .top:
+            return .init(width: 0, height: -8)
+        case .left:
+            return .init(width: -10, height: 0)
+        case .right:
+            return .init(width: 10, height: 0)
+        case .bottom:
+            return .init(width: 0, height: 8)
+        }
+    }
+    
+    static func borderWidth(increasedContrast: Bool) -> CGFloat {
+        increasedContrast ? 2.0 : 1.0
+    }
+    
     /// Creates an activity pill / tooltip badge.
     ///
     /// - Parameters:
@@ -185,14 +235,23 @@ public struct ActivityItemUtils<Icon: View>: View {
         .accessibilityLabel(accessibilityLabelOverride ?? title)
         .modifierIf(accessibilityHintText != nil) { view in view.accessibilityHint(accessibilityHintText!) }
         .modifierIf(primaryAction != nil) { view in view.accessibilityAction { primaryAction?() } }
-        .modifierIf(onLongPress != nil && onTap != nil) { view in
-            view.accessibilityAction(named: "More options") { onLongPress?() }
+        .modifierIf(Self.shouldExposeMoreOptions(hasTap: onTap != nil, hasLongPress: onLongPress != nil)) { view in
+            view.accessibilityAction(named: "More options") {
+                onLongPress?()
+            }
         }
         .opacity(isEnabled ? 1.0 : 0.55)
     }
     
     private var primaryAction: (() -> Void)? {
-        onTap ?? onLongPress
+        switch Self.primaryActionKind(hasTap: onTap != nil, hasLongPress: onLongPress != nil) {
+        case .none:
+            return nil
+        case .tap:
+            return onTap
+        case .longPress:
+            return onLongPress
+        }
     }
     
     private var accessibilityHintText: String? {
@@ -201,7 +260,9 @@ public struct ActivityItemUtils<Icon: View>: View {
     
     private var longPressGesture: some Gesture {
         LongPressGesture(minimumDuration: longPressDuration)
-            .onEnded { _ in onLongPress?() }
+            .onEnded { _ in
+                onLongPress?()
+            }
     }
     
     private var pill: some View {
@@ -262,29 +323,11 @@ public struct ActivityItemUtils<Icon: View>: View {
     }
     
     private var arrowRotation: Angle {
-        switch type {
-        case .top:
-            return .degrees(0)
-        case .left:
-            return .degrees(-90)
-        case .right:
-            return .degrees(90)
-        case .bottom:
-            return .degrees(180)
-        }
+        .degrees(Self.arrowRotationDegrees(for: type))
     }
 
     private var arrowOffset: CGSize {
-        switch type {
-        case .top:
-            return .init(width: 0, height: -8)
-        case .left:
-            return .init(width: -10, height: 0)
-        case .right:
-            return .init(width: 10, height: 0)
-        case .bottom:
-            return .init(width: 0, height: 8)
-        }
+        Self.arrowOffset(for: type)
     }
     
     private var backgroundFillColor: Color {
@@ -302,11 +345,13 @@ public struct ActivityItemUtils<Icon: View>: View {
     }
     
     private var borderWidth: CGFloat {
-        increasedContrast ? 2.0 : 1.0
+        Self.borderWidth(increasedContrast: increasedContrast)
     }
     
     private var borderStrokeColor: Color {
-        if let tint { return tint.opacity(increasedContrast ? 0.55 : 0.35) }
+        if let tint {
+            return tint.opacity(increasedContrast ? 0.55 : 0.35)
+        }
         return Color(uiColor: .separator).opacity(increasedContrast ? 0.75 : 0.35)
     }
     

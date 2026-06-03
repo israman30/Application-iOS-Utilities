@@ -231,4 +231,37 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(FloatingButtonUtilsView.contrastForeground(red: 0, green: 0, blue: 0), .white)
         XCTAssertEqual(FloatingButtonUtilsView.contrastForeground(red: 0, green: 0, blue: 1), .white) // blue-ish
     }
+    
+    func testActivityItemUtils_primaryActionKind_prefersTapOverLongPress() {
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.primaryActionKind(hasTap: false, hasLongPress: false), .none)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.primaryActionKind(hasTap: true, hasLongPress: false), .tap)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.primaryActionKind(hasTap: false, hasLongPress: true), .longPress)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.primaryActionKind(hasTap: true, hasLongPress: true), .tap)
+    }
+    
+    func testActivityItemUtils_shouldExposeMoreOptions_requiresBothActions() {
+        XCTAssertFalse(ActivityItemUtils<EmptyView>.shouldExposeMoreOptions(hasTap: false, hasLongPress: false))
+        XCTAssertFalse(ActivityItemUtils<EmptyView>.shouldExposeMoreOptions(hasTap: true, hasLongPress: false))
+        XCTAssertFalse(ActivityItemUtils<EmptyView>.shouldExposeMoreOptions(hasTap: false, hasLongPress: true))
+        XCTAssertTrue(ActivityItemUtils<EmptyView>.shouldExposeMoreOptions(hasTap: true, hasLongPress: true))
+    }
+    
+    func testActivityItemUtils_arrowRotationDegrees_matchesDirection() {
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowRotationDegrees(for: .top), 0)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowRotationDegrees(for: .left), -90)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowRotationDegrees(for: .right), 90)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowRotationDegrees(for: .bottom), 180)
+    }
+    
+    func testActivityItemUtils_arrowOffset_matchesDirection() {
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowOffset(for: .top), CGSize(width: 0, height: -8))
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowOffset(for: .left), CGSize(width: -10, height: 0))
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowOffset(for: .right), CGSize(width: 10, height: 0))
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.arrowOffset(for: .bottom), CGSize(width: 0, height: 8))
+    }
+    
+    func testActivityItemUtils_borderWidth_usesIncreasedContrast() {
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.borderWidth(increasedContrast: false), 1.0)
+        XCTAssertEqual(ActivityItemUtils<EmptyView>.borderWidth(increasedContrast: true), 2.0)
+    }
 }
