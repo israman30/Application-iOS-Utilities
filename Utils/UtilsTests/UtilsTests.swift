@@ -332,4 +332,15 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(StepperViewUtils.incrementValue(current: 0, min: 0, max: 10, step: 0), 1)
         XCTAssertEqual(StepperViewUtils.decrementValue(current: 5, min: 0, max: 10, step: -1), 4)
     }
+    
+    func testPickerViewUtils_normalizedTitleKey_isNilWhenEmpty() {
+        XCTAssertNil(PickerViewUtils<String>.normalizedTitleKey(""))
+        XCTAssertNotNil(PickerViewUtils<String>.normalizedTitleKey("Transport"))
+    }
+    
+    func testDatePickerViewUtils_valueLineText_formatsPrefixAndValue() {
+        XCTAssertEqual(DatePickerViewUtils.valueLineText(valuePrefix: nil, valueText: "June 1, 2026"), "June 1, 2026")
+        XCTAssertEqual(DatePickerViewUtils.valueLineText(valuePrefix: "Selected:", valueText: "June 1, 2026"), "Selected: June 1, 2026")
+        XCTAssertEqual(DatePickerViewUtils.valueLineText(valuePrefix: "", valueText: "June 1, 2026"), " June 1, 2026")
+    }
 }
