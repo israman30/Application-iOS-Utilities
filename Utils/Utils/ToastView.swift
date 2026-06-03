@@ -74,6 +74,42 @@ public struct ToastView: View {
     @State private var dragOffset: CGFloat = 0
     @State private var didAppear: Bool = false
     
+    static func resolvedIconName(systemImage: String?, style: ToastStyle) -> String? {
+        if let systemImage, !systemImage.isEmpty {
+            return systemImage
+        }
+        return style.defaultSystemImage
+    }
+    
+    static func accessibilityLabelText(title: String?, text: String) -> String {
+        if let title, !title.isEmpty {
+            return "\(title). \(text)"
+        }
+        return text
+    }
+    
+    static func accessibilityHintText(dismissOnTap: Bool, dismissOnSwipe: Bool) -> String? {
+        if dismissOnSwipe && dismissOnTap {
+            return "Swipe or tap to dismiss."
+        }
+        if dismissOnSwipe {
+            return "Swipe to dismiss."
+        }
+        if dismissOnTap {
+            return "Tap to dismiss."
+        }
+        return nil
+    }
+    
+    static func dragOpacity(dragOffset: CGFloat) -> Double {
+        let normalized = min(1.0, Double(abs(dragOffset) / 90))
+        return 1.0 - (0.18 * normalized)
+    }
+    
+    static func shouldAutoDismiss(delayedAnimation: CGFloat) -> Bool {
+        delayedAnimation > 0
+    }
+    
     /// Creates a toast.
     ///
     /// - Parameters:
@@ -177,7 +213,9 @@ public struct ToastView: View {
                 view.gesture(swipeToDismissGesture)
             }
             .modifierIf(dismissOnTap) { view in
-                view.onTapGesture { dismiss(animated: true) }
+                view.onTapGesture {
+                    dismiss(animated: true)
+                }
             }
             .accessibilityElement(children: .ignore)
             .accessibilityLabel(accessibilityLabelText)
@@ -188,7 +226,9 @@ public struct ToastView: View {
             .modifierIf(actionTitle != nil && action != nil) { view in
                 view.accessibilityAction(named: actionTitle!) { action?() }
             }
-            .accessibilityAction(named: "Dismiss") { dismiss(animated: true) }
+            .accessibilityAction(named: "Dismiss") {
+                dismiss(animated: true)
+            }
             .transition(transition)
     }
     
@@ -351,8 +391,7 @@ public struct ToastView: View {
     }
     
     private var iconName: String? {
-        if let systemImage, !systemImage.isEmpty { return systemImage }
-        return style.defaultSystemImage
+        Self.resolvedIconName(systemImage: systemImage, style: style)
     }
     
     private var transition: AnyTransition {
@@ -386,8 +425,7 @@ public struct ToastView: View {
     }
     
     private var dragOpacity: Double {
-        let normalized = min(1.0, Double(abs(dragOffset) / 90))
-        return 1.0 - (0.18 * normalized)
+        Self.dragOpacity(dragOffset: dragOffset)
     }
     
     private func dismiss(animated: Bool) {
@@ -408,7 +446,7 @@ public struct ToastView: View {
     }
     
     private func scheduleAutoDismissIfNeeded() {
-        guard delayedAnimation > 0 else { return }
+        guard Self.shouldAutoDismiss(delayedAnimation: delayedAnimation) else { return }
         DispatchQueue.main.asyncAfter(deadline: .now() + delayedAnimation) {
             guard isVisible else { return }
             dismiss(animated: true)
@@ -442,23 +480,11 @@ public struct ToastView: View {
     
     // MARK: - Accessibility strings
     private var accessibilityLabelText: String {
-        if let title, !title.isEmpty {
-            return "\(title). \(text)"
-        }
-        return text
+        Self.accessibilityLabelText(title: title, text: text)
     }
     
     private var accessibilityHintText: String? {
-        if dismissOnSwipe && dismissOnTap {
-            return "Swipe or tap to dismiss."
-        }
-        if dismissOnSwipe {
-            return "Swipe to dismiss."
-        }
-        if dismissOnTap {
-            return "Tap to dismiss."
-        }
-        return nil
+        Self.accessibilityHintText(dismissOnTap: dismissOnTap, dismissOnSwipe: dismissOnSwipe)
     }
 }
 
@@ -479,7 +505,27 @@ public enum ToastStyle: Equatable {
     /// If you pass `systemImage` to `ToastView`, that always takes precedence.
     case custom(tint: Color?, defaultSystemImage: String? = nil)
     
-    fileprivate var tint: Color? {
+    enum TintKind: Equatable {
+        case none
+        case blue
+        case green
+        case orange
+        case red
+        case custom
+    }
+    
+    var tintKind: TintKind {
+        switch self {
+        case .neutral: return .none
+        case .info: return .blue
+        case .success: return .green
+        case .warning: return .orange
+        case .error: return .red
+        case .custom: return .custom
+        }
+    }
+    
+    var tint: Color? {
         switch self {
         case .neutral: return nil
         case .info: return .blue
@@ -490,7 +536,7 @@ public enum ToastStyle: Equatable {
         }
     }
     
-    fileprivate var defaultSystemImage: String? {
+    var defaultSystemImage: String? {
         switch self {
         case .neutral: return nil
         case .info: return "info.circle.fill"

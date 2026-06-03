@@ -434,4 +434,58 @@ final class UtilsTests: XCTestCase {
             accuracy: 0.0001
         )
     }
+    
+    func testToastView_resolvedIconName_prefersExplicitSystemImage() {
+        XCTAssertEqual(
+            ToastView.resolvedIconName(systemImage: "bell.fill", style: .success),
+            "bell.fill"
+        )
+        // Empty string is treated as “no explicit icon”, so it falls back to style default.
+        XCTAssertEqual(
+            ToastView.resolvedIconName(systemImage: "", style: .success),
+            "checkmark.circle.fill"
+        )
+    }
+    
+    func testToastView_accessibilityLabelText_includesTitleWhenPresent() {
+        XCTAssertEqual(ToastView.accessibilityLabelText(title: "Saved", text: "Done"), "Saved. Done")
+        XCTAssertEqual(ToastView.accessibilityLabelText(title: nil, text: "Done"), "Done")
+        XCTAssertEqual(ToastView.accessibilityLabelText(title: "", text: "Done"), "Done")
+    }
+    
+    func testToastView_accessibilityHintText_matchesDismissOptions() {
+        XCTAssertEqual(ToastView.accessibilityHintText(dismissOnTap: true, dismissOnSwipe: true), "Swipe or tap to dismiss.")
+        XCTAssertEqual(ToastView.accessibilityHintText(dismissOnTap: false, dismissOnSwipe: true), "Swipe to dismiss.")
+        XCTAssertEqual(ToastView.accessibilityHintText(dismissOnTap: true, dismissOnSwipe: false), "Tap to dismiss.")
+        XCTAssertNil(ToastView.accessibilityHintText(dismissOnTap: false, dismissOnSwipe: false))
+    }
+    
+    func testToastView_dragOpacity_clampsAndUsesAbsoluteOffset() {
+        XCTAssertEqual(ToastView.dragOpacity(dragOffset: 0), 1.0, accuracy: 0.0001)
+        XCTAssertEqual(ToastView.dragOpacity(dragOffset: 90), 0.82, accuracy: 0.0001)
+        XCTAssertEqual(ToastView.dragOpacity(dragOffset: 180), 0.82, accuracy: 0.0001) // clamps
+        XCTAssertEqual(ToastView.dragOpacity(dragOffset: -90), 0.82, accuracy: 0.0001) // abs
+    }
+    
+    func testToastView_shouldAutoDismiss_isTrueOnlyForPositiveDelay() {
+        XCTAssertFalse(ToastView.shouldAutoDismiss(delayedAnimation: 0))
+        XCTAssertFalse(ToastView.shouldAutoDismiss(delayedAnimation: -1))
+        XCTAssertTrue(ToastView.shouldAutoDismiss(delayedAnimation: 0.01))
+    }
+    
+    func testToastStyle_defaultSystemImage_andTintKindMappings() {
+        XCTAssertEqual(ToastStyle.neutral.defaultSystemImage, nil)
+        XCTAssertEqual(ToastStyle.info.defaultSystemImage, "info.circle.fill")
+        XCTAssertEqual(ToastStyle.success.defaultSystemImage, "checkmark.circle.fill")
+        XCTAssertEqual(ToastStyle.warning.defaultSystemImage, "exclamationmark.triangle.fill")
+        XCTAssertEqual(ToastStyle.error.defaultSystemImage, "xmark.octagon.fill")
+        XCTAssertEqual(ToastStyle.custom(tint: nil, defaultSystemImage: "star.fill").defaultSystemImage, "star.fill")
+        
+        XCTAssertEqual(ToastStyle.neutral.tintKind, .none)
+        XCTAssertEqual(ToastStyle.info.tintKind, .blue)
+        XCTAssertEqual(ToastStyle.success.tintKind, .green)
+        XCTAssertEqual(ToastStyle.warning.tintKind, .orange)
+        XCTAssertEqual(ToastStyle.error.tintKind, .red)
+        XCTAssertEqual(ToastStyle.custom(tint: nil).tintKind, .custom)
+    }
 }
