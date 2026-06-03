@@ -421,4 +421,17 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(parsed.heading, .h2)
         XCTAssertEqual(parsed.behaviour, .combine)
     }
+    
+    func testFormViewUtil_rowSeparatorTintOpacity_matchesContrast() {
+        XCTAssertEqual(
+            FormViewUtil<EmptyView, EmptyView, EmptyView>.rowSeparatorTintOpacity(colorSchemeContrast: .standard),
+            0.18,
+            accuracy: 0.0001
+        )
+        XCTAssertEqual(
+            FormViewUtil<EmptyView, EmptyView, EmptyView>.rowSeparatorTintOpacity(colorSchemeContrast: .increased),
+            0.35,
+            accuracy: 0.0001
+        )
+    }
 }
