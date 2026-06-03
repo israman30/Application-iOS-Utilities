@@ -195,4 +195,40 @@ final class UtilsTests: XCTestCase {
         XCTAssertNil(TextFieldViewUtil<EmptyView>.normalizedIconName(""))
         XCTAssertNil(TextFieldViewUtil<EmptyView>.normalizedIconName("   \n\t  "))
     }
+    
+    func testButtonViewUtils_accessibilityTitle_isNilForNilOrEmpty() {
+        XCTAssertNil(ButtonViewUtils.accessibilityTitle(nil))
+        XCTAssertNil(ButtonViewUtils.accessibilityTitle(""))
+        XCTAssertEqual(ButtonViewUtils.accessibilityTitle("Save"), "Save")
+        
+        // Current behavior: whitespace-only titles are considered non-empty.
+        XCTAssertEqual(ButtonViewUtils.accessibilityTitle("  "), "  ")
+    }
+    
+    func testButtonViewUtils_shouldInvokeAction_isFalseWhenLoading() {
+        XCTAssertTrue(ButtonViewUtils.shouldInvokeAction(isLoading: false))
+        XCTAssertFalse(ButtonViewUtils.shouldInvokeAction(isLoading: true))
+    }
+    
+    func testFloatingButtonUtilsView_clampedSize_enforcesMinimumTapTarget() {
+        XCTAssertEqual(FloatingButtonUtilsView.clampedSize(56), 56)
+        XCTAssertEqual(FloatingButtonUtilsView.clampedSize(44), 44)
+        XCTAssertEqual(FloatingButtonUtilsView.clampedSize(10), 44)
+        XCTAssertEqual(FloatingButtonUtilsView.clampedSize(-1), 44)
+    }
+    
+    func testFloatingButtonUtilsView_shouldInvokeAction_isFalseWhenLoading() {
+        XCTAssertTrue(FloatingButtonUtilsView.shouldInvokeAction(isLoading: false))
+        XCTAssertFalse(FloatingButtonUtilsView.shouldInvokeAction(isLoading: true))
+    }
+    
+    func testFloatingButtonUtilsView_contrastForeground_usesLuminanceThreshold() {
+        // Bright background -> black foreground
+        XCTAssertEqual(FloatingButtonUtilsView.contrastForeground(red: 1, green: 1, blue: 1), .black)
+        XCTAssertEqual(FloatingButtonUtilsView.contrastForeground(red: 1, green: 1, blue: 0), .black) // yellow-ish
+        
+        // Dark background -> white foreground
+        XCTAssertEqual(FloatingButtonUtilsView.contrastForeground(red: 0, green: 0, blue: 0), .white)
+        XCTAssertEqual(FloatingButtonUtilsView.contrastForeground(red: 0, green: 0, blue: 1), .white) // blue-ish
+    }
 }
