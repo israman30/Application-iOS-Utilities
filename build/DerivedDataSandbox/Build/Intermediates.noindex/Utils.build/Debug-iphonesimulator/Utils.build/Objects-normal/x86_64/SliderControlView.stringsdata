@@ -23,7 +23,7 @@
         "key": "Decrease",
         "location": {
           "startingColumn": 29,
-          "startingLine": 314
+          "startingLine": 316
         }
       },
       {
@@ -31,7 +31,7 @@
         "key": "Decreases by %@",
         "location": {
           "startingColumn": 28,
-          "startingLine": 315
+          "startingLine": 317
         }
       },
       {
@@ -39,7 +39,7 @@
         "key": "Increase",
         "location": {
           "startingColumn": 29,
-          "startingLine": 339
+          "startingLine": 341
         }
       },
       {
@@ -47,7 +47,7 @@
         "key": "Increases by %@",
         "location": {
           "startingColumn": 28,
-          "startingLine": 340
+          "startingLine": 342
         }
       },
       {
@@ -55,7 +55,7 @@
         "key": "Value",
         "location": {
           "startingColumn": 41,
-          "startingLine": 225
+          "startingLine": 227
         }
       }
     ]

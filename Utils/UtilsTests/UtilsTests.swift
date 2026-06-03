@@ -296,4 +296,40 @@ final class UtilsTests: XCTestCase {
         XCTAssertEqual(SliderControlViewUtils.incrementValue(current: 10, min: 0, max: 10, step: 1), 10)
         XCTAssertEqual(SliderControlViewUtils.incrementValue(current: 9.5, min: 0, max: 10, step: 1), 10)
     }
+    
+    func testStepperViewUtils_normalizedBounds_ordersMinAndMax() {
+        let bounds1 = StepperViewUtils.normalizedBounds(min: 0, max: 10)
+        XCTAssertEqual(bounds1.min, 0)
+        XCTAssertEqual(bounds1.max, 10)
+        
+        let bounds2 = StepperViewUtils.normalizedBounds(min: 10, max: 0)
+        XCTAssertEqual(bounds2.min, 0)
+        XCTAssertEqual(bounds2.max, 10)
+    }
+    
+    func testStepperViewUtils_normalizedStep_clampsToAtLeastOne() {
+        XCTAssertEqual(StepperViewUtils.normalizedStep(3), 3)
+        XCTAssertEqual(StepperViewUtils.normalizedStep(1), 1)
+        XCTAssertEqual(StepperViewUtils.normalizedStep(0), 1)
+        XCTAssertEqual(StepperViewUtils.normalizedStep(-10), 1)
+    }
+    
+    func testStepperViewUtils_clampedValue_clampsToBounds() {
+        XCTAssertEqual(StepperViewUtils.clampedValue(-1, min: 0, max: 10), 0)
+        XCTAssertEqual(StepperViewUtils.clampedValue(0, min: 0, max: 10), 0)
+        XCTAssertEqual(StepperViewUtils.clampedValue(5, min: 0, max: 10), 5)
+        XCTAssertEqual(StepperViewUtils.clampedValue(10, min: 0, max: 10), 10)
+        XCTAssertEqual(StepperViewUtils.clampedValue(999, min: 0, max: 10), 10)
+    }
+    
+    func testStepperViewUtils_incrementDecrementValues_respectBoundsAndStepNormalization() {
+        XCTAssertEqual(StepperViewUtils.decrementValue(current: 0, min: 0, max: 10, step: 1), 0)
+        XCTAssertEqual(StepperViewUtils.decrementValue(current: 5, min: 0, max: 10, step: 1), 4)
+        XCTAssertEqual(StepperViewUtils.incrementValue(current: 10, min: 0, max: 10, step: 1), 10)
+        XCTAssertEqual(StepperViewUtils.incrementValue(current: 9, min: 0, max: 10, step: 2), 10)
+        
+        // Step normalization: non-positive step behaves like 1
+        XCTAssertEqual(StepperViewUtils.incrementValue(current: 0, min: 0, max: 10, step: 0), 1)
+        XCTAssertEqual(StepperViewUtils.decrementValue(current: 5, min: 0, max: 10, step: -1), 4)
+    }
 }
