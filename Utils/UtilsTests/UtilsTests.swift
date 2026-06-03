@@ -375,4 +375,50 @@ final class UtilsTests: XCTestCase {
         // Current behavior: whitespace-only subtitles are considered non-empty.
         XCTAssertTrue(ToggleViewUtils.shouldUseSubtitle("  "))
     }
+    
+    func testAccessibilityOptionModifier_parse_defaultsAreEmpty() {
+        let parsed = AccessibilityOptionModifier.parse(options: [])
+        XCTAssertNil(parsed.label)
+        XCTAssertNil(parsed.value)
+        XCTAssertNil(parsed.hint)
+        XCTAssertNil(parsed.traits)
+        XCTAssertFalse(parsed.accessibilityHidden)
+        XCTAssertNil(parsed.behaviour)
+        XCTAssertNil(parsed.heading)
+    }
+    
+    func testAccessibilityOptionModifier_parse_lastLabelValueHintWins() {
+        let parsed = AccessibilityOptionModifier.parse(options: [
+            .labels("First"),
+            .value("One"),
+            .hint("Hint 1"),
+            .labels("Second"),
+            .value("Two"),
+            .hint("Hint 2")
+        ])
+        XCTAssertEqual(parsed.label, "Second")
+        XCTAssertEqual(parsed.value, "Two")
+        XCTAssertEqual(parsed.hint, "Hint 2")
+    }
+    
+    func testAccessibilityOptionModifier_parse_unionsTraits() {
+        let parsed = AccessibilityOptionModifier.parse(options: [
+            .traits([.isHeader]),
+            .traits([.isButton])
+        ])
+        XCTAssertNotNil(parsed.traits)
+        XCTAssertTrue(parsed.traits!.contains(.isHeader))
+        XCTAssertTrue(parsed.traits!.contains(.isButton))
+    }
+    
+    func testAccessibilityOptionModifier_parse_setsHiddenAndHeadingAndBehaviour() {
+        let parsed = AccessibilityOptionModifier.parse(options: [
+            .accessibilityHidden,
+            .heading(level: .h2),
+            .behaviour(children: .combine)
+        ])
+        XCTAssertTrue(parsed.accessibilityHidden)
+        XCTAssertEqual(parsed.heading, .h2)
+        XCTAssertEqual(parsed.behaviour, .combine)
+    }
 }
