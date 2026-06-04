@@ -1,0 +1,74 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Build & Test (Xcode)
+    runs-on: macos-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Select Xcode (latest stable)
+        uses: maxim-lobanov/setup-xcode@v1
+        with:
+          xcode-version: latest-stable
+
+      - name: Pick an iPhone simulator
+        id: sim
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json
+          import subprocess
+          from typing import Any, Dict, List
+
+          raw = subprocess.check_output(["xcrun", "simctl", "list", "-j", "devices", "available"])
+          data: Dict[str, Any] = json.loads(raw)
+
+          iphones: List[Dict[str, Any]] = []
+          for _runtime, devices in (data.get("devices") or {}).items():
+            for d in devices or []:
+              if not d.get("isAvailable"):
+                continue
+              if "iPhone" in (d.get("name") or ""):
+                iphones.append(d)
+
+          def pick(preferred_substrings: List[str]) -> Dict[str, Any]:
+            for s in preferred_substrings:
+              for d in iphones:
+                if s in (d.get("name") or ""):
+                  return d
+            return iphones[0]
+
+          if not iphones:
+            raise SystemExit("No iPhone simulators found on runner.")
+
+          device = pick(["iPhone 15", "iPhone 14", "iPhone 13"])
+          print(f"udid={device['udid']}")
+          print(f"name={device['name']}")
+          PY
+
+      - name: Test
+        shell: bash
+        run: |
+          set -euo pipefail
+          echo "Using simulator: ${{ steps.sim.outputs.name }} (${{ steps.sim.outputs.udid }})"
+
+          xcodebuild \
+            -project "Utils/Utils.xcodeproj" \
+            -scheme "Utils" \
+            -configuration "Debug" \
+            -destination "id=${{ steps.sim.outputs.udid }}" \
+            -derivedDataPath "build/DerivedDataCI" \
+            test \
+            CODE_SIGNING_ALLOWED=NO
