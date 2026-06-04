@@ -490,7 +490,17 @@ struct AccessibilityOptionModifier: ViewModifier {
     private let behaviour: AccessibilityChildBehavior?
     private let heading: AccessibilityHeadingLevel?
     
-    public init(options: [AccessibilityOption]) {
+    struct ParsedOptions {
+        let label: String?
+        let value: String?
+        let hint: String?
+        let traits: AccessibilityTraits?
+        let accessibilityHidden: Bool
+        let behaviour: AccessibilityChildBehavior?
+        let heading: AccessibilityHeadingLevel?
+    }
+    
+    static func parse(options: [AccessibilityOption]) -> ParsedOptions {
         var label: String? = nil
         var value: String? = nil
         var hint: String? = nil
@@ -521,14 +531,26 @@ struct AccessibilityOptionModifier: ViewModifier {
             }
         }
         
-        self.label = label
-        self.value = value
-        self.hint = hint
-        self.traits = traitSet ? combinedTraits : nil
-        self.accessibilityHidden = accessibilityHidden
-        self.behaviour = behaviour
-        self.heading = heading
-        
+        return ParsedOptions(
+            label: label,
+            value: value,
+            hint: hint,
+            traits: traitSet ? combinedTraits : nil,
+            accessibilityHidden: accessibilityHidden,
+            behaviour: behaviour,
+            heading: heading
+        )
+    }
+    
+    public init(options: [AccessibilityOption]) {
+        let parsed = Self.parse(options: options)
+        self.label = parsed.label
+        self.value = parsed.value
+        self.hint = parsed.hint
+        self.traits = parsed.traits
+        self.accessibilityHidden = parsed.accessibilityHidden
+        self.behaviour = parsed.behaviour
+        self.heading = parsed.heading
     }
     
     func body(content: Content) -> some View {

@@ -59,8 +59,7 @@ struct RatingHeartsSampleView: View {
 /// Example:
 /// `RatingHeartsView(rating: 3.5, maxRating: 5).frame(height: 28)`
 public struct RatingHeartsView: View {
-    /// Current rating value. Values outside `0...maxRating` will still render,
-    /// but for predictable results you should clamp the input before passing it.
+    /// Current rating value. Values outside `0...maxRating` are clamped for rendering.
     private let rating: CGFloat
     /// Maximum number of hearts to display (commonly 5).
     private let maxRating: Int
@@ -93,12 +92,30 @@ public struct RatingHeartsView: View {
         self.backgroundColor = backgroundColor
     }
 
+    /// Non-negative number of hearts to draw.
+    ///
+    /// `maxRating` is expected to be positive, but we defensively handle unexpected values.
+    var heartCount: Int {
+        max(0, maxRating)
+    }
+    
+    static func clampedRating(_ rating: CGFloat, maxRating: Int) -> CGFloat {
+        let upper = CGFloat(max(0, maxRating))
+        return min(max(rating, 0), upper)
+    }
+    
+    static func fillWidth(rating: CGFloat, maxRating: Int, totalWidth: CGFloat) -> CGFloat {
+        guard maxRating > 0, totalWidth > 0 else { return 0 }
+        let clamped = clampedRating(rating, maxRating: maxRating)
+        return clamped / CGFloat(maxRating) * totalWidth
+    }
+    
     public var body: some View {
         hearts
             .overlay(
             GeometryReader {
                 // Convert the rating (0...maxRating) into a width fraction of the heart row.
-                let width = rating / CGFloat(maxRating) * $0.size.width
+                let width = Self.fillWidth(rating: rating, maxRating: maxRating, totalWidth: $0.size.width)
                 ZStack(alignment: .leading) {
                     Rectangle()
                         .frame(width: width)
@@ -113,7 +130,7 @@ public struct RatingHeartsView: View {
     /// Heart silhouettes used both for drawing and masking.
     private var hearts: some View {
         HStack(spacing: 0) {
-           ForEach(0..<maxRating, id: \.self) { _ in
+           ForEach(0..<heartCount, id: \.self) { _ in
                Image(systemName: heartIcon)
                    .resizable()
                    .aspectRatio(contentMode: .fit)

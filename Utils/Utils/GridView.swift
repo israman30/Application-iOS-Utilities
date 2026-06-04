@@ -38,24 +38,39 @@ public struct ScrollGridView<Content: View>: View {
     private let content: () -> Content
     
     // MARK: - Internal
-    private var axis: Axis.Set {
+    static func axis(for orientation: GridOrientation) -> Axis.Set {
         orientation == .vertical ? .vertical : .horizontal
+    }
+    
+    static func clampedCount(_ value: Int?) -> Int {
+        max(value ?? 1, 1)
+    }
+    
+    static func gridItemCount(orientation: GridOrientation, columns: Int?, rows: Int?) -> Int {
+        switch orientation {
+        case .vertical:
+            return clampedCount(columns)
+        case .horizontal:
+            return clampedCount(rows)
+        }
+    }
+    
+    static func flexibleGridItems(count: Int, spacing: CGFloat) -> [GridItem] {
+        Array(repeating: GridItem(.flexible(), spacing: spacing), count: max(count, 1))
+    }
+    
+    private var axis: Axis.Set {
+        Self.axis(for: orientation)
     }
     
     private var adaptiveColumns: [GridItem] {
         // Using `.flexible()` keeps this layout generic: cell size is driven by available space
         // and the content itself, rather than enforcing a square aspect ratio.
-        Array(
-            repeating: GridItem(.flexible(), spacing: spacing),
-            count: max(columns ?? 1, 1)
-        )
+        Self.flexibleGridItems(count: Self.clampedCount(columns), spacing: spacing)
     }
     
     private var adaptiveRows: [GridItem] {
-        Array(
-            repeating: GridItem(.flexible(), spacing: spacing),
-            count: max(rows ?? 1, 1)
-        )
+        Self.flexibleGridItems(count: Self.clampedCount(rows), spacing: spacing)
     }
     
     @ViewBuilder

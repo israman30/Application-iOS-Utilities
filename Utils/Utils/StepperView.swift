@@ -84,6 +84,31 @@ public struct StepperViewUtils: View {
     private let cornerRadius: CGFloat
 
     private let onUpdate: (() -> Void)?
+    
+    static func normalizedBounds(min: Int, max: Int) -> (min: Int, max: Int) {
+        (Swift.min(min, max), Swift.max(min, max))
+    }
+    
+    static func normalizedStep(_ step: Int) -> Int {
+        // Avoid surprising “no-op” steppers if the call site passes 0 or a negative step.
+        step > 0 ? step : 1
+    }
+    
+    static func clampedValue(_ value: Int, min: Int, max: Int) -> Int {
+        Swift.max(Swift.min(value, max), min)
+    }
+    
+    static func decrementValue(current: Int, min: Int, max: Int, step: Int) -> Int {
+        let step = normalizedStep(step)
+        let next = Swift.max(current - step, min)
+        return clampedValue(next, min: min, max: max)
+    }
+    
+    static func incrementValue(current: Int, min: Int, max: Int, step: Int) -> Int {
+        let step = normalizedStep(step)
+        let next = Swift.min(current + step, max)
+        return clampedValue(next, min: min, max: max)
+    }
 
     /// Creates a modern stepper control suitable for settings and quantity pickers.
     ///
@@ -112,15 +137,13 @@ public struct StepperViewUtils: View {
         cornerRadius: CGFloat = 12,
         onUpdate: (() -> Void)? = nil
     ) {
-        let normalizedMin = Swift.min(min, max)
-        let normalizedMax = Swift.max(min, max)
+        let bounds = Self.normalizedBounds(min: min, max: max)
         self.titleKey = title.isEmpty ? nil : LocalizedStringKey(title)
         self._value = value
         // Normalize bounds so behavior is deterministic even if call sites pass reversed values.
-        self.min = normalizedMin
-        self.max = normalizedMax
-        // Avoid surprising “no-op” steppers if the call site passes 0 or a negative step.
-        self.step = step > 0 ? step : 1
+        self.min = bounds.min
+        self.max = bounds.max
+        self.step = Self.normalizedStep(step)
         self.showsValue = showsValue
         self.valueText = valueText
         self.tintColor = tintColor
@@ -143,15 +166,13 @@ public struct StepperViewUtils: View {
         cornerRadius: CGFloat = 12,
         onUpdate: (() -> Void)? = nil
     ) {
-        let normalizedMin = Swift.min(min, max)
-        let normalizedMax = Swift.max(min, max)
+        let bounds = Self.normalizedBounds(min: min, max: max)
         self.titleKey = titleKey
         self._value = value
         // Normalize bounds so behavior is deterministic even if call sites pass reversed values.
-        self.min = normalizedMin
-        self.max = normalizedMax
-        // Avoid surprising “no-op” steppers if the call site passes 0 or a negative step.
-        self.step = step > 0 ? step : 1
+        self.min = bounds.min
+        self.max = bounds.max
+        self.step = Self.normalizedStep(step)
         self.showsValue = showsValue
         self.valueText = valueText
         self.tintColor = tintColor
@@ -225,8 +246,7 @@ public struct StepperViewUtils: View {
     private var decrementButton: some View {
         Button {
             let oldValue = value
-            value = Swift.max(value - step, min)
-            value = clamped(value)
+            value = Self.decrementValue(current: value, min: min, max: max, step: step)
             if value != oldValue { Haptics.selectionChanged() }
         } label: {
             let iconColor: Color = (value <= min) ? .secondary : (tintColor ?? .accentColor)
@@ -246,8 +266,7 @@ public struct StepperViewUtils: View {
     private var incrementButton: some View {
         Button {
             let oldValue = value
-            value = Swift.min(value + step, max)
-            value = clamped(value)
+            value = Self.incrementValue(current: value, min: min, max: max, step: step)
             if value != oldValue { Haptics.selectionChanged() }
         } label: {
             let iconColor: Color = (value >= max) ? .secondary : (tintColor ?? .accentColor)
@@ -276,14 +295,14 @@ public struct StepperViewUtils: View {
 
     @discardableResult
     private func clampIfNeeded() -> Bool {
-        let clampedValue = clamped(value)
+        let clampedValue = Self.clampedValue(value, min: min, max: max)
         guard clampedValue != value else { return false }
         value = clampedValue
         return true
     }
 
     private func clamped(_ input: Int) -> Int {
-        Swift.max(Swift.min(input, max), min)
+        Self.clampedValue(input, min: min, max: max)
     }
 }
 

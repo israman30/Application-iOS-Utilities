@@ -66,6 +66,34 @@ public struct ToggleViewUtils: View {
     @Environment(\.accessibilityDifferentiateWithoutColor) private var differentiateWithoutColor: Bool
     @Environment(\.colorScheme) private var colorScheme: ColorScheme
     @Environment(\.dynamicTypeSize) private var dynamicTypeSize: DynamicTypeSize
+    
+    enum IconForegroundStyle: Equatable {
+        case secondary
+        case base(opacity: Double)
+    }
+    
+    static func accessibilityValueText(isOn: Bool) -> String {
+        isOn ? "On" : "Off"
+    }
+    
+    static func selectedWashOpacity(differentiateWithoutColor: Bool) -> Double {
+        differentiateWithoutColor ? 0.12 : 0.10
+    }
+    
+    static func borderOpacity(isOn: Bool) -> Double {
+        isOn ? 0.16 : 0.12
+    }
+    
+    static func iconForegroundStyle(isEnabled: Bool, colorScheme: ColorScheme) -> IconForegroundStyle {
+        guard isEnabled else { return .secondary }
+        // In dark mode, slightly soften the icon so it doesn’t overpower the title.
+        return (colorScheme == .dark) ? .base(opacity: 0.9) : .base(opacity: 1.0)
+    }
+    
+    static func shouldUseSubtitle(_ subtitle: String?) -> Bool {
+        guard let subtitle else { return false }
+        return !subtitle.isEmpty
+    }
 
     /// A modern “settings row” toggle with better typography, contrast, and accessibility defaults.
     ///
@@ -180,8 +208,8 @@ public struct ToggleViewUtils: View {
         }
         .accessibilityElement(children: .ignore)
         .accessibilityLabel(Text(titleKey))
-        .accessibilityValue(Text(isOn ? "On" : "Off"))
-        .modifierIf(subtitle?.isEmpty == false) { view in
+        .accessibilityValue(Text(Self.accessibilityValueText(isOn: isOn)))
+        .modifierIf(Self.shouldUseSubtitle(subtitle)) { view in
             view.accessibilityHint(Text(subtitle!))
         }
     }
@@ -217,10 +245,12 @@ public struct ToggleViewUtils: View {
 
     private var iconForeground: Color {
         let base = tintColor ?? .accentColor
-        guard isEnabled else { return .secondary }
-        // In dark mode, slightly soften the icon so it doesn’t overpower the title.
-        if colorScheme == .dark { return base.opacity(0.9) }
-        return base
+        switch Self.iconForegroundStyle(isEnabled: isEnabled, colorScheme: colorScheme) {
+        case .secondary:
+            return .secondary
+        case let .base(opacity):
+            return base.opacity(opacity)
+        }
     }
 
     private var backgroundView: some View {
@@ -230,14 +260,17 @@ public struct ToggleViewUtils: View {
             // A subtle “selected” wash. This improves perceived affordance without relying solely on color.
             if isOn {
                 RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-                    .fill((tintColor ?? .accentColor).opacity(differentiateWithoutColor ? 0.12 : 0.10))
+                    .fill((tintColor ?? .accentColor).opacity(Self.selectedWashOpacity(differentiateWithoutColor: differentiateWithoutColor)))
             }
         }
     }
 
     private var borderView: some View {
         RoundedRectangle(cornerRadius: cornerRadius, style: .continuous)
-            .strokeBorder(Color.primary.opacity(isOn ? 0.16 : 0.12), lineWidth: 1)
+            .strokeBorder(
+                Color.primary.opacity(Self.borderOpacity(isOn: isOn)),
+                lineWidth: 1
+            )
     }
 }
 

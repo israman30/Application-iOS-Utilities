@@ -186,6 +186,10 @@ public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
 
     @Environment(\.colorSchemeContrast) private var colorSchemeContrast: ColorSchemeContrast
     
+    static func rowSeparatorTintOpacity(colorSchemeContrast: ColorSchemeContrast) -> Double {
+        colorSchemeContrast == .increased ? 0.35 : 0.18
+    }
+    
     /// Creates a form with a single section, plus optional header and footer.
     ///
     /// - Parameters:
@@ -244,12 +248,10 @@ public struct FormViewUtil<Content: View, Header: View, Footer: View>: View {
             .listRowSeparator(rowSeparatorVisibility)
         }
         .listStyle(.insetGrouped)
-        .modifierIf(colorSchemeContrast == .increased) { view in
-            view.listRowSeparatorTint(Color.primary.opacity(0.35))
-        }
-        .modifierIf(colorSchemeContrast != .increased) { view in
-            view.listRowSeparatorTint(Color.primary.opacity(0.18))
-        }
+        .listRowSeparatorTint(
+            Color.primary
+                .opacity(Self.rowSeparatorTintOpacity(colorSchemeContrast: colorSchemeContrast))
+        )
         .background(backgroundColor.ignoresSafeArea())
         .modifierIf(accessibilityIdentifier != nil) { view in
             view.accessibilityIdentifier(accessibilityIdentifier!)

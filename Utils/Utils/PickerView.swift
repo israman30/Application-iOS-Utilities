@@ -95,6 +95,10 @@ public struct PickerViewUtils<T: Hashable>: View {
     private let usesHaptics: Bool
 
     private let onUpdate: (() -> Void)?
+    
+    static func normalizedTitleKey(_ title: String) -> LocalizedStringKey? {
+        title.isEmpty ? nil : LocalizedStringKey(title)
+    }
 
     /// Backwards-compatible initializer.
     ///
@@ -106,7 +110,7 @@ public struct PickerViewUtils<T: Hashable>: View {
         opions: [T],
         onUpdate: (() -> Void)? = nil
     ) {
-        self.titleKey = titleKey.isEmpty ? nil : LocalizedStringKey(titleKey)
+        self.titleKey = Self.normalizedTitleKey(titleKey)
         self._selection = selection
         self.options = opions
         self.showsSelectedValue = true
@@ -172,7 +176,7 @@ public struct PickerViewUtils<T: Hashable>: View {
         onUpdate: (() -> Void)? = nil
     ) {
         self.init(
-            titleKey: titleKey.isEmpty ? nil : LocalizedStringKey(titleKey),
+            titleKey: Self.normalizedTitleKey(titleKey),
             selection: selection,
             options: options,
             showsSelectedValue: showsSelectedValue,
@@ -266,6 +270,11 @@ public struct DatePickerViewUtils: View {
     private let cornerRadius: CGFloat
     private let usesHaptics: Bool
     private let onUpdate: (() -> Void)?
+    
+    static func valueLineText(valuePrefix: String?, valueText: String) -> String {
+        let prefix = valuePrefix.map { "\($0) " } ?? ""
+        return "\(prefix)\(valueText)"
+    }
 
     /// Backwards-compatible initializer.
     public init(
@@ -406,8 +415,7 @@ public struct DatePickerViewUtils: View {
     }
 
     private var valueLine: some View {
-        let prefix = valuePrefix.map { "\($0) " } ?? ""
-        return Text("\(prefix)\(valueText(date))")
+        Text(Self.valueLineText(valuePrefix: valuePrefix, valueText: valueText(date)))
             .font(.subheadline)
             .foregroundStyle(.secondary)
             .accessibilityHidden(true)

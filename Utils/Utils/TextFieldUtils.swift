@@ -54,6 +54,40 @@ public struct TextFieldViewUtil<Header: View>: View {
     @FocusState private var isFocused: Bool
     @State private var isSecureRevealed: Bool = false
     
+    enum BorderStyle: Equatable {
+        case normal
+        case focused
+        case error
+    }
+    
+    static func isErrored(errorText: String?) -> Bool {
+        !(errorText?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+    }
+    
+    static func messageText(supportingText: String?, errorText: String?) -> String? {
+        // Error message takes precedence over supporting text.
+        if isErrored(errorText: errorText) {
+            return errorText
+        }
+        return supportingText
+    }
+    
+    static func borderStyle(isErrored: Bool, isFocused: Bool) -> BorderStyle {
+        // Priority order: error -> focused -> default.
+        if isErrored {
+            return .error
+        }
+        if isFocused {
+            return .focused
+        }
+        return .normal
+    }
+    
+    static func normalizedIconName(_ iconPlaceholder: String) -> String? {
+        let trimmed = iconPlaceholder.trimmingCharacters(in: .whitespacesAndNewlines)
+        return trimmed.isEmpty ? nil : trimmed
+    }
+    
     /// Creates a styled input field.
     ///
     /// - Parameters:
@@ -182,25 +216,26 @@ public struct TextFieldViewUtil<Header: View>: View {
     }
 
     private var isErrored: Bool {
-        !(errorText?.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty ?? true)
+        Self.isErrored(errorText: errorText)
     }
 
     private var messageText: String? {
-        // Error message takes precedence over supporting text.
-        if isErrored { return errorText }
-        return supportingText
+        Self.messageText(supportingText: supportingText, errorText: errorText)
     }
 
     private var borderColor: Color {
-        // Priority order: error -> focused -> default.
-        if isErrored { return .red }
-        if isFocused { return .accentColor }
-        return Color.secondary.opacity(0.35)
+        switch Self.borderStyle(isErrored: isErrored, isFocused: isFocused) {
+        case .error:
+            return .red
+        case .focused:
+            return .accentColor
+        case .normal:
+            return Color.secondary.opacity(0.35)
+        }
     }
 
     private var normalizedIconName: String? {
-        let trimmed = iconPlaceholder.trimmingCharacters(in: .whitespacesAndNewlines)
-        return trimmed.isEmpty ? nil : trimmed
+        Self.normalizedIconName(iconPlaceholder)
     }
 
     @ViewBuilder

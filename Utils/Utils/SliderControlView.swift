@@ -92,6 +92,31 @@ public struct SliderControlViewUtils: View {
     private let minTapAction: (() -> Void)?
     private let maxTapAction: (() -> Void)?
     
+    static func normalizedBounds(min: Double, max: Double) -> (min: Double, max: Double) {
+        (Swift.min(min, max), Swift.max(min, max))
+    }
+    
+    static func clampedValue(_ value: Double, min: Double, max: Double) -> Double {
+        Swift.max(Swift.min(value, max), min)
+    }
+    
+    @usableFromInline static func defaultValueText(_ value: Double) -> String {
+        if value.rounded(.towardZero) == value {
+            return "\(Int(value))"
+        }
+        return String(format: "%.2f", value)
+    }
+    
+    static func decrementValue(current: Double, min: Double, max: Double, step: Double) -> Double {
+        let next = Swift.max(current - step, min)
+        return clampedValue(next, min: min, max: max)
+    }
+    
+    static func incrementValue(current: Double, min: Double, max: Double, step: Double) -> Double {
+        let next = Swift.min(current + step, max)
+        return clampedValue(next, min: min, max: max)
+    }
+    
     /// Creates a slider control view.
     /// - Parameters:
     ///   - titleKey: Optional title shown above the slider.
@@ -124,11 +149,8 @@ public struct SliderControlViewUtils: View {
         minimumValueLabel: String? = nil,
         maximumValueLabel: String? = nil,
         showsValue: Bool = false,
-        valueText: @escaping (Double) -> String = { value in
-            if value.rounded(.towardZero) == value {
-                return "\(Int(value))"
-            }
-            return String(format: "%.2f", value)
+        valueText: @escaping (Double) -> String = {
+            value in Self.defaultValueText(value)
         },
         tintColor: Color? = nil,
         backgroundColor: Color = Color.primary.opacity(0.06),
@@ -141,8 +163,9 @@ public struct SliderControlViewUtils: View {
         self.titleKey = titleKey
         self._value = value
         // Normalize bounds to keep behavior predictable even if call sites pass reversed values.
-        self.min = Swift.min(min, max)
-        self.max = Swift.max(min, max)
+        let bounds = Self.normalizedBounds(min: min, max: max)
+        self.min = bounds.min
+        self.max = bounds.max
         self.step = step
         self.minIcon = minIcon
         self.maxIcon = maxIcon
@@ -213,7 +236,7 @@ public struct SliderControlViewUtils: View {
         let clampedValue = Binding<Double>(
             get: { value },
             set: { newValue in
-                value = Swift.max(Swift.min(newValue, max), min)
+                value = Self.clampedValue(newValue, min: min, max: max)
             }
         )
 
@@ -275,9 +298,9 @@ public struct SliderControlViewUtils: View {
             if let minTapAction {
                 minTapAction()
             } else {
-                value = Swift.max(value - step, min)
+                value = Self.decrementValue(current: value, min: min, max: max, step: step)
             }
-            value = Swift.max(Swift.min(value, max), min)
+            value = Self.clampedValue(value, min: min, max: max)
             if value != oldValue {
                 Haptics.selectionChanged()
             }
@@ -300,9 +323,9 @@ public struct SliderControlViewUtils: View {
             if let maxTapAction {
                 maxTapAction()
             } else {
-                value = Swift.min(value + step, max)
+                value = Self.incrementValue(current: value, min: min, max: max, step: step)
             }
-            value = Swift.max(Swift.min(value, max), min)
+            value = Self.clampedValue(value, min: min, max: max)
             if value != oldValue {
                 Haptics.selectionChanged()
             }

@@ -123,6 +123,34 @@ public struct FloatingButtonUtilsView: View {
     private let longPressDuration: Double
     private let pressHaptic: UIImpactFeedbackGenerator.FeedbackStyle?
     
+    static func clampedSize(_ size: CGFloat) -> CGFloat {
+        max(44, size)
+    }
+    
+    static func shouldInvokeAction(isLoading: Bool) -> Bool {
+        !isLoading
+    }
+    
+    static func contrastForeground(red: CGFloat, green: CGFloat, blue: CGFloat) -> Color {
+        // Lightweight luminance heuristic (not full WCAG contrast computation).
+        let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
+        return luminance > 0.60 ? .black : .white
+    }
+    
+    static func contrastForeground(for tint: Color) -> Color {
+        let uiColor = UIColor(tint)
+        var red: CGFloat = 0
+        var green: CGFloat = 0
+        var blue: CGFloat = 0
+        var alpha: CGFloat = 0
+        
+        guard uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
+            return .white
+        }
+        
+        return contrastForeground(red: red, green: green, blue: blue)
+    }
+    
     /// Creates a floating button.
     ///
     /// - Parameters:
@@ -151,7 +179,7 @@ public struct FloatingButtonUtilsView: View {
         self.title = title
         self.tint = tint
         self.icon = icon
-        self.size = max(44, size)
+        self.size = Self.clampedSize(size)
         self.isLoading = isLoading
         self.action = action
         self.alignment = alignment
@@ -179,7 +207,7 @@ public struct FloatingButtonUtilsView: View {
     
     private var floatingButton: some View {
         Button {
-            guard !isLoading else { return }
+            guard Self.shouldInvokeAction(isLoading: isLoading) else { return }
             action()
         } label: {
             ZStack {
@@ -213,31 +241,13 @@ public struct FloatingButtonUtilsView: View {
     }
 
     private var effectiveForeground: Color {
-        titleContrastForeground(for: tint)
-    }
-
-    private func titleContrastForeground(for tint: Color) -> Color {
-        // We use a lightweight luminance heuristic (not full WCAG contrast computation)
-        // to choose between black/white foreground. This keeps the API simple while
-        // improving legibility for common solid tints.
-        let uiColor = UIColor(tint)
-        var red: CGFloat = 0
-        var green: CGFloat = 0
-        var blue: CGFloat = 0
-        var alpha: CGFloat = 0
-
-        guard uiColor.getRed(&red, green: &green, blue: &blue, alpha: &alpha) else {
-            return .white
-        }
-
-        let luminance = 0.2126 * red + 0.7152 * green + 0.0722 * blue
-        return luminance > 0.60 ? .black : .white
+        Self.contrastForeground(for: tint)
     }
 
     private var longPressGesture: some Gesture {
         LongPressGesture(minimumDuration: longPressDuration)
             .onEnded { _ in
-                guard !isLoading else { return }
+                guard Self.shouldInvokeAction(isLoading: isLoading) else { return }
                 onLongPress?()
             }
     }

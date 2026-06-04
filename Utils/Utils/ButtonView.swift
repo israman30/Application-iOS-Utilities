@@ -106,6 +106,15 @@ public struct ButtonViewUtils: View {
     private let onLongPress: (() -> Void)?
     private let longPressDuration: Double
     
+    static func accessibilityTitle(_ title: String?) -> String? {
+        if let title, !title.isEmpty { return title }
+        return nil
+    }
+    
+    static func shouldInvokeAction(isLoading: Bool) -> Bool {
+        !isLoading
+    }
+    
     /// Creates a `ButtonViewUtils` with a default label (title + optional SF Symbol).
     ///
     /// - Parameters:
@@ -170,7 +179,7 @@ public struct ButtonViewUtils: View {
     
     public var body: some View {
         Button(role: role) {
-            guard !isLoading else { return }
+            guard Self.shouldInvokeAction(isLoading: isLoading) else { return }
             action()
         } label: {
             ZStack {
@@ -189,8 +198,7 @@ public struct ButtonViewUtils: View {
     }
     
     private var accessibilityTitle: String? {
-        if let title, !title.isEmpty { return title }
-        return nil
+        Self.accessibilityTitle(title)
     }
     
     @ViewBuilder
@@ -221,7 +229,7 @@ public struct ButtonViewUtils: View {
     private var longPressGesture: some Gesture {
         LongPressGesture(minimumDuration: longPressDuration)
             .onEnded { _ in
-                guard !isLoading else { return }
+                guard Self.shouldInvokeAction(isLoading: isLoading) else { return }
                 onLongPress?()
             }
     }
