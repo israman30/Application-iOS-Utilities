@@ -1,6 +1,9 @@
 # iOS Utilities
 
 [![Build](https://github.com/israman30/Application-iOS-Utilities/actions/workflows/ci.yml/badge.svg)](https://github.com/israman30/Application-iOS-Utilities/actions/workflows/ci.yml)
+![iOS](https://img.shields.io/badge/iOS-17%2B-blue)
+![Xcode](https://img.shields.io/badge/Xcode-15%2B-blue)
+![Swift](https://img.shields.io/badge/Swift-5.9%2B-orange)
 
 A lightweight **SwiftUI utilities library** with reusable UI components and patterns you can drop into iOS apps—buttons, floating action button, toast notifications, validated text fields, ratings, settings-style controls (toggle/stepper/slider/pickers), and grid/layout helpers—plus previewable **sample views** and reference screens (accessibility checklist, navigation coordinator).
 
