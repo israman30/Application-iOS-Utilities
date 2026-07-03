@@ -23,6 +23,27 @@ enum ToolbarButtonStyle {
     case iconAndText
     case custom
 }
+/// `ToolbarView Sample Usage`
+struct ListUsage: View {
+    @State var isEditing = false
+    @State var searchText = ""
+    var body: some View {
+        NavigationStack {
+            List(0..<10) {
+                Text("\($0)")
+            }
+            .navigationTitle("List")
+            .toolbar {
+                ToolbarItems.addButton {
+                    print("Add")
+                }
+                
+                ToolbarEditToggle(placemnet: .navigationBarLeading, isEditing: $isEditing)
+                ToolbarSearchField(.navigationBarTrailing, searchText: $searchText)
+            }
+        }
+    }
+}
 
 struct ToolbarView: View {
     var body: some View {
@@ -50,6 +71,9 @@ struct ToolbarView: View {
 
 #Preview {
     ToolbarView()
+}
+#Preview {
+    ListUsage()
 }
 
 // MARK: - Reusable Toolbar Item
