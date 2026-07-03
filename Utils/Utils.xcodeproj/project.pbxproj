@@ -25,6 +25,7 @@
 		4D5C09752B41038800882087 /* GridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09742B41038800882087 /* GridView.swift */; };
 		4D5C09772B4B806700882087 /* TextFieldUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D5C09762B4B806700882087 /* TextFieldUtils.swift */; };
 		4D7826862B67389E0034AC4D /* ToastView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D7826852B67389E0034AC4D /* ToastView.swift */; };
+		4D853EEA2FF8077500BE204D /* ToolbarView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4D853EE92FF8077500BE204D /* ToolbarView.swift */; };
 		4DC408992DA4CF7C00821276 /* FormView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DC408982DA4CF7C00821276 /* FormView.swift */; };
 		4DED9B472DA0F14700FA50EF /* SquareGridView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4DED9B462DA0F14700FA50EF /* SquareGridView.swift */; };
 /* End PBXBuildFile section */
@@ -59,6 +60,7 @@
 		4D5C09742B41038800882087 /* GridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GridView.swift; sourceTree = "<group>"; };
 		4D5C09762B4B806700882087 /* TextFieldUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldUtils.swift; sourceTree = "<group>"; };
 		4D7826852B67389E0034AC4D /* ToastView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToastView.swift; sourceTree = "<group>"; };
+		4D853EE92FF8077500BE204D /* ToolbarView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarView.swift; sourceTree = "<group>"; };
 		4DC408982DA4CF7C00821276 /* FormView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormView.swift; sourceTree = "<group>"; };
 		4DED9B462DA0F14700FA50EF /* SquareGridView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SquareGridView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -120,6 +122,7 @@
 				4D3ECD0D2E1A0F910047604D /* AccessibilityView.swift */,
 				4DC408982DA4CF7C00821276 /* FormView.swift */,
 				4D7826852B67389E0034AC4D /* ToastView.swift */,
+				4D853EE92FF8077500BE204D /* ToolbarView.swift */,
 				4D5C09582B40FD9C00882087 /* Utils.docc */,
 			);
 			path = Utils;
@@ -244,6 +247,7 @@
 			files = (
 				4D5C096F2B40FFE700882087 /* RatingStartsView.swift in Sources */,
 				4D537BDE2DA94EE900D34B0C /* StepperView.swift in Sources */,
+				4D853EEA2FF8077500BE204D /* ToolbarView.swift in Sources */,
 				4DED9B472DA0F14700FA50EF /* SquareGridView.swift in Sources */,
 				4D41782A2DA6BBD30085EB5B /* ButtonView.swift in Sources */,
 				4D7826862B67389E0034AC4D /* ToastView.swift in Sources */,
@@ -411,9 +415,9 @@
 		4D5C09692B40FD9C00882087 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
@@ -443,9 +447,9 @@
 		4D5C096A2B40FD9C00882087 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
 				CODE_SIGN_IDENTITY = "";
 				CODE_SIGN_STYLE = Automatic;
-				"CODE_SIGNING_ALLOWED[sdk=iphonesimulator*]" = NO;
 				CURRENT_PROJECT_VERSION = 1;
 				DEFINES_MODULE = YES;
 				DYLIB_COMPATIBILITY_VERSION = 1;
