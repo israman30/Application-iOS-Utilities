@@ -295,7 +295,7 @@ public struct ToolbarItems {
     
     // MARK: - Back Button
     public static func backButton(action: @escaping () -> Void) -> some ToolbarContent {
-        ToolbarButton(.navigationBarTrailing, icon: "chevron.left", label: "Back", action: action)
+        ToolbarButton(.navigationBarLeading, icon: "chevron.left", label: "Back", action: action)
     }
     
     // MARK: - Close Button
