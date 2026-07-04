@@ -75,6 +75,28 @@ struct DetailView: View {
     }
 }
 
+struct EditorView: View {
+    @State var text = ""
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        NavigationStack {
+            TextEditor(text: $text)
+                .navigationTitle("Editor")
+                .toolbar {
+                    ToolbarButton(.navigationBarLeading, icon: "", label: "Cancel") {
+                        dismiss()
+                    }
+                    
+                    ToolbarItems.saveButton(isEnabled: !text.isEmpty) {
+                        print("Saved")
+                        dismiss()
+                    }
+                }
+        }
+    }
+}
+
 struct ToolbarView: View {
     var body: some View {
         NavigationStack {
@@ -107,6 +129,9 @@ struct ToolbarView: View {
 }
 #Preview {
     DetailView()
+}
+#Preview {
+    EditorView()
 }
 
 // MARK: - Reusable Toolbar Item
