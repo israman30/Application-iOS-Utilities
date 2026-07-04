@@ -44,6 +44,36 @@ struct ListUsage: View {
         }
     }
 }
+/// `Detail View`
+struct DetailView: View {
+    @State var isFavorite = false
+    @Environment(\.dismiss) var dismiss
+    
+    var body: some View {
+        NavigationStack {
+            VStack {
+                Text("John Doe")
+                    .font(.title)
+                Text("The coolest man I know in the city..")
+                    .font(.body)
+            }
+            .navigationTitle("Detail View")
+            .toolbar {
+                ToolbarItems.backButton {
+                    dismiss()
+                }
+                
+                ToolbarItems.moreMenu {
+                    Button("Share") {  }
+                    Button("Link") {  }
+                    Button("Copy") {  }
+                    Divider()
+                    Button("Dimiss", role: .destructive) { }
+                }
+            }
+        }
+    }
+}
 
 struct ToolbarView: View {
     var body: some View {
@@ -74,6 +104,9 @@ struct ToolbarView: View {
 }
 #Preview {
     ListUsage()
+}
+#Preview {
+    DetailView()
 }
 
 // MARK: - Reusable Toolbar Item
