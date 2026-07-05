@@ -97,6 +97,37 @@ struct EditorView: View {
     }
 }
 
+struct ListViewLoading: View {
+    @State var list = ["GMC", "Chevy", "Hummer", "Jeep", "Mustang"]
+    @State var searcgText = ""
+    @State var isLoading = false
+    
+    var filteredList: [String] {
+        searcgText.isEmpty ? list : list.filter {
+            $0.localizedCaseInsensitiveContains(searcgText)
+        }
+    }
+    
+    var body: some View {
+        NavigationStack {
+            List(filteredList, id: \.self) {
+                Text($0)
+            }
+            .navigationTitle("Cars")
+            .toolbar {
+                ToolbarItems.refreshButton(isLoading: isLoading) {
+                    Task {
+                        self.isLoading = true
+                        try? await Task.sleep(nanoseconds: 2_000_000_000)
+                        self.isLoading = false
+                    }
+                }
+                ToolbarSearchField(searchText: $searcgText)
+            }
+        }
+    }
+}
+
 struct ToolbarView: View {
     var body: some View {
         NavigationStack {
@@ -132,6 +163,9 @@ struct ToolbarView: View {
 }
 #Preview {
     EditorView()
+}
+#Preview {
+    ListViewLoading()
 }
 
 // MARK: - Reusable Toolbar Item
