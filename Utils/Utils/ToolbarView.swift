@@ -23,7 +23,7 @@ enum ToolbarButtonStyle {
     case iconAndText
     case custom
 }
-/// `ToolbarView Sample Usage`
+// MARK: - ToolbarView Sample Usage
 struct ListUsage: View {
     @State var isEditing = false
     @State var searchText = ""
