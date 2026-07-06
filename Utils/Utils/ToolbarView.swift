@@ -128,6 +128,24 @@ struct ListViewLoading: View {
     }
 }
 
+struct InboxView: View {
+    @State var message = 12
+    var body: some View {
+        NavigationStack {
+            List(1..<5) {
+                Text("\($0)")
+            }
+            .navigationTitle("Messages")
+            .toolbar {
+                ToolbarItems.notificationsBadge(count: message) {
+                    print("Clear notifications")
+                    self.message = 0
+                }
+            }
+        }
+    }
+}
+
 struct ToolbarView: View {
     var body: some View {
         NavigationStack {
@@ -166,6 +184,9 @@ struct ToolbarView: View {
 }
 #Preview {
     ListViewLoading()
+}
+#Preview {
+    InboxView()
 }
 
 // MARK: - Reusable Toolbar Item
