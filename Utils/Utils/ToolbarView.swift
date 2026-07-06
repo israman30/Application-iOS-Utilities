@@ -146,6 +146,52 @@ struct InboxView: View {
     }
 }
 
+struct ComplexTabbar: View {
+    @State var searchText = ""
+    @State var isEditing = false
+    @State var isLoading = false
+    @State var isFilterActive = false
+    
+    var body: some View {
+        NavigationStack {
+            List(1..<10, id: \.self) {
+                Text("Item: \($0)")
+            }
+            .navigationTitle("Complex Tab")
+            .toolbar {
+                ToolbarItems.backButton {
+                    print("Back")
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    HStack(spacing: 12) {
+                        if !isEditing {
+                            Button {
+                                self.isEditing.toggle()
+                            } label: {
+                                Image(systemName: "magnifyingglass")
+                            }
+                            
+                            Button {
+                                isFilterActive.toggle()
+                            } label: {
+                                Image(systemName: isFilterActive ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
+                            }
+                            
+                            Menu {
+                                Button("Refresh") { print("Refresh") }
+                                Button("Share") { print("Share") }
+                                Button("Settings") { print("Settings") }
+                            } label: {
+                                Image(systemName: "ellipsis.circle")
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
 struct ToolbarView: View {
     var body: some View {
         NavigationStack {
@@ -187,6 +233,9 @@ struct ToolbarView: View {
 }
 #Preview {
     InboxView()
+}
+#Preview {
+    ComplexTabbar()
 }
 
 // MARK: - Reusable Toolbar Item
