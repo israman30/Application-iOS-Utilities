@@ -38,8 +38,8 @@ struct ListUsage: View {
                     print("Add")
                 }
                 
-                ToolbarEditToggle(placemnet: .navigationBarLeading, isEditing: $isEditing)
-                ToolbarSearchField(.navigationBarTrailing, searchText: $searchText)
+                ToolbarEditToggle(placement: .navigationBarLeading, isEditing: $isEditing)
+                ToolbarSearchField(searchText: $searchText, placeholder: "Search list")
             }
         }
     }
@@ -68,7 +68,7 @@ struct DetailView: View {
                     Button("Link") {  }
                     Button("Copy") {  }
                     Divider()
-                    Button("Dimiss", role: .destructive) { }
+                    Button("Dismiss", role: .destructive) { }
                 }
             }
         }
@@ -84,7 +84,7 @@ struct EditorView: View {
             TextEditor(text: $text)
                 .navigationTitle("Editor")
                 .toolbar {
-                    ToolbarButton(.navigationBarLeading, icon: "", label: "Cancel") {
+                    ToolbarButton(.navigationBarLeading, label: "Cancel") {
                         dismiss()
                     }
                     
@@ -99,12 +99,12 @@ struct EditorView: View {
 
 struct ListViewLoading: View {
     @State var list = ["GMC", "Chevy", "Hummer", "Jeep", "Mustang"]
-    @State var searcgText = ""
+    @State var searchText = ""
     @State var isLoading = false
     
     var filteredList: [String] {
-        searcgText.isEmpty ? list : list.filter {
-            $0.localizedCaseInsensitiveContains(searcgText)
+        searchText.isEmpty ? list : list.filter {
+            $0.localizedCaseInsensitiveContains(searchText)
         }
     }
     
@@ -122,7 +122,7 @@ struct ListViewLoading: View {
                         self.isLoading = false
                     }
                 }
-                ToolbarSearchField(searchText: $searcgText)
+                ToolbarSearchField(searchText: $searchText, placeholder: "Search cars")
             }
         }
     }
@@ -162,79 +162,126 @@ struct ComplexTabbar: View {
                 ToolbarItems.backButton {
                     print("Back")
                 }
-                ToolbarItem(placement: .navigationBarTrailing) {
-                    HStack(spacing: 12) {
-                        if !isEditing {
-                            Button {
-                                self.isEditing.toggle()
-                            } label: {
-                                Image(systemName: "magnifyingglass")
-                            }
-                            
-                            Button {
-                                isFilterActive.toggle()
-                            } label: {
-                                Image(systemName: isFilterActive ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
-                            }
-                            
-                            Menu {
-                                Button("Refresh") { print("Refresh") }
-                                Button("Share") { print("Share") }
-                                Button("Settings") { print("Settings") }
-                            } label: {
-                                Image(systemName: "ellipsis.circle")
-                            }
-                        }
+                
+                if !isEditing {
+                    ToolbarItems.filterButton(isActive: isFilterActive) {
+                        isFilterActive.toggle()
+                    }
+                    
+                    ToolbarItems.moreMenu {
+                        Button("Refresh") { print("Refresh") }
+                        Button("Share") { print("Share") }
+                        Button("Settings") { print("Settings") }
                     }
                 }
+                
+                ToolbarEditToggle(isEditing: $isEditing)
             }
         }
     }
 }
 
+// MARK: - Showcase Catalog
+
+private struct ToolbarExample: Identifiable {
+    let id = UUID()
+    let title: String
+    let subtitle: String
+    let systemImage: String
+}
+
 struct ToolbarView: View {
+    private let examples: [ToolbarExample] = [
+        ToolbarExample(title: "List with Search", subtitle: "Add, edit, and search in a list", systemImage: "list.bullet"),
+        ToolbarExample(title: "Detail View", subtitle: "Back navigation and overflow menu", systemImage: "doc.text"),
+        ToolbarExample(title: "Editor", subtitle: "Cancel and save actions", systemImage: "square.and.pencil"),
+        ToolbarExample(title: "Loading List", subtitle: "Refresh control and filtered search", systemImage: "arrow.clockwise"),
+        ToolbarExample(title: "Inbox", subtitle: "Notification badge in the toolbar", systemImage: "bell.badge"),
+        ToolbarExample(title: "Complex Toolbar", subtitle: "Filter, menu, and edit toggle", systemImage: "slider.horizontal.3")
+    ]
+    
     var body: some View {
         NavigationStack {
-            Text("Sample View")
-                .navigationTitle("Sample View")
-                .toolbar {
-                    ToolbarButton(.navigationBarTrailing, icon: "magnifyingglass", label: "Search") {
-                        // action
-                    }
-                    
-                    ToolbarItemBuilder(.navigationBarTrailing) {
-                        Button("Tap") { }
-                    }
-                    
-                    ToolbarMenu(.navigationBarLeading, icon: "") {
-                        ForEach(0...3, id: \.self) {
-                            Text("\($0)")
+            List {
+                Section {
+                    ForEach(examples.indices, id: \.self) { index in
+                        NavigationLink {
+                            destination(for: index)
+                        } label: {
+                            Label {
+                                VStack(alignment: .leading, spacing: 4) {
+                                    Text(examples[index].title)
+                                        .font(.body)
+                                    Text(examples[index].subtitle)
+                                        .font(.caption)
+                                        .foregroundStyle(.secondary)
+                                }
+                            } icon: {
+                                Image(systemName: examples[index].systemImage)
+                                    .foregroundStyle(.tint)
+                                    .frame(width: 28)
+                            }
                         }
+                        .accessibilityHint("Opens the \(examples[index].title) toolbar example")
                     }
+                } header: {
+                    Text("Examples")
+                } footer: {
+                    Text("Each example demonstrates reusable toolbar components with accessibility labels and modern styling.")
                 }
+            }
+            .navigationTitle("Toolbar Components")
+            .toolbar {
+                ToolbarItems.helpButton {
+                    print("Help")
+                }
+            }
+        }
+    }
+    
+    @ViewBuilder
+    private func destination(for index: Int) -> some View {
+        switch index {
+        case 0: ListUsage()
+        case 1: DetailView()
+        case 2: EditorView()
+        case 3: ListViewLoading()
+        case 4: InboxView()
+        default: ComplexTabbar()
         }
     }
 }
 
-#Preview {
+#Preview("Catalog") {
     ToolbarView()
 }
-#Preview {
+
+#Preview("Catalog – Dark") {
+    ToolbarView()
+        .preferredColorScheme(.dark)
+}
+
+#Preview("List Usage") {
     ListUsage()
 }
-#Preview {
+
+#Preview("Detail View") {
     DetailView()
 }
-#Preview {
+
+#Preview("Editor") {
     EditorView()
 }
-#Preview {
+
+#Preview("Loading List") {
     ListViewLoading()
 }
-#Preview {
+
+#Preview("Inbox") {
     InboxView()
 }
-#Preview {
+
+#Preview("Complex Toolbar") {
     ComplexTabbar()
 }
 
@@ -258,26 +305,40 @@ public struct ToolbarButton: ToolbarContent {
     let placement: ToolbarItemPlacement
     let icon: String?
     let label: String?
+    let accessibilityLabel: String?
     let action: () -> Void
     
-    public init(_ placement: ToolbarItemPlacement, icon: String?, label: String?, action: @escaping () -> Void) {
+    public init(
+        _ placement: ToolbarItemPlacement,
+        icon: String? = nil,
+        label: String? = nil,
+        accessibilityLabel: String? = nil,
+        action: @escaping () -> Void
+    ) {
         self.placement = placement
         self.icon = icon
         self.label = label
+        self.accessibilityLabel = accessibilityLabel
         self.action = action
+    }
+    
+    private var resolvedAccessibilityLabel: String {
+        accessibilityLabel ?? label ?? "Button"
     }
     
     public var body: some ToolbarContent {
         ToolbarItem(placement: placement) {
             Button(action: action) {
-                if let icon = icon, let label = label {
+                if let icon, let label {
                     Label(label, systemImage: icon)
-                } else if let icon = icon {
+                } else if let icon {
                     Image(systemName: icon)
-                } else if let label = label {
+                } else if let label {
                     Text(label)
                 }
             }
+            .buttonStyle(.borderless)
+            .accessibilityLabel(resolvedAccessibilityLabel)
         }
     }
 }
@@ -289,7 +350,12 @@ public struct ToolbarMenu<Content: View>: ToolbarContent {
     let label: String
     let menuContent: () -> Content
     
-    public init(_ placement: ToolbarItemPlacement, icon: String, label: String = "More", menuContent: @escaping () -> Content) {
+    public init(
+        _ placement: ToolbarItemPlacement,
+        icon: String = "ellipsis.circle",
+        label: String = "More",
+        menuContent: @escaping () -> Content
+    ) {
         self.placement = placement
         self.icon = icon
         self.label = label
@@ -303,6 +369,8 @@ public struct ToolbarMenu<Content: View>: ToolbarContent {
             } label: {
                 Label(label, systemImage: icon)
             }
+            .accessibilityLabel(label)
+            .accessibilityHint("Shows additional actions")
         }
     }
 }
@@ -311,19 +379,29 @@ public struct ToolbarMenu<Content: View>: ToolbarContent {
 public struct ToolbarSearchField: ToolbarContent {
     let placement: ToolbarItemPlacement
     @Binding var searchText: String
-    let placeholder: String = ""
+    let placeholder: String
     
-    public init(_ placement: ToolbarItemPlacement = .navigationBarTrailing, searchText: Binding<String>) {
+    public init(
+        _ placement: ToolbarItemPlacement = .navigationBarTrailing,
+        searchText: Binding<String>,
+        placeholder: String = "Search"
+    ) {
         self.placement = placement
         self._searchText = searchText
+        self.placeholder = placeholder
     }
     
     public var body: some ToolbarContent {
         ToolbarItem(placement: placement) {
-            HStack {
+            HStack(spacing: 8) {
                 Image(systemName: "magnifyingglass")
                     .foregroundStyle(.secondary)
+                    .accessibilityHidden(true)
+                
                 TextField(placeholder, text: $searchText)
+                    .textFieldStyle(.plain)
+                    .submitLabel(.search)
+                    .accessibilityLabel(placeholder)
                 
                 if !searchText.isEmpty {
                     Button {
@@ -332,11 +410,14 @@ public struct ToolbarSearchField: ToolbarContent {
                         Image(systemName: "xmark.circle.fill")
                             .foregroundStyle(.secondary)
                     }
+                    .buttonStyle(.borderless)
+                    .accessibilityLabel("Clear search")
                 }
             }
-            .padding(8)
-            .background(Color(.systemGray6))
-            .clipShape(RoundedRectangle(cornerRadius: 8))
+            .padding(.horizontal, 10)
+            .padding(.vertical, 6)
+            .background(.quaternary, in: RoundedRectangle(cornerRadius: 10, style: .continuous))
+            .frame(minWidth: 160, maxWidth: 240)
         }
     }
 }
@@ -345,17 +426,24 @@ public struct ToolbarSearchField: ToolbarContent {
 public struct ToolbarActivityIndicator: ToolbarContent {
     let placement: ToolbarItemPlacement
     let isLoading: Bool
+    let accessibilityLabel: String
     
-    public init(placement: ToolbarItemPlacement = .navigationBarTrailing, isLoading: Bool) {
+    public init(
+        placement: ToolbarItemPlacement = .navigationBarTrailing,
+        isLoading: Bool,
+        accessibilityLabel: String = "Loading"
+    ) {
         self.placement = placement
         self.isLoading = isLoading
+        self.accessibilityLabel = accessibilityLabel
     }
     
     public var body: some ToolbarContent {
         ToolbarItem(placement: placement) {
             if isLoading {
                 ProgressView()
-                    .scaleEffect(0.8)
+                    .controlSize(.small)
+                    .accessibilityLabel(accessibilityLabel)
             }
         }
     }
@@ -363,21 +451,24 @@ public struct ToolbarActivityIndicator: ToolbarContent {
 
 // MARK: - Edit/Done Toggle Toolbar Item
 public struct ToolbarEditToggle: ToolbarContent {
-    let placemnet: ToolbarItemPlacement
+    let placement: ToolbarItemPlacement
     @Binding var isEditing: Bool
     
-    public init(placemnet: ToolbarItemPlacement = .navigationBarTrailing, isEditing: Binding<Bool>) {
-        self.placemnet = placemnet
+    public init(placement: ToolbarItemPlacement = .navigationBarTrailing, isEditing: Binding<Bool>) {
+        self.placement = placement
         self._isEditing = isEditing
     }
     
     public var body: some ToolbarContent {
-        ToolbarItem(placement: placemnet) {
+        ToolbarItem(placement: placement) {
             Button(isEditing ? "Done" : "Edit") {
-                withAnimation {
-                    self.isEditing.toggle()
+                withAnimation(.easeInOut(duration: 0.2)) {
+                    isEditing.toggle()
                 }
             }
+            .fontWeight(isEditing ? .semibold : .regular)
+            .accessibilityLabel(isEditing ? "Done editing" : "Edit")
+            .accessibilityHint(isEditing ? "Exits edit mode" : "Enters edit mode")
         }
     }
 }
@@ -387,13 +478,31 @@ public struct ToolbarBadge: ToolbarContent {
     let placement: ToolbarItemPlacement
     let icon: String
     let badgeCount: Int
+    let accessibilityLabel: String
     let action: () -> Void
     
-    public init(_ placement: ToolbarItemPlacement, icon: String, badgeCount: Int, action: @escaping () -> Void) {
+    public init(
+        _ placement: ToolbarItemPlacement,
+        icon: String,
+        badgeCount: Int,
+        accessibilityLabel: String = "Notifications",
+        action: @escaping () -> Void
+    ) {
         self.placement = placement
         self.icon = icon
         self.badgeCount = badgeCount
+        self.accessibilityLabel = accessibilityLabel
         self.action = action
+    }
+    
+    private var badgeText: String {
+        badgeCount > 99 ? "99+" : "\(badgeCount)"
+    }
+    
+    private var resolvedAccessibilityLabel: String {
+        badgeCount > 0
+            ? "\(accessibilityLabel), \(badgeCount) unread"
+            : accessibilityLabel
     }
     
     public var body: some ToolbarContent {
@@ -401,19 +510,22 @@ public struct ToolbarBadge: ToolbarContent {
             Button(action: action) {
                 ZStack(alignment: .topTrailing) {
                     Image(systemName: icon)
+                        .symbolRenderingMode(.hierarchical)
                     
                     if badgeCount > 0 {
-                        Text("\(badgeCount)")
-                            .font(.caption2)
-                            .fontWeight(.bold)
+                        Text(badgeText)
+                            .font(.caption2.weight(.bold))
                             .foregroundStyle(.white)
-                            .frame(width: 18, height: 18)
-                            .background(Color.red)
-                            .clipShape(Circle())
+                            .padding(.horizontal, badgeCount > 9 ? 4 : 0)
+                            .frame(minWidth: 18, minHeight: 18)
+                            .background(Color.red, in: Capsule())
                             .offset(x: 8, y: -8)
+                            .accessibilityHidden(true)
                     }
                 }
             }
+            .buttonStyle(.borderless)
+            .accessibilityLabel(resolvedAccessibilityLabel)
         }
     }
 }
@@ -429,12 +541,12 @@ public struct ToolbarItems {
     
     // MARK: - Close Button
     public static func closeButton(action: @escaping () -> Void) -> some ToolbarContent {
-        ToolbarButton(.navigationBarTrailing, icon: "xmark", label: "", action: action)
+        ToolbarButton(.navigationBarTrailing, icon: "xmark", accessibilityLabel: "Close", action: action)
     }
     
     // MARK: - Add Button
     public static func addButton(action: @escaping () -> Void) -> some ToolbarContent {
-        ToolbarButton(.navigationBarTrailing, icon: "plus", label: "", action: action)
+        ToolbarButton(.navigationBarTrailing, icon: "plus", accessibilityLabel: "Add", action: action)
     }
     
     // MARK: - Share Button
@@ -444,20 +556,23 @@ public struct ToolbarItems {
     
     // MARK: - Settings Button
     public static func settingsButton(action: @escaping () -> Void) -> some ToolbarContent {
-        ToolbarButton(.navigationBarTrailing, icon: "gearshape.fill", label: "", action: action)
+        ToolbarButton(.navigationBarTrailing, icon: "gearshape.fill", accessibilityLabel: "Settings", action: action)
     }
     
     // MARK: - Save Button
     public static func saveButton(isEnabled: Bool = true, action: @escaping () -> Void) -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
             Button("Save", action: action)
+                .fontWeight(.semibold)
                 .disabled(!isEnabled)
+                .accessibilityLabel("Save")
+                .accessibilityHint(isEnabled ? "Saves your changes" : "Enter content to enable saving")
         }
     }
     
     // MARK: - Delete Button
     public static func deleteButton(action: @escaping () -> Void) -> some ToolbarContent {
-        ToolbarButton(.navigationBarTrailing, icon: "trash", label: "", action: action)
+        ToolbarButton(.navigationBarTrailing, icon: "trash", accessibilityLabel: "Delete", action: action)
     }
     
     // MARK: - More Menu
@@ -469,33 +584,39 @@ public struct ToolbarItems {
     
     // MARK: - Help Button
     public static func helpButton(action: @escaping () -> Void) -> some ToolbarContent {
-        ToolbarButton(.navigationBarTrailing, icon: "questionmark.circle", label: "", action: action)
+        ToolbarButton(.navigationBarTrailing, icon: "questionmark.circle", accessibilityLabel: "Help", action: action)
     }
     
     // MARK: - Refresh Button
-    public static func refreshButton(isLoading: Bool = false,action: @escaping () -> Void) -> some ToolbarContent {
+    public static func refreshButton(isLoading: Bool = false, action: @escaping () -> Void) -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            if isLoading {
-                ProgressView()
-                    .scaleEffect(0.8)
-            } else {
-                Button {
-                    action()
-                } label: {
-                    Image(systemName: "arrow.clockwise")
+            Group {
+                if isLoading {
+                    ProgressView()
+                        .controlSize(.small)
+                } else {
+                    Button(action: action) {
+                        Image(systemName: "arrow.clockwise")
+                    }
+                    .buttonStyle(.borderless)
                 }
             }
+            .accessibilityElement(children: .ignore)
+            .accessibilityLabel(isLoading ? "Refreshing" : "Refresh")
+            .accessibilityAddTraits(isLoading ? .updatesFrequently : [])
         }
     }
     
     // MARK: - Filter Button
     public static func filterButton(isActive: Bool = false, action: @escaping () -> Void) -> some ToolbarContent {
         ToolbarItem(placement: .navigationBarTrailing) {
-            Button {
-                action()
-            } label: {
+            Button(action: action) {
                 Image(systemName: isActive ? "line.3.horizontal.decrease.circle.fill" : "line.3.horizontal.decrease.circle")
             }
+            .buttonStyle(.borderless)
+            .symbolRenderingMode(.hierarchical)
+            .accessibilityLabel(isActive ? "Filter, active" : "Filter")
+            .accessibilityHint(isActive ? "Double tap to turn off filter" : "Double tap to turn on filter")
         }
     }
     
@@ -503,7 +624,8 @@ public struct ToolbarItems {
     public static func sortButton(action: @escaping () -> Void) -> some ToolbarContent {
         ToolbarButton(
             .navigationBarTrailing,
-            icon: "arrow.up.arrow.down.circle", label: "",
+            icon: "arrow.up.arrow.down.circle",
+            accessibilityLabel: "Sort",
             action: action
         )
     }
